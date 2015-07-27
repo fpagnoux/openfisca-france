@@ -60,8 +60,8 @@ class br_mv_i(SimpleFormulaColumn):
         salaire_de_base = simulation.calculate_add('salaire_de_base', three_previous_months)
         chonet = simulation.calculate_add('chonet', three_previous_months)
         rstbrut = simulation.calculate_add('rstbrut', three_previous_months)
-        pensions_alimentaires_percues = simulation.calculate('pensions_alimentaires_percues', three_previous_months)
-        pensions_alimentaires_versees_individu = simulation.calculate(
+        pensions_alimentaires_percues = simulation.calculate_add('pensions_alimentaires_percues', three_previous_months)
+        pensions_alimentaires_versees_individu = simulation.calculate_add(
             'pensions_alimentaires_versees_individu', three_previous_months
             )
         rto_declarant1 = simulation.calculate_add('rto_declarant1', three_previous_months)
@@ -70,20 +70,20 @@ class br_mv_i(SimpleFormulaColumn):
         rev_cap_lib_holder = simulation.compute_add_divide('rev_cap_lib', three_previous_months)
         rfon_ms = simulation.calculate_add_divide('rfon_ms', three_previous_months)
         div_ms = simulation.calculate_add_divide('div_ms', three_previous_months)
-        revenus_stage_formation_pro = simulation.calculate('revenus_stage_formation_pro', three_previous_months)
-        allocation_securisation_professionnelle = simulation.calculate(
+        revenus_stage_formation_pro = simulation.calculate_add('revenus_stage_formation_pro', three_previous_months)
+        allocation_securisation_professionnelle = simulation.calculate_add(
             'allocation_securisation_professionnelle', three_previous_months
             )
-        prime_forfaitaire_mensuelle_reprise_activite = simulation.calculate(
+        prime_forfaitaire_mensuelle_reprise_activite = simulation.calculate_add(
             'prime_forfaitaire_mensuelle_reprise_activite', three_previous_months
             )
-        dedommagement_victime_amiante = simulation.calculate('dedommagement_victime_amiante', three_previous_months)
-        prestation_compensatoire = simulation.calculate('prestation_compensatoire', three_previous_months)
-        pensions_invalidite = simulation.calculate('pensions_invalidite', three_previous_months)
-        gains_exceptionnels = simulation.calculate('gains_exceptionnels', three_previous_months)
-        indemnites_chomage_partiel = simulation.calculate('indemnites_chomage_partiel', three_previous_months)
-        indemnites_journalieres = simulation.calculate('indemnites_journalieres', three_previous_months)
-        indemnites_volontariat = simulation.calculate('indemnites_volontariat', three_previous_months)
+        dedommagement_victime_amiante = simulation.calculate_add('dedommagement_victime_amiante', three_previous_months)
+        prestation_compensatoire = simulation.calculate_add('prestation_compensatoire', three_previous_months)
+        pensions_invalidite = simulation.calculate_add('pensions_invalidite', three_previous_months)
+        gains_exceptionnels = simulation.calculate_add('gains_exceptionnels', three_previous_months)
+        indemnites_chomage_partiel = simulation.calculate_add('indemnites_chomage_partiel', three_previous_months)
+        indemnites_journalieres = simulation.calculate_add('indemnites_journalieres', three_previous_months)
+        indemnites_volontariat = simulation.calculate_add('indemnites_volontariat', three_previous_months)
         tns_total_revenus_net = simulation.calculate_add('tns_total_revenus_net', three_previous_months)
         rsa_base_ressources_patrimoine_i = simulation.calculate_add(
             'rsa_base_ressources_patrimoine_i', three_previous_months
