@@ -202,10 +202,10 @@ class cmu_base_ressources_i(SimpleFormulaColumn):
         salaire_net = simulation.calculate('salaire_net', previous_year)
         chonet = simulation.calculate('chonet', previous_year)
         rstnet = simulation.calculate('rstnet', previous_year)
-        pensions_alimentaires_percues = simulation.calculate('pensions_alimentaires_percues', previous_year)
-        pensions_alimentaires_versees_individu = simulation.calculate(
+        pensions_alimentaires_percues = simulation.calculate_add('pensions_alimentaires_percues', previous_year)
+        pensions_alimentaires_versees_individu = simulation.calculate_add(
             'pensions_alimentaires_versees_individu', previous_year
-            )
+        )
         rsa_base_ressources_patrimoine_i = simulation.calculate_add('rsa_base_ressources_patrimoine_i', previous_year)
         aah = simulation.calculate_add('aah', previous_year)
         indemnites_journalieres = simulation.calculate('indemnites_journalieres', previous_year)
@@ -214,10 +214,10 @@ class cmu_base_ressources_i(SimpleFormulaColumn):
         revenus_stage_formation_pro_dernier_mois = simulation.calculate('revenus_stage_formation_pro', last_month)
         allocation_securisation_professionnelle = simulation.calculate(
             'allocation_securisation_professionnelle', previous_year
-            )
+        )
         prime_forfaitaire_mensuelle_reprise_activite = simulation.calculate(
             'prime_forfaitaire_mensuelle_reprise_activite', previous_year
-            )
+        )
         dedommagement_victime_amiante = simulation.calculate('dedommagement_victime_amiante', previous_year)
         prestation_compensatoire = simulation.calculate('prestation_compensatoire', previous_year)
         retraite_combattant = simulation.calculate('retraite_combattant', previous_year)

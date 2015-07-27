@@ -101,20 +101,21 @@ class ass_base_ressources_i(SimpleFormulaColumn):
         tns_micro_entreprise_benefice = simulation.calculate_add('tns_micro_entreprise_benefice', period)
         tns_benefice_exploitant_agricole = simulation.calculate('tns_benefice_exploitant_agricole', period)
         tns_autres_revenus = simulation.calculate('tns_autres_revenus', period)
-        pensions_alimentaires_percues = simulation.calculate('pensions_alimentaires_percues', previous_year)
-        pensions_alimentaires_versees_individu = simulation.calculate(
+        pensions_alimentaires_percues = simulation.calculate_add('pensions_alimentaires_percues', previous_year)
+        pensions_alimentaires_versees_individu = simulation.calculate_add(
             'pensions_alimentaires_versees_individu', previous_year
-            )
-
+        )
         aah = simulation.calculate_add('aah', previous_year)
-        indemnites_stage = simulation.calculate('indemnites_stage', previous_year)
-        revenus_stage_formation_pro = simulation.calculate('revenus_stage_formation_pro', previous_year)
+        indemnites_stage = simulation.calculate_add('indemnites_stage', previous_year)
+        revenus_stage_formation_pro = simulation.calculate_add('revenus_stage_formation_pro', previous_year)
 
         return period, (
             salaire_imposable + rstnet + pensions_alimentaires_percues - abs_(pensions_alimentaires_versees_individu) +
             aah + indemnites_stage + revenus_stage_formation_pro + tns_auto_entrepreneur_benefice +
             tns_micro_entreprise_benefice + tns_benefice_exploitant_agricole + tns_autres_revenus
         )
+
+        return period, pensions_alimentaires_versees_individu
 
 
 @reference_formula
