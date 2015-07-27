@@ -93,3 +93,20 @@ build_column('f8uy', IntCol(entity = 'foy',
                 val_type = "monetary",
                 start = date(2009, 1, 1),
                 cerfa_field = u'8UY'))
+
+
+@reference_formula
+class test_bug(SimpleFormulaColumn):
+    column = FloatCol
+    label = u"Test de bug sur calculate_add"
+    entity_class = Individus
+
+    def function(self, simulation, period):
+        period = period.start.offset('first-of', 'month').period('month')
+        last_three_months = period.start.period('month', 3).offset(-3)
+        palim_l3m = simulation.calculate_add('pensions_alimentaires_percues', last_three_months)
+        print(palim_l3m)
+        palim_l3m = simulation.calculate('pensions_alimentaires_percues', last_three_months)
+        print(palim_l3m)
+
+        return period, palim_l3m
