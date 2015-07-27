@@ -103,10 +103,10 @@ class test_bug(SimpleFormulaColumn):
 
     def function(self, simulation, period):
         period = period.start.offset('first-of', 'month').period('month')
-        last_three_months = period.start.period('month', 3).offset(-3)
-        palim_l3m = simulation.calculate_add('pensions_alimentaires_percues', last_three_months)
-        print(palim_l3m)
-        palim_l3m = simulation.calculate('pensions_alimentaires_percues', last_three_months)
-        print(palim_l3m)
+        previous_year = period.start.period('year').offset(-1)
+        pension_alim = simulation.calculate_add('pensions_alimentaires_versees_individu', previous_year)
+        print(pension_alim)
+        # pavi = simulation.calculate('pensions_alimentaires_versees_individu', last_three_months)
+        # print(pavi)
 
-        return period, palim_l3m
+        return period, pension_alim
