@@ -110,8 +110,9 @@ class paje_base_montant(SimpleFormulaColumn):
             return plafond
 
         def enfant_eligible_ne_avant_avril_2014():
-            paje_base_enfant_eligible_avant_reforme_2014 = simulation.compute('paje_base_enfant_eligible_avant_reforme_2014', period)
-            return self.any_by_roles(paje_base_enfant_eligible_avant_reforme_2014)
+            return simulation.any_by_roles('paje_base_enfant_eligible_avant_reforme_2014', period);
+            # paje_base_enfant_eligible_avant_reforme_2014 = simulation.compute('paje_base_enfant_eligible_avant_reforme_2014', period)
+            # return self.any_by_roles(paje_base_enfant_eligible_avant_reforme_2014)
 
         def enfant_eligible_ne_apres_avril_2014():
             paje_base_enfant_eligible_apres_reforme_2014 = simulation.compute('paje_base_enfant_eligible_apres_reforme_2014', period)
