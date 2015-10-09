@@ -20,7 +20,7 @@ log = logging.getLogger(__name__)
 zone_apl_by_depcom = None
 
 
-@reference_formula
+@law_variable
 class al_pac(SimpleFormulaColumn):
     column = FloatCol
     entity_class = Familles
@@ -72,7 +72,7 @@ class al_pac(SimpleFormulaColumn):
         return period, al_pac
 
 
-@reference_formula
+@law_variable
 class aide_logement_base_ressources_eval_forfaitaire(SimpleFormulaColumn):
     column = FloatCol
     entity_class = Familles
@@ -97,7 +97,7 @@ class aide_logement_base_ressources_eval_forfaitaire(SimpleFormulaColumn):
         return period, result
 
 
-@reference_formula
+@law_variable
 class aide_logement_abattement_chomage_indemnise(SimpleFormulaColumn):
     column = FloatCol
     entity_class = Individus
@@ -119,7 +119,7 @@ class aide_logement_abattement_chomage_indemnise(SimpleFormulaColumn):
         return period, abattement
 
 
-@reference_formula
+@law_variable
 class aide_logement_abattement_depart_retraite(SimpleFormulaColumn):
     column = FloatCol
     entity_class = Individus
@@ -140,7 +140,7 @@ class aide_logement_abattement_depart_retraite(SimpleFormulaColumn):
         return period, abattement
 
 
-@reference_formula
+@law_variable
 class aide_logement_base_ressources_defaut(SimpleFormulaColumn):
     column = FloatCol
     entity_class = Familles
@@ -171,7 +171,7 @@ class aide_logement_base_ressources_defaut(SimpleFormulaColumn):
         return period, result
 
 
-@reference_formula
+@law_variable
 class aide_logement_base_ressources(SimpleFormulaColumn):
     column = FloatCol
     entity_class = Familles
@@ -225,7 +225,7 @@ class aide_logement_base_ressources(SimpleFormulaColumn):
         return period, ressources
 
 
-@reference_formula
+@law_variable
 class aide_logement_montant_brut(SimpleFormulaColumn):
     column = FloatCol
     entity_class = Familles
@@ -419,7 +419,7 @@ class aide_logement_montant_brut(SimpleFormulaColumn):
         return period, al
 
 
-@reference_formula
+@law_variable
 class aide_logement_montant(SimpleFormulaColumn):
     column = FloatCol
     entity_class = Familles
@@ -434,7 +434,7 @@ class aide_logement_montant(SimpleFormulaColumn):
         return period, montant
 
 
-@reference_formula
+@law_variable
 class alf(SimpleFormulaColumn):
     calculate_output = calculate_output_add
     column = FloatCol
@@ -454,7 +454,7 @@ class alf(SimpleFormulaColumn):
         return period, result
 
 
-@reference_formula
+@law_variable
 class als_nonet(SimpleFormulaColumn):
     column = FloatCol
     entity_class = Familles
@@ -477,7 +477,7 @@ class als_nonet(SimpleFormulaColumn):
         )
 
 
-@reference_formula
+@law_variable
 class alset(SimpleFormulaColumn):
     calculate_output = calculate_output_add
     column = FloatCol
@@ -503,7 +503,7 @@ class alset(SimpleFormulaColumn):
         )
 
 
-@reference_formula
+@law_variable
 class als(SimpleFormulaColumn):
     calculate_output = calculate_output_add
     column = FloatCol
@@ -520,7 +520,7 @@ class als(SimpleFormulaColumn):
         return period, result
 
 
-@reference_formula
+@law_variable
 class apl(SimpleFormulaColumn):
     calculate_output = calculate_output_add
     column = FloatCol
@@ -539,7 +539,7 @@ class apl(SimpleFormulaColumn):
         return period, aide_logement_montant * (statut_occupation == 3)
 
 
-@reference_formula
+@law_variable
 class aide_logement_non_calculable(SimpleFormulaColumn):
     column = EnumCol(
         enum = Enum([
@@ -559,7 +559,7 @@ class aide_logement_non_calculable(SimpleFormulaColumn):
         return period, (statut_occupation == 1) * 1 + (statut_occupation == 7) * 2
 
 
-@reference_formula
+@law_variable
 class aide_logement(SimpleFormulaColumn):
     column = FloatCol
     entity_class = Familles
@@ -574,7 +574,7 @@ class aide_logement(SimpleFormulaColumn):
         return period, max_(max_(apl, als), alf)
 
 
-@reference_formula
+@law_variable
 class crds_logement(SimpleFormulaColumn):
     calculate_output = calculate_output_add
     column = FloatCol
@@ -589,14 +589,14 @@ class crds_logement(SimpleFormulaColumn):
         return period, -aide_logement_montant_brut * crds
 
 
-@reference_formula
+@law_variable
 class statut_occupation_individu(EntityToPersonColumn):
     entity_class = Individus
     label = u"Statut d'occupation de l'individu"
     variable = Menages.column_by_name['statut_occupation']
 
 
-@reference_formula
+@law_variable
 class statut_occupation_famille(PersonToEntityColumn):
     entity_class = Familles
     label = u"Statut d'occupation de la famille"
@@ -604,7 +604,7 @@ class statut_occupation_famille(PersonToEntityColumn):
     variable = Individus.column_by_name['statut_occupation_individu']
 
 
-@reference_formula
+@law_variable
 class zone_apl(SimpleFormulaColumn):
     column = EnumCol(
         enum = Enum([
@@ -660,14 +660,14 @@ def preload_zone_apl():
                 zone_apl_by_depcom[subcommune_depcom] = zone_apl_by_depcom[commune_depcom]
 
 
-@reference_formula
+@law_variable
 class zone_apl_individu(EntityToPersonColumn):
     entity_class = Individus
     label = u"Zone apl de la personne"
     variable = zone_apl
 
 
-@reference_formula
+@law_variable
 class zone_apl_famille(PersonToEntityColumn):
     entity_class = Familles
     label = u"Zone apl de la famille"

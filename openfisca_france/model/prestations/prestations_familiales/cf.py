@@ -7,7 +7,7 @@ from numpy import (round, maximum as max_, minimum as min_, logical_not as not_,
 from ...base import *  # noqa analysis:ignore
 
 
-@reference_formula
+@law_variable
 class cf_enfant_a_charge(SimpleFormulaColumn):
     column = BoolCol
     entity_class = Individus
@@ -28,7 +28,7 @@ class cf_enfant_a_charge(SimpleFormulaColumn):
         return period, condition_age * condition_situation
 
 
-@reference_formula
+@law_variable
 class cf_enfant_eligible(SimpleFormulaColumn):
     column = BoolCol
     entity_class = Individus
@@ -50,7 +50,7 @@ class cf_enfant_eligible(SimpleFormulaColumn):
         return period, or_(condition_enfant, condition_jeune) * cf_enfant_a_charge
 
 
-@reference_formula
+@law_variable
 class cf_dom_enfant_eligible(SimpleFormulaColumn):
     column = BoolCol
     entity_class = Individus
@@ -71,7 +71,7 @@ class cf_dom_enfant_eligible(SimpleFormulaColumn):
         return period, condition_age * condition_situation
 
 
-@reference_formula
+@law_variable
 class cf_dom_enfant_trop_jeune(SimpleFormulaColumn):
     column = BoolCol
     entity_class = Individus
@@ -90,7 +90,7 @@ class cf_dom_enfant_trop_jeune(SimpleFormulaColumn):
         return period, condition_age * est_enfant_dans_famille
 
 
-@reference_formula
+@law_variable
 class cf_ressources_i(SimpleFormulaColumn):
     column = FloatCol
     entity_class = Individus
@@ -106,7 +106,7 @@ class cf_ressources_i(SimpleFormulaColumn):
         return period, or_(not_(est_enfant_dans_famille), cf_enfant_a_charge) * br_pf_i
 
 
-@reference_formula
+@law_variable
 class cf_plafond(SimpleFormulaColumn):
     column = FloatCol
     entity_class = Familles
@@ -146,7 +146,7 @@ class cf_plafond(SimpleFormulaColumn):
         return period, plafond
 
 
-@reference_formula
+@law_variable
 class cf_majore_plafond(DatedFormulaColumn):
     column = FloatCol
     entity_class = Familles
@@ -160,7 +160,7 @@ class cf_majore_plafond(DatedFormulaColumn):
         return period, plafond_base * pfam.cf.plafond_cf_majore
 
 
-@reference_formula
+@law_variable
 class cf_ressources(SimpleFormulaColumn):
     column = FloatCol
     entity_class = Familles
@@ -173,7 +173,7 @@ class cf_ressources(SimpleFormulaColumn):
         return period, ressources
 
 
-@reference_formula
+@law_variable
 class cf_eligibilite_base(SimpleFormulaColumn):
     column = BoolCol
     entity_class = Familles
@@ -189,7 +189,7 @@ class cf_eligibilite_base(SimpleFormulaColumn):
 
         return period, not_(residence_dom) * (cf_nbenf >= 3)
 
-@reference_formula
+@law_variable
 class cf_eligibilite_dom(SimpleFormulaColumn):
     column = BoolCol
     entity_class = Familles
@@ -214,7 +214,7 @@ class cf_eligibilite_dom(SimpleFormulaColumn):
         return period, condition_composition_famille * condition_residence
 
 
-@reference_formula
+@law_variable
 class cf_non_majore_avant_cumul(SimpleFormulaColumn):
     column = FloatCol
     entity_class = Familles
@@ -247,7 +247,7 @@ class cf_non_majore_avant_cumul(SimpleFormulaColumn):
         return period, max_(eligibilite * montant, eligibilite_diff * montant_diff)
 
 
-@reference_formula
+@law_variable
 class cf_majore_avant_cumul(DatedFormulaColumn):
     column = FloatCol
     entity_class = Familles
@@ -274,7 +274,7 @@ class cf_majore_avant_cumul(DatedFormulaColumn):
         return period, eligibilite * montant
 
 
-@reference_formula
+@law_variable
 class cf_montant(SimpleFormulaColumn):
     column = FloatCol(default = 0)
     entity_class = Familles
@@ -289,7 +289,7 @@ class cf_montant(SimpleFormulaColumn):
         return period, max_(cf_non_majore_avant_cumul, cf_majore_avant_cumul)
 
 
-@reference_formula
+@law_variable
 class cf(SimpleFormulaColumn):
     calculate_output = calculate_output_add
     column = FloatCol(default = 0)

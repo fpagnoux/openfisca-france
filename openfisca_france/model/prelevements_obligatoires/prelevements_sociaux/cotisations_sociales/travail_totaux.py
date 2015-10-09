@@ -12,7 +12,7 @@ from ....base import *  # noqa analysis:ignore
 log = logging.getLogger(__name__)
 
 
-@reference_formula
+@law_variable
 class cotisations_employeur(SimpleFormulaColumn):
     base_function = requested_period_added_value
     column = FloatCol
@@ -34,7 +34,7 @@ class cotisations_employeur(SimpleFormulaColumn):
             )
 
 
-@reference_formula
+@law_variable
 class cotisations_employeur_contributives(SimpleFormulaColumn):
     base_function = requested_period_added_value
     column = FloatCol
@@ -81,7 +81,7 @@ class cotisations_employeur_contributives(SimpleFormulaColumn):
         return period, cotisations_employeur_contributives
 
 
-@reference_formula
+@law_variable
 class cotisations_employeur_non_contributives(SimpleFormulaColumn):
     base_function = requested_period_added_value
     column = FloatCol
@@ -109,7 +109,7 @@ class cotisations_employeur_non_contributives(SimpleFormulaColumn):
         return period, cotisations_employeur_non_contributives
 
 
-@reference_formula
+@law_variable
 class cotisations_salariales_contributives(SimpleFormulaColumn):
     base_function = requested_period_added_value
     column = FloatCol
@@ -153,7 +153,7 @@ class cotisations_salariales_contributives(SimpleFormulaColumn):
         return period, cotisations_salariales_contributives
 
 
-@reference_formula
+@law_variable
 class cotisations_salariales_non_contributives(SimpleFormulaColumn):
     base_function = requested_period_added_value
     column = FloatCol
@@ -177,7 +177,7 @@ class cotisations_salariales_non_contributives(SimpleFormulaColumn):
         return period, cotisations_salariales_non_contributives
 
 
-@reference_formula
+@law_variable
 class cotisations_salariales(SimpleFormulaColumn):
     base_function = requested_period_added_value
     column = FloatCol

@@ -5,7 +5,7 @@ from __future__ import division
 from ...base import *  # noqa
 
 
-@reference_formula
+@law_variable
 class aeeh(DatedFormulaColumn):
     column = FloatCol(default = 0)
     entity_class = Familles

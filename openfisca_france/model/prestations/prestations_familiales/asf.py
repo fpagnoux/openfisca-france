@@ -9,7 +9,7 @@ from ...base import *  # noqa analysis:ignore
 # from .base_ressource import nb_enf
 
 
-@reference_formula
+@law_variable
 class asf_elig_enfant(SimpleFormulaColumn):
     column = BoolCol(default = False)
     entity_class = Individus
@@ -29,7 +29,7 @@ class asf_elig_enfant(SimpleFormulaColumn):
 
         return period, eligibilite
 
-@reference_formula
+@law_variable
 class asf_enfant(SimpleFormulaColumn):
     column = FloatCol(default = 0)
     entity_class = Individus
@@ -44,7 +44,7 @@ class asf_enfant(SimpleFormulaColumn):
         return period, asf_elig_enfant * pfam.af.bmaf * pfam.asf.taux1
 
 
-@reference_formula
+@law_variable
 class asf_elig(SimpleFormulaColumn):
     column = BoolCol(default = False)
     entity_class = Familles
@@ -61,7 +61,7 @@ class asf_elig(SimpleFormulaColumn):
         return period, not_(residence_mayotte) * isol * not_(pensions_alimentaires_percues)  # Parent isolé et ne résident pas à Mayotte
 
 
-@reference_formula
+@law_variable
 class asf(SimpleFormulaColumn):
     calculate_output = calculate_output_add
     column = FloatCol(default = 0)

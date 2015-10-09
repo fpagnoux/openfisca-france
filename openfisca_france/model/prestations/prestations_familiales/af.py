@@ -9,7 +9,7 @@ from ...base import *  # noqa analysis:ignore
 from .base_ressource import nb_enf
 
 
-@reference_formula
+@law_variable
 class af_enfant_a_charge(SimpleFormulaColumn):
     column = BoolCol
     entity_class = Individus
@@ -32,7 +32,7 @@ class af_enfant_a_charge(SimpleFormulaColumn):
         return period, or_(condition_enfant, condition_jeune) * est_enfant_dans_famille
 
 
-@reference_formula
+@law_variable
 class af_nbenf(SimpleFormulaColumn):
     column = IntCol
     entity_class = Familles
@@ -47,7 +47,7 @@ class af_nbenf(SimpleFormulaColumn):
         return period, af_nbenf
 
 
-@reference_formula
+@law_variable
 class af_forf_nbenf(SimpleFormulaColumn):
     column = IntCol
     entity_class = Familles
@@ -65,7 +65,7 @@ class af_forf_nbenf(SimpleFormulaColumn):
         return period, af_forf_nbenf
 
 
-@reference_formula
+@law_variable
 class af_eligibilite_base(SimpleFormulaColumn):
     column = BoolCol
     entity_class = Familles
@@ -80,7 +80,7 @@ class af_eligibilite_base(SimpleFormulaColumn):
         return period, not_(residence_dom) * (af_nbenf >= 2)
 
 
-@reference_formula
+@law_variable
 class af_eligibilite_dom(SimpleFormulaColumn):
     column = BoolCol
     entity_class = Familles
@@ -96,7 +96,7 @@ class af_eligibilite_dom(SimpleFormulaColumn):
         return period, residence_dom * not_(residence_mayotte) * (af_nbenf >= 1)
 
 
-@reference_formula
+@law_variable
 class af_base(SimpleFormulaColumn):
     column = FloatCol
     entity_class = Familles
@@ -126,7 +126,7 @@ class af_base(SimpleFormulaColumn):
         return period, montant_base_module
 
 
-@reference_formula
+@law_variable
 class af_taux_modulation(DatedFormulaColumn):
     column = FloatCol
     entity_class = Familles
@@ -157,7 +157,7 @@ class af_taux_modulation(DatedFormulaColumn):
         return period, taux
 
 
-@reference_formula
+@law_variable
 class af_forf_taux_modulation(DatedFormulaColumn):
     column = FloatCol
     entity_class = Familles
@@ -190,7 +190,7 @@ class af_forf_taux_modulation(DatedFormulaColumn):
         return period, taux
 
 
-@reference_formula
+@law_variable
 class af_age_aine(SimpleFormulaColumn):
     column = IntCol
     entity_class = Familles
@@ -217,7 +217,7 @@ class af_age_aine(SimpleFormulaColumn):
         return period, age_aine
 
 
-@reference_formula
+@law_variable
 class af_majoration_enfant(SimpleFormulaColumn):
     column = FloatCol
     entity_class = Individus
@@ -255,7 +255,7 @@ class af_majoration_enfant(SimpleFormulaColumn):
         return period, af_enfant_a_charge * (af_base > 0) * pas_aine * montant
 
 
-@reference_formula
+@law_variable
 class af_majo(SimpleFormulaColumn):
     column = FloatCol
     entity_class = Familles
@@ -272,7 +272,7 @@ class af_majo(SimpleFormulaColumn):
         return period, af_majoration_enfants_module
 
 
-@reference_formula
+@law_variable
 class af_complement_degressif(DatedFormulaColumn):
     column = FloatCol
     entity_class = Familles
@@ -302,7 +302,7 @@ class af_complement_degressif(DatedFormulaColumn):
         return period, max_(0, af - depassement_mensuel) * (depassement_mensuel > 0)
 
 
-@reference_formula
+@law_variable
 class af_forf_complement_degressif(DatedFormulaColumn):
     column = FloatCol
     entity_class = Familles
@@ -332,7 +332,7 @@ class af_forf_complement_degressif(DatedFormulaColumn):
         return period, max_(0, af_forf - depassement_mensuel) * (depassement_mensuel > 0)
 
 
-@reference_formula
+@law_variable
 class af_forf(SimpleFormulaColumn):
     column = FloatCol
     entity_class = Familles
@@ -354,7 +354,7 @@ class af_forf(SimpleFormulaColumn):
         return period, af_forf_module
 
 
-@reference_formula
+@law_variable
 class af(SimpleFormulaColumn):
     calculate_output = calculate_output_add
     column = FloatCol

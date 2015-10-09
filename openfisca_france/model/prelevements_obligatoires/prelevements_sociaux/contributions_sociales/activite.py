@@ -15,7 +15,7 @@ log = logging.getLogger(__name__)
 # TODO: prise_en_charge_employeur_retraite_supplementaire à la CSG/CRDS et au forfait social
 
 
-@reference_formula
+@law_variable
 class assiette_csg_abattue(SimpleFormulaColumn):
     column = FloatCol
     label = u"Assiette CSG - CRDS"
@@ -40,7 +40,7 @@ class assiette_csg_abattue(SimpleFormulaColumn):
             )
 
 
-@reference_formula
+@law_variable
 class assiette_csg_non_abattue(SimpleFormulaColumn):
     column = FloatCol
     label = u"Assiette CSG - CRDS"
@@ -53,7 +53,7 @@ class assiette_csg_non_abattue(SimpleFormulaColumn):
         return period, - prevoyance_obligatoire_cadre
 
 
-@reference_formula
+@law_variable
 class csg_deductible_salaire(SimpleFormulaColumn):
     calculate_output = calculate_output_add
     column = FloatCol
@@ -76,7 +76,7 @@ class csg_deductible_salaire(SimpleFormulaColumn):
         return period, montant_csg
 
 
-@reference_formula
+@law_variable
 class csg_imposable_salaire(SimpleFormulaColumn):
     calculate_output = calculate_output_add
     column = FloatCol
@@ -100,7 +100,7 @@ class csg_imposable_salaire(SimpleFormulaColumn):
         return period, montant_csg
 
 
-@reference_formula
+@law_variable
 class crds_salaire(SimpleFormulaColumn):
     calculate_output = calculate_output_add
     column = FloatCol
@@ -125,7 +125,7 @@ class crds_salaire(SimpleFormulaColumn):
         return period, montant_crds
 
 
-@reference_formula
+@law_variable
 class forfait_social(SimpleFormulaColumn):
     column = FloatCol
     entity_class = Individus
@@ -154,7 +154,7 @@ class forfait_social(SimpleFormulaColumn):
             )
 
 
-@reference_formula
+@law_variable
 class salaire_imposable(SimpleFormulaColumn):
     base_function = requested_period_added_value
     column = FloatCol(
@@ -191,7 +191,7 @@ class salaire_imposable(SimpleFormulaColumn):
             )
 
 
-@reference_formula
+@law_variable
 class salaire_net(SimpleFormulaColumn):
     base_function = requested_period_added_value
     column = FloatCol
@@ -216,7 +216,7 @@ class salaire_net(SimpleFormulaColumn):
         return period, salaire_imposable + crds_salaire + csg_imposable_salaire
 
 
-@reference_formula
+@law_variable
 class tehr(SimpleFormulaColumn):
     column = FloatCol
     entity_class = Individus
@@ -237,7 +237,7 @@ class tehr(SimpleFormulaColumn):
 ############################################################################
 
 
-@reference_formula
+@law_variable
 class rev_microsocial(SimpleFormulaColumn):
     """Revenu net des cotisations sociales sous régime microsocial (auto-entrepreneur)"""
     column = FloatCol
@@ -259,7 +259,7 @@ class rev_microsocial(SimpleFormulaColumn):
         return period, total - prelsoc_ms
 
 
-@reference_formula
+@law_variable
 class rev_microsocial_declarant1(EntityToPersonColumn):
     entity_class = Individus
     label = u"Revenu net des cotisations sociales sous régime microsocial (auto-entrepreneur) (pour le premier déclarant du foyer fiscal)"  # noqa

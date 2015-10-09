@@ -11,7 +11,7 @@ from ...base import *  # noqa analysis:ignore
 log = logging.getLogger(__name__)
 
 
-@reference_formula
+@law_variable
 class credits_impot(DatedFormulaColumn):
     column = FloatCol(default = 0)
     entity_class = FoyersFiscaux
@@ -232,7 +232,7 @@ class credits_impot(DatedFormulaColumn):
                 preetu + prlire + quaenv + saldom2)
 
 
-@reference_formula
+@law_variable
 class nb_pac2(SimpleFormulaColumn):
     column = FloatCol(default = 0)
     entity_class = FoyersFiscaux
@@ -248,7 +248,7 @@ class nb_pac2(SimpleFormulaColumn):
         return period, nbF + nbJ + nbR - nbH / 2
 
 
-@reference_formula
+@law_variable
 class accult(SimpleFormulaColumn):
     column = FloatCol(default = 0)
     entity_class = FoyersFiscaux
@@ -268,7 +268,7 @@ class accult(SimpleFormulaColumn):
         return period, P.taux * f7uo
 
 
-@reference_formula
+@law_variable
 class acqgpl(SimpleFormulaColumn):
     column = FloatCol(default = 0)
     entity_class = FoyersFiscaux
@@ -289,7 +289,7 @@ class acqgpl(SimpleFormulaColumn):
         return period, f7up * acqgpl.mont_up + f7uq * acqgpl.mont_uq
 
 
-@reference_formula
+@law_variable
 class aidmob(SimpleFormulaColumn):
     column = FloatCol(default = 0)
     entity_class = FoyersFiscaux
@@ -313,7 +313,7 @@ class aidmob(SimpleFormulaColumn):
         return period, (f1ar + f1br + f1cr + f1dr + f1er) * _P.ir.credits_impot.aidmob.montant
 
 
-@reference_formula
+@law_variable
 class aidper(DatedFormulaColumn):
     column = FloatCol(default = 0)
     entity_class = FoyersFiscaux
@@ -470,7 +470,7 @@ class aidper(DatedFormulaColumn):
                 min_(f7wj, max1))
 
 
-@reference_formula
+@law_variable
 class assloy(SimpleFormulaColumn):
     column = FloatCol(default = 0)
     entity_class = FoyersFiscaux
@@ -489,7 +489,7 @@ class assloy(SimpleFormulaColumn):
         return period, _P.ir.credits_impot.assloy.taux * f4bf
 
 
-@reference_formula
+@law_variable
 class autent(SimpleFormulaColumn):
     column = FloatCol(default = 0)
     entity_class = FoyersFiscaux
@@ -507,7 +507,7 @@ class autent(SimpleFormulaColumn):
         return period, f8uy
 
 
-@reference_formula
+@law_variable
 class ci_garext(SimpleFormulaColumn):
     column = FloatCol(default = 0)
     entity_class = FoyersFiscaux
@@ -538,7 +538,7 @@ class ci_garext(SimpleFormulaColumn):
                               min_(f7gg, max1 / 2))
 
 
-@reference_formula
+@law_variable
 class creimp_exc_2008(SimpleFormulaColumn):
     column = FloatCol(default = 0)
     entity_class = FoyersFiscaux
@@ -562,7 +562,7 @@ class creimp_exc_2008(SimpleFormulaColumn):
                 (rpp > 11673) * max_(0, 8317 * (12475 - rpp) / 802)))
 
 
-@reference_formula
+@law_variable
 class creimp(DatedFormulaColumn):
     column = FloatCol(default = 0)
     entity_class = FoyersFiscaux
@@ -856,7 +856,7 @@ class creimp(DatedFormulaColumn):
                 f8uz + f8wa + f8wb + f8wc + f8wd + f8we + f8wr + f8wt + f8wu)
 
 
-@reference_formula
+@law_variable
 class direpa(SimpleFormulaColumn):
     column = FloatCol(default = 0)
     entity_class = FoyersFiscaux
@@ -873,7 +873,7 @@ class direpa(SimpleFormulaColumn):
         return period, f2bg
 
 
-@reference_formula
+@law_variable
 class divide(SimpleFormulaColumn):
     column = FloatCol(default = 0)
     entity_class = FoyersFiscaux
@@ -898,7 +898,7 @@ class divide(SimpleFormulaColumn):
         return period, min_(P.taux * (f2dc + f2gr), max1)
 
 
-@reference_formula
+@law_variable
 class drbail(SimpleFormulaColumn):
     column = FloatCol(default = 0)
     entity_class = FoyersFiscaux
@@ -917,7 +917,7 @@ class drbail(SimpleFormulaColumn):
         return period, P.taux * f4tq
 
 
-@reference_formula
+@law_variable
 class inthab(DatedFormulaColumn):
     column = FloatCol(default = 0)
     entity_class = FoyersFiscaux
@@ -1110,7 +1110,7 @@ class inthab(DatedFormulaColumn):
                     P.taux6 * min_(f7vt, max6))
 
 
-@reference_formula
+@law_variable
 class jeunes(SimpleFormulaColumn):
     column = FloatCol(default = 0)
     entity_class = FoyersFiscaux
@@ -1125,7 +1125,7 @@ class jeunes(SimpleFormulaColumn):
         return period, self.sum_by_entity(jeunes_ind_holder)
 
 
-@reference_formula
+@law_variable
 class jeunes_ind(SimpleFormulaColumn):
     column = FloatCol(default = 0)
     entity_class = Individus
@@ -1170,7 +1170,7 @@ class jeunes_ind(SimpleFormulaColumn):
                                 # somme calculée sur formulaire 2041
 
 
-@reference_formula
+@law_variable
 class mecena(SimpleFormulaColumn):
     column = FloatCol(default = 0)
     entity_class = FoyersFiscaux
@@ -1188,7 +1188,7 @@ class mecena(SimpleFormulaColumn):
         return period, f7us
 
 
-@reference_formula
+@law_variable
 class percvm(SimpleFormulaColumn):
     column = FloatCol(default = 0)
     entity_class = FoyersFiscaux
@@ -1208,7 +1208,7 @@ class percvm(SimpleFormulaColumn):
         return period, _P.ir.credits_impot.percvm.taux * f3vv_end_2010
 
 
-@reference_formula
+@law_variable
 class preetu(DatedFormulaColumn):
     column = FloatCol(default = 0)
     entity_class = FoyersFiscaux
@@ -1262,7 +1262,7 @@ class preetu(DatedFormulaColumn):
         return period, P.taux * min_(f7uk, P.max) + P.taux * min_(f7td, max1)
 
 
-@reference_formula
+@law_variable
 class prlire(SimpleFormulaColumn):
     column = FloatCol(default = 0)
     entity_class = FoyersFiscaux
@@ -1285,7 +1285,7 @@ class prlire(SimpleFormulaColumn):
         return period, _P.ir.credits_impot.prlire.taux * min_(f2dh, plaf_resid)
 
 
-@reference_formula
+@law_variable
 class quaenv(DatedFormulaColumn):
     column = FloatCol(default = 0)
     entity_class = FoyersFiscaux
@@ -1587,7 +1587,7 @@ class quaenv(DatedFormulaColumn):
         return period, or_(not_(or_(f7we, f7wg)), (rfr < 30000)) * montant + f7sz
 
 
-@reference_formula
+@law_variable
 class quaenv_bouquet(SimpleFormulaColumn):
     column = BoolCol(default = False)
     entity_class = FoyersFiscaux
@@ -1631,7 +1631,7 @@ class quaenv_bouquet(SimpleFormulaColumn):
         return period, or_(bouquet, f7wh)
 
 
-@reference_formula
+@law_variable
 class saldom2(DatedFormulaColumn):
     column = FloatCol(default = 0)
     entity_class = FoyersFiscaux

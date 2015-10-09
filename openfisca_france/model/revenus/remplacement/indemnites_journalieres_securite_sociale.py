@@ -10,7 +10,7 @@ build_column('indemnites_journalieres_accident_travail', FloatCol(entity = 'ind'
 build_column('indemnites_journalieres_maladie_professionnelle', FloatCol(entity = 'ind', label = u"Indemnités journalières de maladie professionnelle"))
 
 
-@reference_formula
+@law_variable
 class indemnites_journalieres(SimpleFormulaColumn):
     column = FloatCol
     label = u"Total des indemnités journalières"
@@ -28,7 +28,7 @@ class indemnites_journalieres(SimpleFormulaColumn):
         return period, result
 
 
-@reference_formula
+@law_variable
 class indemnites_journalieres_imposables(SimpleFormulaColumn):
     column = FloatCol
     label = u"Total des indemnités journalières imposables"

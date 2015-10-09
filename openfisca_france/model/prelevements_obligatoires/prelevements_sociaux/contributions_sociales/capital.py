@@ -41,7 +41,7 @@ def _mhsup(hsup):
 # revenus du capital soumis au barème
 
 
-@reference_formula
+@law_variable
 class csg_cap_bar(SimpleFormulaColumn):
     """Calcule la CSG sur les revenus du capital soumis au barème."""
     column = FloatCol
@@ -57,7 +57,7 @@ class csg_cap_bar(SimpleFormulaColumn):
         return period, -rev_cap_bar * _P.csg.capital.glob
 
 
-@reference_formula
+@law_variable
 class csg_cap_bar_declarant1(EntityToPersonColumn):
     entity_class = Individus
     label = u"CSG sur les revenus du capital soumis au barème (pour le premier déclarant du foyer fiscal)"
@@ -65,7 +65,7 @@ class csg_cap_bar_declarant1(EntityToPersonColumn):
     variable = csg_cap_bar
 
 
-@reference_formula
+@law_variable
 class crds_cap_bar(SimpleFormulaColumn):
     """Calcule la CRDS sur les revenus du capital soumis au barème."""
     column = FloatCol
@@ -81,7 +81,7 @@ class crds_cap_bar(SimpleFormulaColumn):
         return period, -rev_cap_bar * _P.crds.capital
 
 
-@reference_formula
+@law_variable
 class crds_cap_bar_declarant1(EntityToPersonColumn):
     entity_class = Individus
     label = u"CRDS sur les revenus du capital soumis au barème (pour le premier déclarant du foyer fiscal)"
@@ -89,7 +89,7 @@ class crds_cap_bar_declarant1(EntityToPersonColumn):
     variable = crds_cap_bar
 
 
-@reference_formula
+@law_variable
 class prelsoc_cap_bar(DatedFormulaColumn):
     """Calcule le prélèvement social sur les revenus du capital soumis au barème"""
     column = FloatCol
@@ -125,7 +125,7 @@ class prelsoc_cap_bar(DatedFormulaColumn):
         return period, -rev_cap_bar * total
 
 
-@reference_formula
+@law_variable
 class prelsoc_cap_bar_declarant1(EntityToPersonColumn):
     entity_class = Individus
     label = u"Prélèvements sociaux sur les revenus du capital soumis au barème (pour le premier déclarant du foyer fiscal)"  # noqa
@@ -136,7 +136,7 @@ class prelsoc_cap_bar_declarant1(EntityToPersonColumn):
 # plus-values de valeurs mobilières
 
 
-@reference_formula
+@law_variable
 class csg_pv_mo(SimpleFormulaColumn):
     column = FloatCol(default = 0)
     entity_class = FoyersFiscaux
@@ -154,7 +154,7 @@ class csg_pv_mo(SimpleFormulaColumn):
         return period, -f3vg * _P.csg.capital.glob
 
 
-@reference_formula
+@law_variable
 class crds_pv_mo(SimpleFormulaColumn):
     column = FloatCol(default = 0)
     entity_class = FoyersFiscaux
@@ -172,7 +172,7 @@ class crds_pv_mo(SimpleFormulaColumn):
         return period, -f3vg * _P.crds.capital
 
 
-@reference_formula
+@law_variable
 class prelsoc_pv_mo(DatedFormulaColumn):
     column = FloatCol(default = 0)
     entity_class = FoyersFiscaux
@@ -224,7 +224,7 @@ class prelsoc_pv_mo(DatedFormulaColumn):
 # plus-values immobilières
 
 
-@reference_formula
+@law_variable
 class csg_pv_immo(SimpleFormulaColumn):
     column = FloatCol(default = 0)
     entity_class = FoyersFiscaux
@@ -242,7 +242,7 @@ class csg_pv_immo(SimpleFormulaColumn):
         return period, -f3vz * _P.csg.capital.glob
 
 
-@reference_formula
+@law_variable
 class crds_pv_immo(SimpleFormulaColumn):
     column = FloatCol(default = 0)
     entity_class = FoyersFiscaux
@@ -260,7 +260,7 @@ class crds_pv_immo(SimpleFormulaColumn):
         return period, -f3vz * _P.crds.capital
 
 
-@reference_formula
+@law_variable
 class prelsoc_pv_immo(DatedFormulaColumn):
     column = FloatCol(default = 0)
     entity_class = FoyersFiscaux
@@ -312,7 +312,7 @@ class prelsoc_pv_immo(DatedFormulaColumn):
 # revenus fonciers
 
 
-@reference_formula
+@law_variable
 class csg_fon(SimpleFormulaColumn):
     column = FloatCol(default = 0)
     entity_class = FoyersFiscaux
@@ -331,7 +331,7 @@ class csg_fon(SimpleFormulaColumn):
         return period, -rev_cat_rfon * _P.csg.capital.glob
 
 
-@reference_formula
+@law_variable
 class crds_fon(SimpleFormulaColumn):
     column = FloatCol(default = 0)
     entity_class = FoyersFiscaux
@@ -350,7 +350,7 @@ class crds_fon(SimpleFormulaColumn):
         return period, -rev_cat_rfon * _P.crds.capital
 
 
-@reference_formula
+@law_variable
 class prelsoc_fon(DatedFormulaColumn):
     column = FloatCol(default = 0)
     entity_class = FoyersFiscaux
@@ -405,7 +405,7 @@ class prelsoc_fon(DatedFormulaColumn):
 # revenus du capital soumis au prélèvement libératoire
 
 
-@reference_formula
+@law_variable
 class csg_cap_lib(SimpleFormulaColumn):
     """Calcule la CSG sur les revenus du capital soumis au prélèvement libératoire."""
     column = FloatCol
@@ -421,7 +421,7 @@ class csg_cap_lib(SimpleFormulaColumn):
         return period, -rev_cap_lib * _P.csg.capital.glob
 
 
-@reference_formula
+@law_variable
 class csg_cap_lib_declarant1(EntityToPersonColumn):
     entity_class = Individus
     label = u"CSG sur les revenus du capital soumis au prélèvement libératoire (pour le premier déclarant du foyer fiscal)"  # noqa
@@ -429,7 +429,7 @@ class csg_cap_lib_declarant1(EntityToPersonColumn):
     variable = csg_cap_lib
 
 
-@reference_formula
+@law_variable
 class crds_cap_lib(SimpleFormulaColumn):
     """Calcule la CRDS sur les revenus du capital soumis au prélèvement libératoire."""
     column = FloatCol
@@ -445,7 +445,7 @@ class crds_cap_lib(SimpleFormulaColumn):
         return period, -rev_cap_lib * _P.crds.capital
 
 
-@reference_formula
+@law_variable
 class crds_cap_lib_declarant1(EntityToPersonColumn):
     entity_class = Individus
     label = u"CRDS sur les revenus du capital soumis au prélèvement libératoire (pour le premier déclarant du foyer fiscal)"  # noqa
@@ -453,7 +453,7 @@ class crds_cap_lib_declarant1(EntityToPersonColumn):
     variable = crds_cap_lib
 
 
-@reference_formula
+@law_variable
 class prelsoc_cap_lib(SimpleFormulaColumn):
     """Calcule le prélèvement social sur les revenus du capital soumis au prélèvement libératoire."""
     column = FloatCol
@@ -476,7 +476,7 @@ class prelsoc_cap_lib(SimpleFormulaColumn):
         return period, -rev_cap_lib * total
 
 
-@reference_formula
+@law_variable
 class prelsoc_cap_lib_declarant1(EntityToPersonColumn):
     entity_class = Individus
     label = u"Prélèvements sociaux sur les revenus du capital soumis au prélèvement libératoire (pour le premier déclarant du foyer fiscal)"  # noqa

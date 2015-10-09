@@ -9,7 +9,7 @@ from numpy import datetime64, timedelta64
 from ....base import *  # noqa analysis:ignore
 
 
-@reference_formula
+@law_variable
 class apprenti(SimpleFormulaColumn):
     column = BoolCol
     entity_class = Individus
@@ -29,7 +29,7 @@ class apprenti(SimpleFormulaColumn):
         return period, age_condition * anciennete_contrat
 
 
-@reference_formula
+@law_variable
 class remuneration_apprenti(SimpleFormulaColumn):
     column = FloatCol
     entity_class = Individus
@@ -93,7 +93,7 @@ class remuneration_apprenti(SimpleFormulaColumn):
         return period, output * smic * apprenti
 
 
-@reference_formula
+@law_variable
 class exoneration_cotisations_employeur_apprenti(SimpleFormulaColumn):
     column = FloatCol
     entity_class = Individus
@@ -141,7 +141,7 @@ class exoneration_cotisations_employeur_apprenti(SimpleFormulaColumn):
             ) * apprenti
 
 
-@reference_formula
+@law_variable
 class exoneration_cotisations_salariales_apprenti(SimpleFormulaColumn):
     column = FloatCol
     entity_class = Individus
@@ -157,7 +157,7 @@ class exoneration_cotisations_salariales_apprenti(SimpleFormulaColumn):
         return period, - (cotisations_salariales_contributives + cotisations_salariales_non_contributives) * apprenti
 
 
-@reference_formula
+@law_variable
 class prime_apprentissage(SimpleFormulaColumn):
     column = FloatCol
     entity_class = Individus
@@ -185,7 +185,7 @@ class prime_apprentissage(SimpleFormulaColumn):
         apprenti = simulation.calculate('apprenti', period)
         return period, 1000 * apprenti
 
-# @reference_formula
+# @law_variable
 # class credit_impot_emploi_apprenti(SimpleFormulaColumn):
 #     column = FloatCol
 #     entity_class = Individus
@@ -210,7 +210,7 @@ class prime_apprentissage(SimpleFormulaColumn):
 #     # subventions perçues en contrepartie de leur embauche.
 
 
-# @reference_formula
+# @law_variable
 # class credit_impot_emploi_apprenti(SimpleFormulaColumn):
 #     column = FloatCol
 #     entity_class = Individus

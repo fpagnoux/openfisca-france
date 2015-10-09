@@ -7,13 +7,13 @@ from numpy import (absolute as abs_, logical_and as and_, logical_not as not_, l
 
 from ...base import *  # noqa analysis:ignore
 
-@reference_formula
+@law_variable
 class ass_precondition_remplie(SimpleFormulaColumn):
     column = FloatCol
     label = u"Éligible à l'ASS"
     entity_class = Individus
 
-@reference_formula
+@law_variable
 class ass(SimpleFormulaColumn):
     column = FloatCol
     label = u"Montant de l'ASS pour une famille"
@@ -43,7 +43,7 @@ class ass(SimpleFormulaColumn):
         return period, ass
 
 
-@reference_formula
+@law_variable
 class ass_base_ressources(SimpleFormulaColumn):
     column = FloatCol
     label = u"Base de ressources de l'ASS"
@@ -60,7 +60,7 @@ class ass_base_ressources(SimpleFormulaColumn):
         return period, result
 
 
-@reference_formula
+@law_variable
 class ass_base_ressources_i(SimpleFormulaColumn):
     column = FloatCol
     label = u"Base de ressources individuelle de l'ASS"
@@ -96,7 +96,7 @@ class ass_base_ressources_i(SimpleFormulaColumn):
         )
 
 
-@reference_formula
+@law_variable
 class ass_base_ressources_conjoint(SimpleFormulaColumn):
     column = FloatCol
     label = u"Base de ressources individuelle pour le conjoint du demandeur de l'ASS"
@@ -159,7 +159,7 @@ class ass_base_ressources_conjoint(SimpleFormulaColumn):
         return period, result
 
 
-@reference_formula
+@law_variable
 class ass_eligibilite_i(SimpleFormulaColumn):
     column = BoolCol
     label = u"Éligibilité individuelle à l'ASS"

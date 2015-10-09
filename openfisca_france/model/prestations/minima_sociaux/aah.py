@@ -6,7 +6,7 @@ from numpy import (maximum as max_)
 from ...base import *  # noqa analysis:ignore
 
 
-@reference_formula
+@law_variable
 class br_aah(SimpleFormulaColumn):
     column = FloatCol
     label = u"Base ressources de l'allocation adulte handicapé"
@@ -67,7 +67,7 @@ class br_aah(SimpleFormulaColumn):
     '''
 
 
-@reference_formula
+@law_variable
 class aah_eligible(SimpleFormulaColumn):
     column = BoolCol
     label = u"Eligibilité à  l'Allocation adulte handicapé"
@@ -90,7 +90,7 @@ class aah_eligible(SimpleFormulaColumn):
     # TODO: dated_function : avant 2008, il fallait ne pas avoir travaillé pendant les 12 mois précédant la demande.
 
 
-@reference_formula
+@law_variable
 class nb_eligib_aah(SimpleFormulaColumn):
     column = FloatCol
     label = "Nombre d'allocataires de l'AAH dans la famille"
@@ -110,7 +110,7 @@ class nb_eligib_aah(SimpleFormulaColumn):
         return period, nb_eligib_aah
 
 
-@reference_formula
+@law_variable
 class aah_famille(SimpleFormulaColumn):
     column = FloatCol
     label = u"Allocation adulte handicapé (Familles) mensualisée"
@@ -130,7 +130,7 @@ class aah_famille(SimpleFormulaColumn):
         return period, nb_eligib_aah * max_(plaf_ress_aah - br_aah, 0) / 12
 
 
-@reference_formula
+@law_variable
 class aah(SimpleFormulaColumn):
     calculate_output = calculate_output_add
     column = FloatCol
@@ -153,7 +153,7 @@ class aah(SimpleFormulaColumn):
             )
 
 
-@reference_formula
+@law_variable
 class caah(DatedFormulaColumn):
     calculate_output = calculate_output_add
     column = FloatCol

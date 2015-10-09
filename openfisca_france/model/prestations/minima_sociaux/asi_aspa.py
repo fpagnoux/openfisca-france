@@ -22,7 +22,7 @@ reference_input_variable(
     )
 
 
-@reference_formula
+@law_variable
 class br_mv_i(SimpleFormulaColumn):
     column = FloatCol
     label = u"Base ressources individuelle du minimum vieillesse/ASPA"
@@ -97,7 +97,7 @@ class br_mv_i(SimpleFormulaColumn):
                ) / 3
 
 
-@reference_formula
+@law_variable
 class br_mv(SimpleFormulaColumn):
     column = FloatCol
     label = u"Base ressource du minimum vieillesse et assimilés (ASPA)"
@@ -112,7 +112,7 @@ class br_mv(SimpleFormulaColumn):
         return period, ass + br_mv_i[CHEF] + br_mv_i[PART]
 
 
-@reference_formula
+@law_variable
 class aspa_elig(SimpleFormulaColumn):
     column = BoolCol
     label = u"Indicatrice individuelle d'éligibilité à l'allocation de solidarité aux personnes agées"
@@ -134,7 +134,7 @@ class aspa_elig(SimpleFormulaColumn):
         return period, condition_age * condition_nationalite
 
 
-@reference_formula
+@law_variable
 class asi_elig(SimpleFormulaColumn):
     column = BoolCol
     label = u"Indicatrice individuelle d'éligibilité à l'allocation supplémentaire d'invalidité"
@@ -156,7 +156,7 @@ class asi_elig(SimpleFormulaColumn):
         return period, condition_situation * condition_pensionnement * condition_nationalite
 
 
-@reference_formula
+@law_variable
 class asi_aspa_condition_nationalite(SimpleFormulaColumn):
     column = BoolCol
     label = u"Condition de nationnalité et de titre de séjour pour bénéficier de l'ASPA ou l'ASI"
@@ -170,7 +170,7 @@ class asi_aspa_condition_nationalite(SimpleFormulaColumn):
         return period, or_(ressortissant_eee, duree_possession_titre_sejour >= duree_min_titre_sejour)
 
 
-@reference_formula
+@law_variable
 class asi_aspa_nb_alloc(SimpleFormulaColumn):
     column = IntCol
     label = u"Nombre d'allocataires ASI/ASPA"
@@ -187,7 +187,7 @@ class asi_aspa_nb_alloc(SimpleFormulaColumn):
         return period, (1 * aspa_elig[CHEF] + 1 * aspa_elig[PART] + 1 * asi_elig[CHEF] + 1 * asi_elig[PART])
 
 
-@reference_formula
+@law_variable
 class asi(SimpleFormulaColumn):
     calculate_output = calculate_output_add
     column = FloatCol
@@ -251,7 +251,7 @@ class asi(SimpleFormulaColumn):
         return period, elig * montant_servi_asi
 
 
-@reference_formula
+@law_variable
 class aspa_couple(DatedFormulaColumn):
     column = BoolCol
     label = u"Couple au sens de l'ASPA"
@@ -272,7 +272,7 @@ class aspa_couple(DatedFormulaColumn):
         return period, concub
 
 
-@reference_formula
+@law_variable
 class aspa(SimpleFormulaColumn):
     calculate_output = calculate_output_add
     column = FloatCol

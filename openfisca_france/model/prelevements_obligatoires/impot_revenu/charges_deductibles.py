@@ -200,7 +200,7 @@ build_column('f6fl', IntCol(entity = 'foy',
                 cerfa_field = u'6FL'))
 
 
-@reference_formula
+@law_variable
 class rfr_cd(SimpleFormulaColumn):
     column = FloatCol(default = 0)
     entity_class = FoyersFiscaux
@@ -217,7 +217,7 @@ class rfr_cd(SimpleFormulaColumn):
         return period, cd_acc75a + cd_doment + cd_eparet + cd_sofipe
 
 
-@reference_formula
+@law_variable
 class cd1(DatedFormulaColumn):
     column = FloatCol(default = 0)
     entity_class = FoyersFiscaux
@@ -316,7 +316,7 @@ class cd1(DatedFormulaColumn):
         return period, niches1
 
 
-@reference_formula
+@law_variable
 class cd2(DatedFormulaColumn):
     column = FloatCol(default = 0)
     entity_class = FoyersFiscaux
@@ -358,7 +358,7 @@ class cd2(DatedFormulaColumn):
         return period, niches2
 
 
-@reference_formula
+@law_variable
 class rbg_int(SimpleFormulaColumn):
     column = FloatCol(default = 0)
     entity_class = FoyersFiscaux
@@ -372,7 +372,7 @@ class rbg_int(SimpleFormulaColumn):
         return period, max_(rbg - cd1, 0)
 
 
-@reference_formula
+@law_variable
 class charges_deduc(SimpleFormulaColumn):
     column = FloatCol(default = 0)
     entity_class = FoyersFiscaux
@@ -387,7 +387,7 @@ class charges_deduc(SimpleFormulaColumn):
         return period, cd1 + cd2
 
 
-@reference_formula
+@law_variable
 class cd_penali(SimpleFormulaColumn):
     column = FloatCol(default = 0)
     entity_class = FoyersFiscaux
@@ -420,7 +420,7 @@ class cd_penali(SimpleFormulaColumn):
                     f6gp * (1 + taux_jgt_2006) + f6gu)
 
 
-@reference_formula
+@law_variable
 class cd_acc75a(SimpleFormulaColumn):
     column = FloatCol(default = 0)
     entity_class = FoyersFiscaux
@@ -439,7 +439,7 @@ class cd_acc75a(SimpleFormulaColumn):
         return period, min_(f6eu, amax)
 
 
-@reference_formula
+@law_variable
 class cd_percap(DatedFormulaColumn):
     column = FloatCol(default = 0)
     entity_class = FoyersFiscaux
@@ -478,7 +478,7 @@ class cd_percap(DatedFormulaColumn):
         return period, min_(min_(f6cb, max_cb) + min_(f6da, max_da), max_da)
 
 
-@reference_formula
+@law_variable
 class cd_deddiv(SimpleFormulaColumn):
     column = FloatCol(default = 0)
     entity_class = FoyersFiscaux
@@ -494,7 +494,7 @@ class cd_deddiv(SimpleFormulaColumn):
         return period, f6dd
 
 
-@reference_formula
+@law_variable
 class cd_doment(SimpleFormulaColumn):
     column = FloatCol(default = 0)
     entity_class = FoyersFiscaux
@@ -514,7 +514,7 @@ class cd_doment(SimpleFormulaColumn):
         return period, f6eh
 
 
-@reference_formula
+@law_variable
 class cd_eparet(SimpleFormulaColumn):
     column = FloatCol(default = 0)
     entity_class = FoyersFiscaux
@@ -553,7 +553,7 @@ class cd_eparet(SimpleFormulaColumn):
                 (f6pu != 0) * min_(f6ru + f6su, f6pu))
 
 
-@reference_formula
+@law_variable
 class cd_sofipe(SimpleFormulaColumn):
     column = FloatCol(default = 0)
     entity_class = FoyersFiscaux
@@ -577,7 +577,7 @@ class cd_sofipe(SimpleFormulaColumn):
         return period, min_(f6cc, max1)
 
 
-@reference_formula
+@law_variable
 class cd_cinema(SimpleFormulaColumn):
     column = FloatCol(default = 0)
     entity_class = FoyersFiscaux
@@ -600,7 +600,7 @@ class cd_cinema(SimpleFormulaColumn):
         return period, min_(f6aa, max1)
 
 
-@reference_formula
+@law_variable
 class cd_ecodev(SimpleFormulaColumn):
     column = FloatCol(default = 0)
     entity_class = FoyersFiscaux
@@ -623,7 +623,7 @@ class cd_ecodev(SimpleFormulaColumn):
         return period, min_(f6eh, max1)
 
 
-@reference_formula
+@law_variable
 class cd_grorep(SimpleFormulaColumn):
     column = FloatCol(default = 0)
     entity_class = FoyersFiscaux

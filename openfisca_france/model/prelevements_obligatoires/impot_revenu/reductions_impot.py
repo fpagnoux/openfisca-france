@@ -12,7 +12,7 @@ from ...base import *  # noqa analysis:ignore
 log = logging.getLogger(__name__)
 
 
-@reference_formula
+@law_variable
 class reductions(DatedFormulaColumn):
     column = FloatCol(default = 0)
     entity_class = FoyersFiscaux
@@ -412,7 +412,7 @@ class reductions(DatedFormulaColumn):
     # TODO: plafonnement pour parti politiques depuis 2012 P.ir.reductions_impots.dfppce.max_niv
 
 
-@reference_formula
+@law_variable
 class adhcga(SimpleFormulaColumn):
     column = FloatCol(default = 0)
     entity_class = FoyersFiscaux
@@ -431,7 +431,7 @@ class adhcga(SimpleFormulaColumn):
         return period, min_(f7ff, P.max * f7fg)
 
 
-@reference_formula
+@law_variable
 class assvie(SimpleFormulaColumn):
     column = FloatCol(default = 0)
     entity_class = FoyersFiscaux
@@ -455,7 +455,7 @@ class assvie(SimpleFormulaColumn):
         return period, P.taux * min_(f7gw + f7gx + f7gy, max1)
 
 
-@reference_formula
+@law_variable
 class cappme(DatedFormulaColumn):
     column = FloatCol(default = 0)
     entity_class = FoyersFiscaux
@@ -628,7 +628,7 @@ class cappme(DatedFormulaColumn):
 #TODO: vérifier l'existence du "max_"
 
 
-@reference_formula
+@law_variable
 class cotsyn(SimpleFormulaColumn):
     column = FloatCol(default = 0)
     entity_class = FoyersFiscaux
@@ -665,7 +665,7 @@ class cotsyn(SimpleFormulaColumn):
         return period, P.taux * (min_(f7ac, maxv) + min_(f7ae, maxc) + min_(f7ag, maxp))
 
 
-@reference_formula
+@law_variable
 class creaen(DatedFormulaColumn):
     column = FloatCol(default = 0)
     entity_class = FoyersFiscaux
@@ -741,7 +741,7 @@ class creaen(DatedFormulaColumn):
                     P.hand * (f7my / 2))
 
 
-@reference_formula
+@law_variable
 class deffor(SimpleFormulaColumn):
     column = FloatCol(default = 0)
     entity_class = FoyersFiscaux
@@ -760,7 +760,7 @@ class deffor(SimpleFormulaColumn):
         return period, P.taux * min_(f7uc, P.max)
 
 
-@reference_formula
+@law_variable
 class daepad(SimpleFormulaColumn):
     column = FloatCol(default = 0)
     entity_class = FoyersFiscaux
@@ -779,7 +779,7 @@ class daepad(SimpleFormulaColumn):
         return period, P.taux * (min_(f7cd, P.max) + min_(f7ce, P.max))
 
 
-@reference_formula
+@law_variable
 class dfppce(DatedFormulaColumn):
     column = FloatCol(default = 0)
     entity_class = FoyersFiscaux
@@ -967,7 +967,7 @@ class dfppce(DatedFormulaColumn):
 
 
 # Outre-mer : TODO: plafonnement, cf. 2041-GE 2042-IOM
-@reference_formula
+@law_variable
 class doment(DatedFormulaColumn):
     column = FloatCol(default = 0)
     entity_class = FoyersFiscaux
@@ -1274,7 +1274,7 @@ class doment(DatedFormulaColumn):
 
 #TODO: vérifier les dates des variables de doment et domsoc (y sont-elles encore en 2013 par ex ?)
 
-@reference_formula
+@law_variable
 class domlog(DatedFormulaColumn):
     column = FloatCol(default = 0)
     entity_class = FoyersFiscaux
@@ -1482,7 +1482,7 @@ class domlog(DatedFormulaColumn):
 #En accord avec la DGFiP mais pas de 7ub et 7uj dans la notice
 
 
-@reference_formula
+@law_variable
 class domsoc(DatedFormulaColumn):
     column = FloatCol(default = 0)
     entity_class = FoyersFiscaux
@@ -1535,7 +1535,7 @@ class domsoc(DatedFormulaColumn):
         return period,  fhra + fhrb + fhrc + fhrd + f7qn + f7qk + f7qu + f7kg + f7kh + f7ki + f7qj + f7qs + f7qw + f7qx
 
 
-@reference_formula
+@law_variable
 class donapd(DatedFormulaColumn):
     column = FloatCol(default = 0)
     entity_class = FoyersFiscaux
@@ -1565,7 +1565,7 @@ class donapd(DatedFormulaColumn):
         return period, P.taux * min_(f7ud + f7va, P.max)
 
 
-@reference_formula
+@law_variable
 class duflot(SimpleFormulaColumn):
     column = FloatCol(default = 0)
     entity_class = FoyersFiscaux
@@ -1587,7 +1587,7 @@ class duflot(SimpleFormulaColumn):
 
 #TODO: / 5 dans trois TOM
 
-@reference_formula
+@law_variable
 class ecodev(SimpleFormulaColumn):
     column = FloatCol(default = 0)
     entity_class = FoyersFiscaux
@@ -1608,7 +1608,7 @@ class ecodev(SimpleFormulaColumn):
         return period, min_(f7uh * P.taux, min_(P.base * rbg_int, P.max))  # page3 ligne 18
 
 
-@reference_formula
+@law_variable
 class ecpess(SimpleFormulaColumn):
     column = FloatCol(default = 0)
     entity_class = FoyersFiscaux
@@ -1632,7 +1632,7 @@ class ecpess(SimpleFormulaColumn):
                 P.sup * (f7ef + f7eg / 2))
 
 
-@reference_formula
+@law_variable
 class garext(DatedFormulaColumn):
     column = FloatCol(default = 0)
     entity_class = FoyersFiscaux
@@ -1682,7 +1682,7 @@ class garext(DatedFormulaColumn):
                            min_(f7gg, max2))
 
 
-@reference_formula
+@law_variable
 class intagr(SimpleFormulaColumn):
     column = FloatCol(default = 0)
     entity_class = FoyersFiscaux
@@ -1703,7 +1703,7 @@ class intagr(SimpleFormulaColumn):
         return period, P.taux * min_(f7um, max1)
 
 
-@reference_formula
+@law_variable
 class intcon(SimpleFormulaColumn):
     column = FloatCol(default = 0)
     entity_class = FoyersFiscaux
@@ -1724,7 +1724,7 @@ class intcon(SimpleFormulaColumn):
         return period, P.taux * min_(f7uh, max1)
 
 
-@reference_formula
+@law_variable
 class intemp(SimpleFormulaColumn):
     column = FloatCol(default = 0)
     entity_class = FoyersFiscaux
@@ -1746,7 +1746,7 @@ class intemp(SimpleFormulaColumn):
         return period, P.taux * min_(f7wg, max1)
 
 
-@reference_formula
+@law_variable
 class invfor(DatedFormulaColumn):
     column = FloatCol(default = 0)
     entity_class = FoyersFiscaux
@@ -1908,7 +1908,7 @@ class invfor(DatedFormulaColumn):
             P.taux_ass * min_(f7ul, P.ifortra_seuil * (marpac + 1)))
 
 
-@reference_formula
+@law_variable
 class invlst(DatedFormulaColumn):
     column = FloatCol(default = 0)
     entity_class = FoyersFiscaux
@@ -2128,7 +2128,7 @@ class invlst(DatedFormulaColumn):
         return period, around(xi + xj + xo)
 
 
-@reference_formula
+@law_variable
 class invrev(SimpleFormulaColumn):
     column = FloatCol(default = 0)
     entity_class = FoyersFiscaux
@@ -2158,7 +2158,7 @@ class invrev(SimpleFormulaColumn):
                  P.taux_gt * f7gt + P.taux_gt * f7gv)
 
 
-@reference_formula
+@law_variable
 class locmeu(DatedFormulaColumn):
     column = FloatCol(default = 0)
     entity_class = FoyersFiscaux
@@ -2316,7 +2316,7 @@ class locmeu(DatedFormulaColumn):
                 f7ji + f7js)
 
 
-@reference_formula
+@law_variable
 class mohist(SimpleFormulaColumn):
     column = FloatCol(default = 0)
     entity_class = FoyersFiscaux
@@ -2335,7 +2335,7 @@ class mohist(SimpleFormulaColumn):
         return period, P.taux * min_(f7nz, P.max)
 
 
-@reference_formula
+@law_variable
 class patnat(DatedFormulaColumn):
     column = FloatCol(default = 0)
     entity_class = FoyersFiscaux
@@ -2400,7 +2400,7 @@ class patnat(DatedFormulaColumn):
         return period, P.taux * min_(f7ka, max1) + f7kb + f7kc + f7kd
 
 
-@reference_formula
+@law_variable
 class prcomp(SimpleFormulaColumn):
     column = FloatCol(default = 0)
     entity_class = FoyersFiscaux
@@ -2430,7 +2430,7 @@ class prcomp(SimpleFormulaColumn):
                  P.taux * f7wp)
 
 
-@reference_formula
+@law_variable
 class repsoc(SimpleFormulaColumn):
     column = FloatCol(default = 0)
     entity_class = FoyersFiscaux
@@ -2451,7 +2451,7 @@ class repsoc(SimpleFormulaColumn):
         return period, P.taux * min_(f7fh, seuil)
 
 
-@reference_formula
+@law_variable
 class resimm(DatedFormulaColumn):
     column = FloatCol(default = 0)
     entity_class = FoyersFiscaux
@@ -2541,7 +2541,7 @@ class resimm(DatedFormulaColumn):
                 P.taux_ra * min_(f7ra, max4) + P.taux_re * min_(f7re + f7sx, max5))
 
 
-@reference_formula
+@law_variable
 class rsceha(SimpleFormulaColumn):
     column = FloatCol(default = 0)
     entity_class = FoyersFiscaux
@@ -2562,7 +2562,7 @@ class rsceha(SimpleFormulaColumn):
         return period, P.taux * min_(f7gz, max1)
 
 
-@reference_formula
+@law_variable
 class saldom(DatedFormulaColumn):
     column = FloatCol(default = 0)
     entity_class = FoyersFiscaux
@@ -2657,7 +2657,7 @@ class saldom(DatedFormulaColumn):
         return period, P.taux * min_(f7df, max1)
 
 
-@reference_formula
+@law_variable
 class scelli(DatedFormulaColumn):
     column = FloatCol(default = 0)
     entity_class = FoyersFiscaux
@@ -2980,7 +2980,7 @@ class scelli(DatedFormulaColumn):
                 )
 
 
-@reference_formula
+@law_variable
 class sofica(SimpleFormulaColumn):
     column = FloatCol(default = 0)
     entity_class = FoyersFiscaux
@@ -3003,7 +3003,7 @@ class sofica(SimpleFormulaColumn):
         return period, P.taux2 * min_(f7gn, max0) + P.taux3 * min_(f7fn, max1)
 
 
-@reference_formula
+@law_variable
 class sofipe(SimpleFormulaColumn):
     column = FloatCol(default = 0)
     entity_class = FoyersFiscaux
@@ -3027,7 +3027,7 @@ class sofipe(SimpleFormulaColumn):
         return period, P.taux * min_(f7gs, max1)
 
 
-@reference_formula
+@law_variable
 class spfcpi(DatedFormulaColumn):
     column = FloatCol(default = 0)
     entity_class = FoyersFiscaux

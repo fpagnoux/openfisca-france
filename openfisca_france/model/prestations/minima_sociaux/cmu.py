@@ -10,7 +10,7 @@ from numpy import (absolute as abs_, apply_along_axis, array, int32, logical_not
 from ...base import *  # noqa analysis:ignore
 
 
-@reference_formula
+@law_variable
 class acs_montant(DatedFormulaColumn):
     column = FloatCol
     entity_class = Familles
@@ -39,7 +39,7 @@ class acs_montant(DatedFormulaColumn):
             nb_par_age(ages_couple, 60, 200) * P.acs_plus_60_ans)
 
 
-@reference_formula
+@law_variable
 class cmu_forfait_logement_base(SimpleFormulaColumn):
     column = FloatCol
     entity_class = Familles
@@ -54,7 +54,7 @@ class cmu_forfait_logement_base(SimpleFormulaColumn):
         return period, forfait_logement(cmu_nbp_foyer, P, law_rsa)
 
 
-@reference_formula
+@law_variable
 class cmu_forfait_logement_al(SimpleFormulaColumn):
     column = FloatCol
     entity_class = Familles
@@ -69,7 +69,7 @@ class cmu_forfait_logement_al(SimpleFormulaColumn):
         return period, forfait_logement(cmu_nbp_foyer, P, law_rsa)
 
 
-@reference_formula
+@law_variable
 class cmu_nbp_foyer(SimpleFormulaColumn):
     column = PeriodSizeIndependentIntCol
     entity_class = Familles
@@ -83,7 +83,7 @@ class cmu_nbp_foyer(SimpleFormulaColumn):
         return period, nb_par + cmu_nb_pac
 
 
-@reference_formula
+@law_variable
 class cmu_eligible_majoration_dom(SimpleFormulaColumn):
     column = BoolCol
     entity_class = Familles
@@ -98,7 +98,7 @@ class cmu_eligible_majoration_dom(SimpleFormulaColumn):
         return period, residence_guadeloupe | residence_martinique | residence_guyane | residence_reunion
 
 
-@reference_formula
+@law_variable
 class cmu_c_plafond(SimpleFormulaColumn):
     column = FloatCol
     entity_class = Familles
@@ -150,7 +150,7 @@ class cmu_c_plafond(SimpleFormulaColumn):
             )
 
 
-@reference_formula
+@law_variable
 class acs_plafond(SimpleFormulaColumn):
     column = FloatCol
     entity_class = Familles
@@ -164,7 +164,7 @@ class acs_plafond(SimpleFormulaColumn):
         return period, cmu_c_plafond * (1 + P.majoration_plafond_acs)
 
 
-@reference_formula
+@law_variable
 class cmu_base_ressources_i(SimpleFormulaColumn):
     column = FloatCol
     label = u"Base de ressources de l'individu prise en compte pour l'éligibilité à la CMU-C / ACS"
@@ -221,7 +221,7 @@ class cmu_base_ressources_i(SimpleFormulaColumn):
             gains_exceptionnels + tns_total_revenus_net + revenus_stage_formation_pro)
 
 
-@reference_formula
+@law_variable
 class cmu_base_ressources(SimpleFormulaColumn):
     column = FloatCol
     label = u"Base de ressources prise en compte pour l'éligibilité à la CMU-C / ACS"
@@ -270,7 +270,7 @@ class cmu_base_ressources(SimpleFormulaColumn):
         return period, res
 
 
-@reference_formula
+@law_variable
 class cmu_nb_pac(SimpleFormulaColumn):
     column = PeriodSizeIndependentIntCol
     entity_class = Familles
@@ -285,7 +285,7 @@ class cmu_nb_pac(SimpleFormulaColumn):
         return period, nb_par_age(ages, 0, P.age_limite_pac)
 
 
-@reference_formula
+@law_variable
 class cmu_c(SimpleFormulaColumn):
     '''
     Détermine si le foyer a droit à la CMU complémentaire
@@ -320,7 +320,7 @@ class cmu_c(SimpleFormulaColumn):
         return period, not_(residence_mayotte) * or_(eligibilite_basique, eligibilite_rsa)
 
 
-@reference_formula
+@law_variable
 class acs(SimpleFormulaColumn):
     '''
     Calcule le montant de l'ACS auquel le foyer a droit

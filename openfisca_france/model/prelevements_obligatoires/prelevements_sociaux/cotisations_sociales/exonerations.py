@@ -17,7 +17,7 @@ reference_input_variable(
     )
 
 
-@reference_formula
+@law_variable
 class exoneration_cotisations_employeur_geographiques(SimpleFormulaColumn):
     column = FloatCol
     entity_class = Individus
@@ -38,7 +38,7 @@ class exoneration_cotisations_employeur_geographiques(SimpleFormulaColumn):
         return period, exonerations_geographiques
 
 
-@reference_formula
+@law_variable
 class exoneration_cotisations_employeur_jei(SimpleFormulaColumn):
     column = FloatCol
     entity_class = Individus
@@ -86,7 +86,7 @@ class exoneration_cotisations_employeur_jei(SimpleFormulaColumn):
         return period, - exoneration * jeune_entreprise_innovante
 
 
-@reference_formula
+@law_variable
 class exoneration_cotisations_employeur_zfu(SimpleFormulaColumn):
     column = FloatCol
     entity_class = Individus
@@ -238,7 +238,7 @@ class exoneration_cotisations_employeur_zfu(SimpleFormulaColumn):
         # TODO: propager dans le temps
 
 
-@reference_formula
+@law_variable
 class exoneration_cotisations_employeur_zrd(SimpleFormulaColumn):
     column = FloatCol
     entity_class = Individus
@@ -276,7 +276,7 @@ class exoneration_cotisations_employeur_zrd(SimpleFormulaColumn):
         return period, exoneration_cotisations_zrd
 
 
-@reference_formula
+@law_variable
 class exoneration_cotisations_employeur_zrr(SimpleFormulaColumn):
     column = FloatCol
     entity_class = Individus
@@ -332,7 +332,7 @@ class exoneration_cotisations_employeur_zrr(SimpleFormulaColumn):
 
 
 # Aides à la création
-@reference_formula
+@law_variable
 class exoneration_is_creation_zrr(SimpleFormulaColumn):
     column = FloatCol
     entity_class = Individus
@@ -379,7 +379,7 @@ class exoneration_is_creation_zrr(SimpleFormulaColumn):
         # TODO: mettre sur toutes les années
 
 
-# @reference_formula
+# @law_variable
 # class bassin_emploi_redynamiser(SimpleFormulaColumn):
 #     column = BoolCol
 #     entity_class = Individus
@@ -392,7 +392,7 @@ class exoneration_is_creation_zrr(SimpleFormulaColumn):
 #         effectif_entreprise = simulation.calculate('effectif_entreprise', period)
 #         return period, (effectif_entreprise >= 1) * False
 
-@reference_formula
+@law_variable
 class jeune_entreprise_innovante(SimpleFormulaColumn):
     column = BoolCol
     entity_class = Individus
@@ -451,7 +451,7 @@ class jeune_entreprise_innovante(SimpleFormulaColumn):
         return period, jeune_entreprise_innovante
 
 
-@reference_formula
+@law_variable
 class bassin_emploi_redynamiser(SimpleFormulaColumn):
     column = BoolCol
     entity_class = Individus
@@ -466,7 +466,7 @@ class bassin_emploi_redynamiser(SimpleFormulaColumn):
         return period, (effectif_entreprise >= 1) * False
 
 
-@reference_formula
+@law_variable
 class zone_restructuration_defense(SimpleFormulaColumn):
     column = BoolCol
     entity_class = Individus
@@ -477,7 +477,7 @@ class zone_restructuration_defense(SimpleFormulaColumn):
         return period, (effectif_entreprise >= 1) * False
 
 
-@reference_formula
+@law_variable
 class zone_franche_urbaine(SimpleFormulaColumn):
     column = BoolCol
     entity_class = Individus
@@ -488,7 +488,7 @@ class zone_franche_urbaine(SimpleFormulaColumn):
         return period, (effectif_entreprise >= 1) * False
 
 
-@reference_formula
+@law_variable
 class zone_revitalisation_rurale(SimpleFormulaColumn):
     column = BoolCol
     entity_class = Individus

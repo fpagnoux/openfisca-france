@@ -7,7 +7,7 @@ from numpy import logical_not as not_, maximum as max_, minimum as min_
 from ..base import *  # noqa analysis:ignore
 
 
-@reference_formula
+@law_variable
 class exonere_taxe_habitation(SimpleFormulaColumn):
     column = BoolCol(default = True)
     entity_class = Menages
@@ -58,7 +58,7 @@ class exonere_taxe_habitation(SimpleFormulaColumn):
         return period, not_(elig)
 
 
-@reference_formula
+@law_variable
 class taxe_habitation(SimpleFormulaColumn):
     column = FloatCol(default = 0)
     entity_class = Menages

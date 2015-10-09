@@ -8,7 +8,7 @@ from numpy import int32, logical_not as not_, logical_or as or_, zeros
 from ...base import *  # noqa analysis:ignore
 
 
-@reference_formula
+@law_variable
 class smic55(SimpleFormulaColumn):
     column = BoolCol
     entity_class = Individus
@@ -26,7 +26,7 @@ class smic55(SimpleFormulaColumn):
         return period, salaire_net / 6 >= (_P.fam.af.seuil_rev_taux * smic_mensuel_brut)
 
 
-@reference_formula
+@law_variable
 class pfam_enfant_a_charge(SimpleFormulaColumn):
     column = BoolCol(default = False)
     entity_class = Individus
@@ -49,7 +49,7 @@ class pfam_enfant_a_charge(SimpleFormulaColumn):
         return period, or_(condition_enfant, condition_jeune) * est_enfant_dans_famille
 
 
-@reference_formula
+@law_variable
 class pfam_ressources_i(SimpleFormulaColumn):
     column = FloatCol
     entity_class = Individus
@@ -65,7 +65,7 @@ class pfam_ressources_i(SimpleFormulaColumn):
         return period, or_(not_(est_enfant_dans_famille), pfam_enfant_a_charge) * br_pf_i
 
 
-@reference_formula
+@law_variable
 class br_pf_i(SimpleFormulaColumn):
     column = FloatCol(default = 0)
     entity_class = Individus
@@ -82,7 +82,7 @@ class br_pf_i(SimpleFormulaColumn):
         return period, tspr + hsup + rpns
 
 
-@reference_formula
+@law_variable
 class biact(SimpleFormulaColumn):
     column = BoolCol(default = False)
     entity_class = Familles
@@ -101,7 +101,7 @@ class biact(SimpleFormulaColumn):
         return period, (br_pf_i[CHEF] >= seuil_rev) & (br_pf_i[PART] >= seuil_rev)
 
 
-@reference_formula
+@law_variable
 class div(SimpleFormulaColumn):
     column = FloatCol(default = 0)
     entity_class = Individus
@@ -130,7 +130,7 @@ class div(SimpleFormulaColumn):
         return period, f3vc + f3ve + f3vg - f3vh + f3vl + f3vm + rpns_pvce + rpns_pvct - rpns_mvct - rpns_mvlt
 
 
-@reference_formula
+@law_variable
 class rev_coll(SimpleFormulaColumn):
     column = FloatCol(default = 0)
     entity_class = Individus
@@ -170,7 +170,7 @@ class rev_coll(SimpleFormulaColumn):
             - f7gc - abat_spe + rev_cat_pv)
 
 
-@reference_formula
+@law_variable
 class br_pf(SimpleFormulaColumn):
     column = FloatCol(default = 0)
     entity_class = Familles

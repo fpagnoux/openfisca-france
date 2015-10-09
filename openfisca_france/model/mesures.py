@@ -7,7 +7,7 @@ from numpy import floor, logical_not as not_
 from .base import *  # noqa analysis:ignore
 
 
-@reference_formula
+@law_variable
 class uc(SimpleFormulaColumn):
     column = FloatCol(default = 0)
     entity_class = Menages
@@ -34,7 +34,7 @@ class uc(SimpleFormulaColumn):
         return period, uc
 
 
-@reference_formula
+@law_variable
 class typ_men(SimpleFormulaColumn):
     column = PeriodSizeIndependentIntCol(default = 0)
     entity_class = Menages
@@ -70,7 +70,7 @@ class typ_men(SimpleFormulaColumn):
                 7 * (isol & _3_kid))  # Famille monoparentale trois enfants et plus
 
 
-@reference_formula
+@law_variable
 class revdisp(SimpleFormulaColumn):
     column = FloatCol(default = 0)
     entity_class = Menages
@@ -101,7 +101,7 @@ class revdisp(SimpleFormulaColumn):
         return period, rev_trav + pen + rev_cap + psoc + ppe + impo
 
 
-@reference_formula
+@law_variable
 class nivvie(SimpleFormulaColumn):
     column = FloatCol(default = 0)
     entity_class = Menages
@@ -119,7 +119,7 @@ class nivvie(SimpleFormulaColumn):
         return period, revdisp / uc
 
 
-@reference_formula
+@law_variable
 class revenu_net_individu(SimpleFormulaColumn):
     column = FloatCol
     entity_class = Individus
@@ -134,7 +134,7 @@ class revenu_net_individu(SimpleFormulaColumn):
         return period, pen + rev_cap + rev_trav
 
 
-@reference_formula
+@law_variable
 class revnet(PersonToEntityColumn):
     entity_class = Menages
     label = u"Revenu net du ménage"
@@ -143,7 +143,7 @@ class revnet(PersonToEntityColumn):
     variable = revenu_net_individu
 
 
-@reference_formula
+@law_variable
 class nivvie_net(SimpleFormulaColumn):
     column = FloatCol(default = 0)
     entity_class = Menages
@@ -161,7 +161,7 @@ class nivvie_net(SimpleFormulaColumn):
         return period, revnet / uc
 
 
-@reference_formula
+@law_variable
 class revenu_initial_individu(SimpleFormulaColumn):
     column = FloatCol
     entity_class = Individus
@@ -179,7 +179,7 @@ class revenu_initial_individu(SimpleFormulaColumn):
             cotisations_salariales_contributives)
 
 
-@reference_formula
+@law_variable
 class revini(PersonToEntityColumn):
     entity_class = Menages
     label = u"Revenu initial du ménage"
@@ -187,7 +187,7 @@ class revini(PersonToEntityColumn):
     variable = revenu_initial_individu
 
 
-@reference_formula
+@law_variable
 class nivvie_ini(SimpleFormulaColumn):
     column = FloatCol(default = 0)
     entity_class = Menages
@@ -215,7 +215,7 @@ def _revprim(rev_trav, cho, rev_cap, cotisations_employeur, cotisations_salarial
     return rev_trav + rev_cap - cotisations_employeur - cotisations_salariales - cho
 
 
-@reference_formula
+@law_variable
 class rev_trav(SimpleFormulaColumn):
     column = FloatCol(default = 0)
     entity_class = Individus
@@ -235,7 +235,7 @@ class rev_trav(SimpleFormulaColumn):
         return period, rev_sal + rag + ric + rnc
 
 
-@reference_formula
+@law_variable
 class pen(SimpleFormulaColumn):
     column = FloatCol(default = 0)
     entity_class = Individus
@@ -259,7 +259,7 @@ class pen(SimpleFormulaColumn):
                     rto_declarant1)
 
 
-@reference_formula
+@law_variable
 class cotsoc_bar_declarant1(SimpleFormulaColumn):
     column = FloatCol(default = 0)
     entity_class = Individus
@@ -277,7 +277,7 @@ class cotsoc_bar_declarant1(SimpleFormulaColumn):
         return period, csg_cap_bar_declarant1 + prelsoc_cap_bar_declarant1 + crds_cap_bar_declarant1
 
 
-@reference_formula
+@law_variable
 class cotsoc_lib_declarant1(SimpleFormulaColumn):
     column = FloatCol(default = 0)
     entity_class = Individus
@@ -295,7 +295,7 @@ class cotsoc_lib_declarant1(SimpleFormulaColumn):
         return period, csg_cap_lib_declarant1 + prelsoc_cap_lib_declarant1 + crds_cap_lib_declarant1
 
 
-@reference_formula
+@law_variable
 class rev_cap(SimpleFormulaColumn):
     column = FloatCol(default = 0)
     entity_class = Individus
@@ -323,7 +323,7 @@ class rev_cap(SimpleFormulaColumn):
         return period, fon + rev_cap_bar + cotsoc_bar_declarant1 + rev_cap_lib + cotsoc_lib_declarant1 + imp_lib + rac
 
 
-@reference_formula
+@law_variable
 class psoc(SimpleFormulaColumn):
     column = FloatCol(default = 0)
     entity_class = Familles
@@ -342,7 +342,7 @@ class psoc(SimpleFormulaColumn):
         return period, pfam + mini + aides_logement
 
 
-@reference_formula
+@law_variable
 class pfam(SimpleFormulaColumn):
     column = FloatCol(default = 0)
     entity_class = Familles
@@ -365,7 +365,7 @@ class pfam(SimpleFormulaColumn):
         return period, af + cf + ars + aeeh + paje + asf + crds_pfam
 
 
-@reference_formula
+@law_variable
 class mini(SimpleFormulaColumn):
     column = FloatCol(default = 0)
     entity_class = Familles
@@ -393,7 +393,7 @@ class mini(SimpleFormulaColumn):
         return period, aspa + aah + caah + asi + rsa + aefa + api + ass + psa
 
 
-@reference_formula
+@law_variable
 class aides_logement(SimpleFormulaColumn):
     column = FloatCol(default = 0)
     entity_class = Familles
@@ -413,7 +413,7 @@ class aides_logement(SimpleFormulaColumn):
         return period, apl + als + alf + crds_logement
 
 
-@reference_formula
+@law_variable
 class impo(SimpleFormulaColumn):
     column = FloatCol(default = 0)
     entity_class = Menages
@@ -434,7 +434,7 @@ class impo(SimpleFormulaColumn):
         return period, irpp + taxe_habitation
 
 
-@reference_formula
+@law_variable
 class crds(SimpleFormulaColumn):
     column = FloatCol(default = 0)
     entity_class = Individus
@@ -467,7 +467,7 @@ class crds(SimpleFormulaColumn):
                 crds_pfam + crds_logement + crds_mini)
 
 
-@reference_formula
+@law_variable
 class csg(SimpleFormulaColumn):
     column = FloatCol(default = 0)
     entity_class = Individus
@@ -497,7 +497,7 @@ class csg(SimpleFormulaColumn):
                 csg_cap_lib_declarant1 + csg_pv_mo + csg_pv_immo + csg_cap_bar_declarant1)
 
 
-@reference_formula
+@law_variable
 class cotsoc_noncontrib(SimpleFormulaColumn):
     column = FloatCol(default = 0)
     entity_class = Individus
@@ -516,7 +516,7 @@ class cotsoc_noncontrib(SimpleFormulaColumn):
         return period, cotisations_employeur_non_contributives + cotisations_salariales_non_contributives
 
 
-@reference_formula
+@law_variable
 class prelsoc_cap(SimpleFormulaColumn):
     column = FloatCol(default = 0)
     entity_class = Individus
@@ -542,7 +542,7 @@ class prelsoc_cap(SimpleFormulaColumn):
                     prelsoc_pv_immo)
 
 
-@reference_formula
+@law_variable
 class check_csk(SimpleFormulaColumn):
     column = FloatCol(default = 0)
     entity_class = Menages
@@ -563,7 +563,7 @@ class check_csk(SimpleFormulaColumn):
         return period, prelsoc_cap_bar + prelsoc_pv_mo + prelsoc_fon
 
 
-@reference_formula
+@law_variable
 class check_csg(SimpleFormulaColumn):
     column = FloatCol(default = 0)
     entity_class = Menages
@@ -584,7 +584,7 @@ class check_csg(SimpleFormulaColumn):
         return period, csg_cap_bar + csg_pv_mo + csg_fon
 
 
-@reference_formula
+@law_variable
 class check_crds(SimpleFormulaColumn):
     column = FloatCol(default = 0)
     entity_class = Menages
