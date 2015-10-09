@@ -12,6 +12,9 @@ from openfisca_core.formulas import (calculate_output_add, calculate_output_add_
     requested_period_added_value, requested_period_default_value, requested_period_last_value,
     set_input_dispatch_by_period, set_input_divide_by_period, SimpleFormulaColumn)
 
+# for retro-compatibility
+from openfisca_core.formulas import make_reference_formula_decorator
+
 from ..entities import entity_class_by_symbol, Familles, FoyersFiscaux, Individus, Menages
 
 
@@ -54,6 +57,7 @@ __all__ = [
     'QUIFOY',
     'QUIMEN',
     'law_variable',
+    'reference_formula',
     'reference_input_variable',
     'requested_period_added_value',
     'requested_period_default_value',
@@ -106,3 +110,4 @@ build_column = functools.partial(
     )
 
 law_variable = make_law_variable_decorator(entity_class_by_symbol = entity_class_by_symbol)
+reference_formula = make_reference_formula_decorator(entity_class_by_symbol = entity_class_by_symbol)
