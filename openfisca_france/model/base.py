@@ -53,7 +53,7 @@ __all__ = [
     'QUIFAM',
     'QUIFOY',
     'QUIMEN',
-    'reference_formula',
+    'law_variable',
     'reference_input_variable',
     'requested_period_added_value',
     'requested_period_default_value',
@@ -105,4 +105,4 @@ build_column = functools.partial(
     entity_class_by_symbol = entity_class_by_symbol,
     )
 
-reference_formula = make_reference_formula_decorator(entity_class_by_symbol = entity_class_by_symbol)
+law_variable = make_law_variable_decorator(entity_class_by_symbol = entity_class_by_symbol)
