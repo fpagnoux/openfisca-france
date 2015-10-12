@@ -891,7 +891,7 @@ class rsa_majore(DatedFormulaColumn):
         return period, base_normalise * (base_normalise >= P.rsa_nv)
 
 
-@law_variable
+@reference_formula
 class rsa_majore_eligibilite(SimpleFormulaColumn):
     column = BoolCol
     entity_class = Familles
