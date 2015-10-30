@@ -1248,14 +1248,32 @@ class decote(DatedFormulaColumn):
     def function_2014__(self, simulation, period):
         period = period.start.offset('first-of', 'year').period('year')
         ir_plaf_qf = simulation.calculate('ir_plaf_qf', period)
-        nb_adult = simulation.calculate('nb_adult', period)            
-        decote_seuil_celib = simulation.legislation_at(period.start).ir.decote_seuil_celib.seuil
-        decote_seuil_couple = simulation.legislation_at(period.start).ir.decote_seuil_couple.seuil
+        nb_adult = simulation.calculate('nb_adult', period)
+        decote_seuil_celib = simulation.legislation_at(period.start).ir.decote.seuil_celib
+        decote_seuil_couple = simulation.legislation_at(period.start).ir.decote.seuil_couple
         decote_celib = (ir_plaf_qf < decote_seuil_celib) * (decote_seuil_celib - ir_plaf_qf)
         decote_couple = (ir_plaf_qf < decote_seuil_couple) * (decote_seuil_couple - ir_plaf_qf)
-            
+
         return period, (nb_adult == 1) * decote_celib + (nb_adult == 2) * decote_couple
-   
+
+
+@reference_formula
+class decote_gain_fiscal(SimpleFormulaColumn):
+    column = FloatCol(default = 0)
+    entity_class = FoyersFiscaux
+    label = u"Gain fiscal de la décote/Décote au sens Dgfip tel que sur la feuille d'impôt"
+    start_date = date(1982, 1, 1)
+
+    def function(self, simulation, period):
+        '''
+        Renvoie le gain fiscal du à la décote
+        '''
+        period = period.start.offset('first-of', 'year').period('year')
+        decote = simulation.calculate('decote', period)
+        ir_plaf_qf = simulation.calculate('ir_plaf_qf', period)
+
+        return period, min_(decote, ir_plaf_qf)
+
 
 @reference_formula
 class nat_imp(SimpleFormulaColumn):

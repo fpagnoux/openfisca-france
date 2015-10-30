@@ -9,7 +9,7 @@ from setuptools import setup, find_packages
 
 setup(
     name = 'OpenFisca-France',
-    version = '0.5.3.dev0',
+    version = '0.5.4.dev0',
 
     author = 'OpenFisca Team',
     author_email = 'contact@openfisca.fr',
@@ -20,7 +20,7 @@ setup(
         "Programming Language :: Python",
         "Topic :: Scientific/Engineering :: Information Analysis",
         ],
-    description = u'France specific model for OpenFisca',
+    description = u'French tax and benefit system for OpenFisca',
     keywords = 'benefit france microsimulation social tax',
     license = 'http://www.fsf.org/licensing/licenses/agpl-3.0.html',
     url = 'https://github.com/openfisca/openfisca-france',
@@ -43,7 +43,7 @@ setup(
     include_package_data = True,  # Will read MANIFEST.in
     install_requires = [
         'Babel >= 0.9.4',
-        'Biryani >= 0.10.4',
+        'Biryani[datetimeconv] >= 0.10.4',
         'numpy >= 1.6',
         'OpenFisca-Core >= 0.5.0',
         'PyYAML >= 3.10',
