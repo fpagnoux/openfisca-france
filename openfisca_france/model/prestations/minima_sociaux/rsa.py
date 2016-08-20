@@ -472,9 +472,9 @@ class rsa_enfant_a_charge(Variable):
             enceinte_fam = simulation.calculate('enceinte_fam', period)
             isole = not_(simulation.calculate('en_couple', period))
             isolement_recent = simulation.calculate('rsa_isolement_recent', period)
-            presence_autres_enfants = self.sum_by_entity(enfant * not_(autonomie_financiere) * (age <= P_rsa.age_pac), entity = "famille") > 1
+            presence_autres_enfants = self.sum_by_entity(enfant * not_(autonomie_financiere) * (age <= P_rsa.age_pac), entity = Familles) > 1
 
-            return self.cast_from_entity_to_roles(not_(enceinte_fam) * isole * isolement_recent * not_(presence_autres_enfants), entity = 'famille')
+            return self.cast_from_entity_to_roles(not_(enceinte_fam) * isole * isolement_recent * not_(presence_autres_enfants), entity = Familles)
 
         return period, (
             enfant * not_(autonomie_financiere) *
