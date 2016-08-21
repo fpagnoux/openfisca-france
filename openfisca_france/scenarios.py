@@ -653,11 +653,11 @@ class Scenario(scenarios.AbstractScenario):
                                             #     error = u"Un déclarant d'un foyer fiscal doit être agé d'au moins 18"
                                             #         u" ans",
                                             #     ),
-                                            conv.test(
-                                                lambda individu_id: individu_id in parents_id,
-                                                error = u"Un déclarant ou un conjoint sur la déclaration d'impôt, doit"
-                                                        u" être un parent dans sa famille",
-                                                ),
+                                            # conv.test(
+                                            #     lambda individu_id: individu_id in parents_id,
+                                            #     error = u"Un déclarant ou un conjoint sur la déclaration d'impôt, doit"
+                                            #             u" être un parent dans sa famille",
+                                            #     ),
                                             )),
                                         ),
                                     personnes_a_charge = conv.uniform_sequence(
