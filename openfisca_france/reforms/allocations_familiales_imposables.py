@@ -7,7 +7,6 @@ from openfisca_core import columns
 from openfisca_core.reforms import Reform
 from openfisca_core.variables import Variable
 from .. import entities
-from ..model.base import QUIFOY
 
 
 def modify_legislation_json(reference_legislation_json_copy):
@@ -87,7 +86,7 @@ class allocations_familiales_imposables(Reform):
             period = period.this_year
             imposition = simulation.legislation_at(period.start).allocations_familiales_imposables.imposition
             af_famille_year = simulation.calculate_add('af', period)
-            af = simulation.transpose_to_entity('af', FoyersFiscaux)
+            af = simulation.transpose_to_entity(af_famille_year, target_entity = FoyersFiscaux, origin_entity = Familles)
 
             return period, af * imposition
 
