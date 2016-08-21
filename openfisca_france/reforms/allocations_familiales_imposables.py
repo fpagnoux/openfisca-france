@@ -85,11 +85,10 @@ class allocations_familiales_imposables(Reform):
 
         def function(self, simulation, period):
             period = period.this_year
-            af_holder = simulation.calculate_add('af')
             imposition = simulation.legislation_at(period.start).allocations_familiales_imposables.imposition
+            af_famille_year = simulation.calculate_add('af', period)
+            af = simulation.transpose_to_entity('af', FoyersFiscaux)
 
-            af = self.cast_from_entity_to_role(af_holder, entity= "famille", role = QUIFOY['vous'])
-            af = self.sum_by_entity(af)
             return period, af * imposition
 
     def apply(self):

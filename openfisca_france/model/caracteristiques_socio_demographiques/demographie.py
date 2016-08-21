@@ -3,44 +3,44 @@
 from openfisca_france.model.base import *  # noqa
 
 
-class idmen(Variable):
-    column = IntCol
-    entity_class = Individus
-    is_permanent = True
-    label = u"Identifiant du ménage"
+# class idmen(Variable):
+#     column = IntCol
+#     entity_class = Individus
+#     is_permanent = True
+#     label = u"Identifiant du ménage"
 
 
-class idfoy(Variable):
-    column = IntCol
-    entity_class = Individus
-    is_permanent = True
-    label = u"Identifiant du foyer"
+# class idfoy(Variable):
+#     column = IntCol
+#     entity_class = Individus
+#     is_permanent = True
+#     label = u"Identifiant du foyer"
 
 
-class idfam(Variable):
-    column = IntCol
-    entity_class = Individus
-    is_permanent = True
-    label = u"Identifiant de la famille"
+# class idfam(Variable):
+#     column = IntCol
+#     entity_class = Individus
+#     is_permanent = True
+#     label = u"Identifiant de la famille"
 
 
 
-class quimen(Variable):
-    column = EnumCol(enum = QUIMEN)
-    entity_class = Individus
-    is_permanent = True
+# class quimen(Variable):
+#     column = EnumCol(enum = QUIMEN)
+#     entity_class = Individus
+#     is_permanent = True
 
 
-class quifoy(Variable):
-    column = EnumCol(enum = QUIFOY)
-    entity_class = Individus
-    is_permanent = True
+# class quifoy(Variable):
+#     column = EnumCol(enum = QUIFOY)
+#     entity_class = Individus
+#     is_permanent = True
 
 
-class quifam(Variable):
-    column = EnumCol(enum = QUIFAM)
-    entity_class = Individus
-    is_permanent = True
+# class quifam(Variable):
+#     column = EnumCol(enum = QUIFAM)
+#     entity_class = Individus
+#     is_permanent = True
 
 
 

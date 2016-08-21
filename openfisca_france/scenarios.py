@@ -20,6 +20,7 @@ year_or_month_or_day_re = re.compile(ur'(18|19|20)\d{2}(-(0[1-9]|1[0-2])(-([0-2]
 
 
 class Scenario(scenarios.AbstractScenario):
+
     def init_single_entity(self, axes = None, enfants = None, famille = None, foyer_fiscal = None, menage = None,
             parent1 = None, parent2 = None, period = None):
         if enfants is None:
@@ -48,6 +49,11 @@ class Scenario(scenarios.AbstractScenario):
                 famille.setdefault('enfants', []).append(id)
                 foyer_fiscal.setdefault('personnes_a_charge', []).append(id)
                 menage.setdefault('enfants', []).append(id)
+        from pprint import pprint
+        pprint([famille])
+        pprint([foyer_fiscal])
+        pprint(individus)
+        pprint([menage])
         conv.check(self.make_json_or_python_to_attributes())(dict(
             axes = axes,
             period = period,
