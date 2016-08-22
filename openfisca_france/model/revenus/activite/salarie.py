@@ -690,10 +690,11 @@ class supp_familial_traitement(Variable):
         period = period.start.period(u'month').offset('first-of')
         categorie_salarie = simulation.calculate('categorie_salarie', period)
         traitement_indiciaire_brut = simulation.calculate('traitement_indiciaire_brut', period)
-        af_nbenf_fonc_holder = simulation.compute('af_nbenf_fonc', period)
         _P = simulation.legislation_at(period.start)
 
-        fonc_nbenf = self.cast_from_entity_to_role(af_nbenf_fonc_holder, role = CHEF)
+        af_nbenf_fonc = simulation.calculate('af_nbenf_fonc', period)
+        fonc_nbenf = simulation.project_on_first_person(af_nbenf_fonc, entity = Familles)
+
         P = _P.fonc.supp_fam
         part_fixe_1 = P.fixe.enf1
         part_fixe_2 = P.fixe.enf2
