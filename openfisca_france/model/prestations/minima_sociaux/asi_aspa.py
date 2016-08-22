@@ -29,7 +29,6 @@ class asi_aspa_base_ressources_individu(Variable):
         three_previous_months = period.last_3_months
 
         aspa_eligibilite = simulation.calculate('aspa_eligibilite', period)
-        aspa_couple_holder = simulation.compute('aspa_couple', period)
         salaire_de_base = simulation.calculate_add('salaire_de_base', three_previous_months)
         chomage_net = simulation.calculate_add('chomage_net', three_previous_months)
         retraite_brute = simulation.calculate_add('retraite_brute', three_previous_months)
@@ -72,7 +71,8 @@ class asi_aspa_base_ressources_individu(Variable):
         legislation = simulation.legislation_at(period.start)
         leg_1er_janvier = simulation.legislation_at(period.start.offset('first-of', 'year'))
 
-        aspa_couple = self.cast_from_entity_to_role(aspa_couple_holder, role = VOUS)
+        aspa_couple_famille = simulation.calculate('aspa_couple', period)
+        aspa_couple = simulation.project_on_persons(aspa_couple_famille, entity = Familles)
 
         # Revenus du foyer fiscal que l'on projette sur le premier invidividus
         rev_cap_bar_foyer_fiscal = max_(0, simulation.calculate_add('rev_cap_bar', three_previous_months))
