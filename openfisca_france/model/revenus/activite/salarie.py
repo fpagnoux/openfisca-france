@@ -30,10 +30,8 @@ class bourse_recherche(Variable):
 
 class sal_pen_exo_etr(Variable):
     cerfa_field = {
-        QUIFOY['vous']: u"1AC",
-        QUIFOY['conj']: u"1BC",
-        QUIFOY['pac1']: u"1CC",
-        QUIFOY['pac2']: u"1DC",
+        DECLARANT: [ u"1AC", u"1BC"],
+        PERSONNE_A_CHARGE: [u"1CC", u"1DC"],
         }
     column = IntCol(val_type = "monetary")
     entity_class = Individus
@@ -44,25 +42,18 @@ class sal_pen_exo_etr(Variable):
 
 
 class frais_reels(Variable):
-    cerfa_field = {QUIFOY['vous']: u"1AK",
-        QUIFOY['conj']: u"1BK",
-        QUIFOY['pac1']: u"1CK",
-        QUIFOY['pac2']: u"1DK",
-        QUIFOY['pac3']: u"1EK",
-        }
+    cerfa_field = {
+        DECLARANT: [ u"1AK", u"1BK"],
+        PERSONNE_A_CHARGE: [u"1CK", u"1DK", u"1EK"]
+        } # (f1ak, f1bk, f1ck, f1dk, f1ek)
     column = IntCol(val_type = "monetary")
     entity_class = Individus
     label = u"Frais réels"
 
-  # (f1ak, f1bk, f1ck, f1dk, f1ek)
-
-
 class hsup(Variable):
     cerfa_field = {
-        QUIFOY['vous']: u"1AU",
-        QUIFOY['conj']: u"1BU",
-        QUIFOY['pac1']: u"1CU",
-        QUIFOY['pac2']: u"1DU",
+        DECLARANT: [ u"1AU", u"1BU"],
+        PERSONNE_A_CHARGE: [u"1CU" u"1DU"]
         }
     column = IntCol(val_type = "monetary")
     entity_class = Individus
@@ -73,11 +64,9 @@ class hsup(Variable):
   # (f1au, f1bu, f1cu, f1du)
 
 class ppe_du_sa(Variable):
-    cerfa_field = {QUIFOY['vous']: u"1AV",
-        QUIFOY['conj']: u"1BV",
-        QUIFOY['pac1']: u"1CV",
-        QUIFOY['pac2']: u"1DV",
-        QUIFOY['pac3']: u"1QV",
+    cerfa_field = {
+        DECLARANT: [ u"1AV", u"1BV"],
+        PERSONNE_A_CHARGE: [u"1CV", u"1DV", u"1QV"]
         }
     column = IntCol
     entity_class = Individus
@@ -87,11 +76,8 @@ class ppe_du_sa(Variable):
 
 class ppe_tp_sa(Variable):
     cerfa_field = {
-        QUIFOY['vous']: u"1AX",
-        QUIFOY['conj']: u"1BX",
-        QUIFOY['pac1']: u"1CX",
-        QUIFOY['pac2']: u"1DX",
-        QUIFOY['pac3']: u"1QX",
+        DECLARANT: [ u"1AX", u"1BX"],
+        PERSONNE_A_CHARGE: [u"1CX", u"1DX", u"1QX"]
         }
 
     column = BoolCol

@@ -11,8 +11,8 @@ from openfisca_france.model.base import *  # noqa analysis:ignore
 # du coups je n'ai pas changé et j'ai fait un dico comme pour salaire_imposable
 
 class f1tv(Variable):
-    cerfa_field = {QUIFOY['vous']: u"1TV",
-        QUIFOY['conj']: u"1UV",
+    cerfa_field = {
+        DECLARANT: [ u"1TV", u"1UV"]
         }
     column = IntCol(val_type = "monetary")
     entity_class = Individus
@@ -21,8 +21,8 @@ class f1tv(Variable):
   # (f1tv,f1uv))
 
 class f1tw(Variable):
-    cerfa_field = {QUIFOY['vous']: u"1TW",
-        QUIFOY['conj']: u"1UW",
+    cerfa_field = {
+        DECLARANT: [ u"1TW", u"1UW"]
         }
     column = IntCol(val_type = "monetary")
     entity_class = Individus
@@ -31,8 +31,8 @@ class f1tw(Variable):
   # (f1tw,f1uw))
 
 class f1tx(Variable):
-    cerfa_field = {QUIFOY['vous']: u"1TX",
-        QUIFOY['conj']: u"1UX",
+    cerfa_field = {
+        DECLARANT: [ u"1TX", u"1UX"]
         }
     column = IntCol(val_type = "monetary")
     entity_class = Individus
@@ -81,8 +81,8 @@ class f3vc(Variable):
 
 
 class f3vd(Variable):
-    cerfa_field = {QUIFOY['vous']: u"3VD",
-        QUIFOY['conj']: u"3SD",
+    cerfa_field = {
+        DECLARANT: [ u"3VD", u"3SD"]
         }
     column = IntCol(val_type = "monetary")
     entity_class = Individus
@@ -110,8 +110,8 @@ class f3ve(Variable):
 # """
 
 class f3vf(Variable):
-    cerfa_field = {QUIFOY['vous']: u"3VF",
-        QUIFOY['conj']: u"3SF",
+    cerfa_field = {
+        DECLARANT: [ u"3VF", u"3SF"]
         }
     column = IntCol(val_type = "monetary")
     entity_class = Individus
@@ -141,8 +141,8 @@ class f3vl(Variable):
   # vérifier pour 2011 et 2010
 
 class f3vi(Variable):
-    cerfa_field = {QUIFOY['vous']: u"3VI",
-        QUIFOY['conj']: u"3SI",
+    cerfa_field = {
+        DECLARANT: [ u"3VI", u"3SI"]
         }
     column = IntCol(val_type = "monetary")
     entity_class = Individus
@@ -168,8 +168,8 @@ class f3vt(Variable):
 
 
 class f3vj(Variable):
-    cerfa_field = {QUIFOY['vous']: u"3VJ",
-        QUIFOY['conj']: u"3VK",
+    cerfa_field = {
+        DECLARANT: [ u"3VJ", u"3VK"]
         }
     column = IntCol(val_type = "monetary")
     entity_class = Individus
@@ -178,8 +178,8 @@ class f3vj(Variable):
   # (f3vj, f3vk )
 
 class f3va(Variable):
-    cerfa_field = {QUIFOY['vous']: u"3VA",
-        QUIFOY['conj']: u"3VB",
+    cerfa_field = {
+        DECLARANT: [ u"3VA", u"3VB"]
         }
     column = IntCol(val_type = "monetary")
     entity_class = Individus

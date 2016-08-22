@@ -4,11 +4,9 @@ from openfisca_france.model.base import *  # noqa analysis:ignore
 
 
 class chomeur_longue_duree(Variable):
-    cerfa_field = {QUIFOY['vous']: u"1AI",
-        QUIFOY['conj']: u"1BI",
-        QUIFOY['pac1']: u"1CI",
-        QUIFOY['pac2']: u"1DI",
-        QUIFOY['pac3']: u"1EI",
+    cerfa_field = {
+        DECLARANT: [ u"1AI", u"1BI"],
+        PERSONNE_A_CHARGE: [u"1CI", u"1DI", u"1EI"],
         }
     column = BoolCol
     entity_class = Individus

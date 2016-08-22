@@ -173,11 +173,8 @@ class salaire_imposable(Variable):
     base_function = requested_period_added_value
     column = FloatCol(
         cerfa_field = {
-            QUIFOY['vous']: u"1AJ",
-            QUIFOY['conj']: u"1BJ",
-            QUIFOY['pac1']: u"1CJ",
-            QUIFOY['pac2']: u"1DJ",
-            QUIFOY['pac3']: u"1EJ",
+            DECLARANT: [ u"1AJ", u"1BJ"],
+            PERSONNE_A_CHARGE: [u"1CJ", u"1DJ", u"1EJ"]
             },  # (f1aj, f1bj, f1cj, f1dj, f1ej)
         val_type = "monetary",
         )

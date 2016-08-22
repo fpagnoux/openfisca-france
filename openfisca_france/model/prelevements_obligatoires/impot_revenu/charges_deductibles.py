@@ -102,9 +102,9 @@ class f6dd(Variable):
 
 # Épargne retraite - PERP, PRÉFON, COREM et CGOS
 class f6ps(Variable):
-    cerfa_field = {QUIFOY['vous']: u"6PS",
-        QUIFOY['conj']: u"6PT",
-        QUIFOY['pac1']: u"6PU",
+    cerfa_field = {
+        DECLARANT: [ u"6PS", u"6PT"],
+        PERSONNE_A_CHARGE: u"6PU",
         }
     column = IntCol(val_type = "monetary")
     entity_class = Individus
@@ -113,9 +113,9 @@ class f6ps(Variable):
   # (f6ps, f6pt, f6pu)
 
 class f6rs(Variable):
-    cerfa_field = {QUIFOY['vous']: u"6RS",
-        QUIFOY['conj']: u"6RT",
-        QUIFOY['pac1']: u"6RU",
+    cerfa_field = {
+        DECLARANT: [ u"6RS", u"6RT"],
+        PERSONNE_A_CHARGE: u"6RU",
         }
     column = IntCol(val_type = "monetary")
     entity_class = Individus
@@ -124,9 +124,9 @@ class f6rs(Variable):
   # (f6rs, f6rt, f6ru)))
 
 class f6ss(Variable):
-    cerfa_field = {QUIFOY['vous']: u"6SS",
-        QUIFOY['conj']: u"6ST",
-        QUIFOY['pac1']: u"6SU",
+    cerfa_field = {
+        DECLARANT: [ u"6SS", u"6ST"],
+        PERSONNE_A_CHARGE: u"6SU",
         }
     column = IntCol(val_type = "monetary")
     entity_class = Individus

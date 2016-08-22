@@ -83,9 +83,9 @@ class f7vc(Variable):
 
 # Cotisations syndicales des salariées et pensionnés
 class f7ac(Variable):
-    cerfa_field = {QUIFOY['vous']: u"7AC",
-        QUIFOY['conj']: u"7AE",
-        QUIFOY['pac1']: u"7AG",
+    cerfa_field = {
+        DECLARANT: [ u"7AC", u"7AE"],
+        PERSONNE_A_CHARGE: u"7AG",
         }
     column = IntCol(val_type = "monetary")
     entity_class = Individus

@@ -23,8 +23,8 @@ from openfisca_france.model.base import *  # noqa
 # après l'underscore : abbréviation du label de la case
 
 class f5qm(Variable):
-    cerfa_field = {QUIFOY['vous']: u"5QM",
-        QUIFOY['conj']: u"5RM",
+    cerfa_field = {
+        DECLARANT: [ u"5QM", u"5RM"],
         }
     column = IntCol(val_type = "monetary")
     entity_class = Individus
@@ -34,9 +34,9 @@ class f5qm(Variable):
 
 # Revenus des professions non salariées
 class ppe_du_ns(Variable):
-    cerfa_field = {QUIFOY['vous']: u"5NV",
-        QUIFOY['conj']: u"5OV",
-        QUIFOY['pac1']: u"5PV",
+    cerfa_field = {
+        DECLARANT: [ u"5NV", u"5OV"],
+        PERSONNE_A_CHARGE: u"5PV",
         }
     column = IntCol
     entity_class = Individus
@@ -46,9 +46,9 @@ class ppe_du_ns(Variable):
   # (f5nv, f5ov, f5pv)
 
 class ppe_tp_ns(Variable):
-    cerfa_field = {QUIFOY['vous']: u"5NW",
-        QUIFOY['conj']: u"5OW",
-        QUIFOY['pac1']: u"5PW",
+    cerfa_field = {
+        DECLARANT: [ u"5NW", u"5OW"],
+        PERSONNE_A_CHARGE: u"5PW",
         }
     column = BoolCol
     entity_class = Individus
@@ -58,9 +58,10 @@ class ppe_tp_ns(Variable):
   # (f5nw, f5ow, f5pw)
 
 class frag_exon(Variable):
-    cerfa_field = {QUIFOY['vous']: u"5HN",
-        QUIFOY['conj']: u"5IN",
-        QUIFOY['pac1']: u"5JN", }
+    cerfa_field = {
+        DECLARANT: [ u"5HN", u"5IN"],
+        PERSONNE_A_CHARGE: u"5JN",
+        }
     column = IntCol(val_type = "monetary")
     entity_class = Individus
     label = u"Revenus agricoles exonérés (régime du forfait)"
@@ -69,9 +70,10 @@ class frag_exon(Variable):
   # (f5hn, f5in, f5jn))
 
 class frag_impo(Variable):
-    cerfa_field = {QUIFOY['vous']: u"5HO",
-        QUIFOY['conj']: u"5IO",
-        QUIFOY['pac1']: u"5JO", }
+    cerfa_field = {
+        DECLARANT: [ u"5HO", u"5IO"],
+        PERSONNE_A_CHARGE: u"5JO",
+        }
     column = IntCol(val_type = "monetary")
     entity_class = Individus
     label = u"Revenus agricoles imposables (régime du forfait)"
@@ -80,9 +82,10 @@ class frag_impo(Variable):
   # (f5ho, f5io, f5jo))
 
 class arag_exon(Variable):
-    cerfa_field = {QUIFOY['vous']: u"5HB",
-        QUIFOY['conj']: u"5IB",
-        QUIFOY['pac1']: u"5JB", }
+    cerfa_field = {
+        DECLARANT: [ u"5HB", u"5IB"],
+        PERSONNE_A_CHARGE: u"5JB",
+        }
     column = IntCol(val_type = "monetary")
     entity_class = Individus
     label = u"Revenus agricoles exonérés yc plus-values (Régime du bénéfice réel, revenus bénéficiant de l'abattement CGA ou viseur), activités exercées en Corse"
@@ -91,9 +94,10 @@ class arag_exon(Variable):
   # (f5hb, f5ib, f5jb))
 
 class arag_impg(Variable):
-    cerfa_field = {QUIFOY['vous']: u"5HC",
-        QUIFOY['conj']: u"5IC",
-        QUIFOY['pac1']: u"5JC", }
+    cerfa_field = {
+        DECLARANT: [ u"5HC", u"5IC"],
+        PERSONNE_A_CHARGE: u"5JC",
+        }
     column = IntCol(val_type = "monetary")
     entity_class = Individus
     label = u"Revenus agricoles imposables, cas général moyenne triennale (Régime du bénéfice réel, revenus bénéficiant de l'abattement CGA ou viseur)"
@@ -102,9 +106,10 @@ class arag_impg(Variable):
   # (f5hc, f5ic, f5jc))
 
 class arag_defi(Variable):
-    cerfa_field = {QUIFOY['vous']: u"5HF",
-        QUIFOY['conj']: u"5IF",
-        QUIFOY['pac1']: u"5JF", }
+    cerfa_field = {
+        DECLARANT: [ u"5HF", u"5IF"],
+        PERSONNE_A_CHARGE: u"5JF",
+        }
     column = IntCol(val_type = "monetary")
     entity_class = Individus
     label = u"Déficits agricoles (Régime du bénéfice réel, revenus bénéficiant de l'abattement CGA ou viseur)"
@@ -113,9 +118,10 @@ class arag_defi(Variable):
   # (f5hf, f5if, f5jf))
 
 class nrag_exon(Variable):
-    cerfa_field = {QUIFOY['vous']: u"5HH",
-        QUIFOY['conj']: u"5IH",
-        QUIFOY['pac1']: u"5JH", }
+    cerfa_field = {
+        DECLARANT: [ u"5HH", u"5IH"],
+        PERSONNE_A_CHARGE: u"5JH",
+        }
     column = IntCol(val_type = "monetary")
     entity_class = Individus
     label = u"Revenus agricoles exonérés yc plus-values (Régime du bénéfice réel, revenus ne bénéficiant pas de l'abattement CGA ou viseur), activités exercées en Corse"
@@ -124,9 +130,10 @@ class nrag_exon(Variable):
   # (f5hh, f5ih, f5jh))
 
 class nrag_impg(Variable):
-    cerfa_field = {QUIFOY['vous']: u"5HI",
-        QUIFOY['conj']: u"5II",
-        QUIFOY['pac1']: u"5JI", }
+    cerfa_field = {
+        DECLARANT: [ u"5HI", u"5II"],
+        PERSONNE_A_CHARGE: u"5JI",
+        }
     column = IntCol(val_type = "monetary")
     entity_class = Individus
     label = u"Revenus agricoles imposables, cas général moyenne triennale (Régime du bénéfice réel, revenus ne bénéficiant pas de l'abattement CGA ou viseur)"
@@ -135,9 +142,10 @@ class nrag_impg(Variable):
   # (f5hi, f5ii, f5ji))
 
 class nrag_defi(Variable):
-    cerfa_field = {QUIFOY['vous']: u"5HL",
-        QUIFOY['conj']: u"5IL",
-        QUIFOY['pac1']: u"5JL", }
+    cerfa_field = {
+        DECLARANT: [ u"5HL", u"5IL"],
+        PERSONNE_A_CHARGE: u"5JL",
+        }
     column = IntCol(val_type = "monetary")
     entity_class = Individus
     label = u"Déficits agricoles (Régime du bénéfice réel, revenus ne bénéficiant pas de l'abattement CGA ou viseur)"
@@ -146,9 +154,10 @@ class nrag_defi(Variable):
   # (f5hl, f5il, f5jl))
 
 class nrag_ajag(Variable):
-    cerfa_field = {QUIFOY['vous']: u"5HM",
-        QUIFOY['conj']: u"5IM",
-        QUIFOY['pac1']: u"5JM", }
+    cerfa_field = {
+        DECLARANT: [ u"5HM", u"5IM"],
+        PERSONNE_A_CHARGE: u"5JM",
+        }
     column = IntCol(val_type = "monetary")
     entity_class = Individus
     label = u"Jeunes agriculteurs, Abattement de 50% ou 100% (Régime du bénéfice réel, revenus bénéficiant de l'abattement CGA ou viseur)"
@@ -158,9 +167,10 @@ class nrag_ajag(Variable):
 
 # Autoentrepreneur
 class ebic_impv(Variable):
-    cerfa_field = {QUIFOY['vous']: u"5TA",
-        QUIFOY['conj']: u"5UA",
-        QUIFOY['pac1']: u"5VA", }
+    cerfa_field = {
+        DECLARANT: [ u"5TA", u"5UA"],
+        PERSONNE_A_CHARGE: u"5VA",
+        }
     column = IntCol(val_type = "monetary")
     entity_class = Individus
     label = u"Revenus industriels et commerciaux professionnels imposables: vente de marchandises et assimilées (régime auto-entrepreneur)"
@@ -170,9 +180,10 @@ class ebic_impv(Variable):
   # (f5ta, f5ua, f5va))
 
 class ebic_imps(Variable):
-    cerfa_field = {QUIFOY['vous']: u"5TB",
-        QUIFOY['conj']: u"5UB",
-        QUIFOY['pac1']: u"5VB", }
+    cerfa_field = {
+        DECLARANT: [ u"5TB", u"5UB"],
+        PERSONNE_A_CHARGE: u"5VB",
+        }
     column = IntCol(val_type = "monetary")
     entity_class = Individus
     label = u"Revenus industriels et commerciaux professionnels imposables: prestations de services et locations meublées (régime auto-entrepreneur)"
@@ -182,9 +193,10 @@ class ebic_imps(Variable):
   # (f5tb, f5ub, f5vb))
 
 class ebnc_impo(Variable):
-    cerfa_field = {QUIFOY['vous']: u"5TE",
-        QUIFOY['conj']: u"5UE",
-        QUIFOY['pac1']: u"5VE", }
+    cerfa_field = {
+        DECLARANT: [ u"5TE", u"5UE"],
+        PERSONNE_A_CHARGE: u"5VE",
+        }
     column = IntCol(val_type = "monetary")
     entity_class = Individus
     label = u"Revenus non commerciaux (régime auto-entrepreneur ayant opté pour le versement libératoire)"
@@ -194,9 +206,10 @@ class ebnc_impo(Variable):
   # (f5te, f5ue, f5ve))
 
 class mbic_exon(Variable):
-    cerfa_field = {QUIFOY['vous']: u"5KN",
-        QUIFOY['conj']: u"5LN",
-        QUIFOY['pac1']: u"5MN", }
+    cerfa_field = {
+        DECLARANT: [ u"5KN", u"5LN"],
+        PERSONNE_A_CHARGE: u"5MN",
+        }
     column = IntCol(val_type = "monetary")
     entity_class = Individus
     label = u"Revenus industriels et commerciaux professionnels nets exonérés (régime micro entreprise)"
@@ -204,9 +217,10 @@ class mbic_exon(Variable):
   # (f5kn, f5ln, f5mn))
 
 class abic_exon(Variable):
-    cerfa_field = {QUIFOY['vous']: u"5KB",
-        QUIFOY['conj']: u"5LB",
-        QUIFOY['pac1']: u"5MB", }
+    cerfa_field = {
+        DECLARANT: [ u"5KB", u"5LB"],
+        PERSONNE_A_CHARGE: u"5MB",
+        }
     column = IntCol(val_type = "monetary")
     entity_class = Individus
     label = u"Revenus industriels et commerciaux nets exonérés yc plus-values avec CGA ou viseur (régime du bénéfice réel)"
@@ -214,9 +228,10 @@ class abic_exon(Variable):
   # (f5kb, f5lb, f5mb))
 
 class nbic_exon(Variable):
-    cerfa_field = {QUIFOY['vous']: u"5KH",
-        QUIFOY['conj']: u"5LH",
-        QUIFOY['pac1']: u"5MH", }
+    cerfa_field = {
+        DECLARANT: [ u"5KH", u"5LH"],
+        PERSONNE_A_CHARGE: u"5MH",
+        }
     column = IntCol(val_type = "monetary")
     entity_class = Individus
     label = u"Revenus industriels et commerciaux nets exonérés yc plus-values sans CGA (régime du bénéfice réel)"
@@ -224,9 +239,10 @@ class nbic_exon(Variable):
   # (f5kh, f5lh, f5mh))
 
 class mbic_impv(Variable):
-    cerfa_field = {QUIFOY['vous']: u"5KO",
-        QUIFOY['conj']: u"5LO",
-        QUIFOY['pac1']: u"5MO", }
+    cerfa_field = {
+        DECLARANT: [ u"5KO", u"5LO"],
+        PERSONNE_A_CHARGE: u"5MO",
+        }
     column = IntCol(val_type = "monetary")
     entity_class = Individus
     label = u"Revenus industriels et commerciaux professionnels imposables: vente de marchandises (régime micro entreprise)"
@@ -234,9 +250,10 @@ class mbic_impv(Variable):
   # (f5ko, f5lo, f5mo))
 
 class mbic_imps(Variable):
-    cerfa_field = {QUIFOY['vous']: u"5KP",
-        QUIFOY['conj']: u"5LP",
-        QUIFOY['pac1']: u"5MP", }
+    cerfa_field = {
+        DECLARANT: [ u"5KP", u"5LP"],
+        PERSONNE_A_CHARGE: u"5MP",
+        }
     column = IntCol(val_type = "monetary")
     entity_class = Individus
     label = u"Revenus industriels et commerciaux professionnels imposables: prestations de services et locations meublées (régime micro entreprise)"
@@ -244,9 +261,10 @@ class mbic_imps(Variable):
   # (f5kp, f5lp, f5mp))
 
 class abic_impn(Variable):
-    cerfa_field = {QUIFOY['vous']: u"5KC",
-        QUIFOY['conj']: u"5LC",
-        QUIFOY['pac1']: u"5MC", }
+    cerfa_field = {
+        DECLARANT: [ u"5KC", u"5LC"],
+        PERSONNE_A_CHARGE: u"5MC",
+        }
     column = IntCol(val_type = "monetary")
     entity_class = Individus
     label = u"Revenus industriels et commerciaux imposables: régime normal ou simplifié avec CGA ou viseur (régime du bénéfice réel)"
@@ -254,9 +272,10 @@ class abic_impn(Variable):
   # (f5kc, f5lc, f5mc))
 
 class abic_imps(Variable):
-    cerfa_field = {QUIFOY['vous']: u"5KD",
-        QUIFOY['conj']: u"5LD",
-        QUIFOY['pac1']: u"5MD", }
+    cerfa_field = {
+        DECLARANT: [ u"5KD", u"5LD"],
+        PERSONNE_A_CHARGE: u"5MD",
+        }
     column = IntCol(val_type = "monetary")
     entity_class = Individus
     label = u"Revenus industriels et commerciaux imposables: régime simplifié avec CGA ou viseur (régime du bénéfice réel)"
@@ -266,9 +285,10 @@ class abic_imps(Variable):
 
 
 class nbic_impn(Variable):
-    cerfa_field = {QUIFOY['vous']: u"5KI",
-        QUIFOY['conj']: u"5LI",
-        QUIFOY['pac1']: u"5MI", }
+    cerfa_field = {
+        DECLARANT: [ u"5KI", u"5LI"],
+        PERSONNE_A_CHARGE: u"5MI",
+        }
 
     column = IntCol(val_type = "monetary")
     entity_class = Individus
@@ -280,9 +300,10 @@ class nbic_impn(Variable):
 # réutilisation cases 2013
 # """
 class nbic_imps(Variable):
-    cerfa_field = {QUIFOY['vous']: u"5KJ",
-        QUIFOY['conj']: u"5LJ",
-        QUIFOY['pac1']: u"5MJ", }
+    cerfa_field = {
+        DECLARANT: [ u"5KJ", u"5LJ"],
+        PERSONNE_A_CHARGE: u"5MJ",
+        }
     column = IntCol(val_type = "monetary")
     entity_class = Individus
     label = u"Revenus industriels et commerciaux professionnels imposables: régime simplifié sans CGA (régime du bénéfice réel)"
@@ -291,9 +312,10 @@ class nbic_imps(Variable):
  # TODO: c'est 5HU pour les années anciennes
 
 class nbic_mvct(Variable):
-    cerfa_field = {QUIFOY['vous']: u"5KJ",
-        QUIFOY['conj']: u"5LJ",
-        QUIFOY['pac1']: u"5MJ", }
+    cerfa_field = {
+        DECLARANT: [ u"5KJ", u"5LJ"],
+        PERSONNE_A_CHARGE: u"5MJ",
+        }
     column = IntCol(val_type = "monetary")
     entity_class = Individus
     label = u"Revenus industriels et commerciaux professionnels moins-values nettes à court terme"
@@ -303,9 +325,10 @@ class nbic_mvct(Variable):
                                                           # vérifier date début #####à intégrer dans OF#######
 
 class abic_defn(Variable):
-    cerfa_field = {QUIFOY['vous']: u"5KF",
-        QUIFOY['conj']: u"5LF",
-        QUIFOY['pac1']: u"5MF", }
+    cerfa_field = {
+        DECLARANT: [ u"5KF", u"5LF"],
+        PERSONNE_A_CHARGE: u"5MF",
+        }
     column = IntCol(val_type = "monetary")
     entity_class = Individus
     label = u"Déficits industriels et commerciaux: régime normal ou simplifié avec CGA ou viseur (régime du bénéfice réel)"
@@ -313,9 +336,10 @@ class abic_defn(Variable):
   # (f5kf, f5lf, f5mf))
 
 class abic_defs(Variable):
-    cerfa_field = {QUIFOY['vous']: u"5KG",
-        QUIFOY['conj']: u"5LG",
-        QUIFOY['pac1']: u"5MG", }
+    cerfa_field = {
+        DECLARANT: [ u"5KG", u"5LG"],
+        PERSONNE_A_CHARGE: u"5MG",
+        }
     column = IntCol(val_type = "monetary")
     entity_class = Individus
     label = u"Déficits industriels et commerciaux: simplifié avec CGA ou viseur (régime du bénéfice réel)"
@@ -325,9 +349,10 @@ class abic_defs(Variable):
                                                           # vérif <=2012
 
 class nbic_defn(Variable):
-    cerfa_field = {QUIFOY['vous']: u"5KL",
-        QUIFOY['conj']: u"5LL",
-        QUIFOY['pac1']: u"5ML", }
+    cerfa_field = {
+        DECLARANT: [ u"5KL", u"5LL"],
+        PERSONNE_A_CHARGE: u"5ML",
+        }
     column = IntCol(val_type = "monetary")
     entity_class = Individus
     label = u"Déficits industriels et commerciaux: régime normal ou simplifié sans CGA (régime du bénéfice réel)"
@@ -335,9 +360,10 @@ class nbic_defn(Variable):
   # (f5kl, f5ll, f5ml))
 
 class nbic_defs(Variable):
-    cerfa_field = {QUIFOY['vous']: u"5KM",
-        QUIFOY['conj']: u"5LM",
-        QUIFOY['pac1']: u"5MM", }
+    cerfa_field = {
+        DECLARANT: [ u"5KM", u"5LM"],
+        PERSONNE_A_CHARGE: u"5MM",
+        }
     column = IntCol(val_type = "monetary")
     entity_class = Individus
     label = u"Locations déjà soumises aux prélèvements sociaux sans CGA (régime du bénéfice réel)"
@@ -346,9 +372,10 @@ class nbic_defs(Variable):
   # (f5km, f5lm, f5mm))
 
 class nbic_apch(Variable):
-    cerfa_field = {QUIFOY['vous']: u"5KS",
-        QUIFOY['conj']: u"5LS",
-        QUIFOY['pac1']: u"5MS", }
+    cerfa_field = {
+        DECLARANT: [ u"5KS", u"5LS"],
+        PERSONNE_A_CHARGE: u"5MS",
+        }
     column = IntCol(val_type = "monetary")
     entity_class = Individus
     label = u"Artisans pêcheurs : abattement 50% avec CGA ou viseur (régime du bénéfice réel)"
@@ -356,9 +383,10 @@ class nbic_apch(Variable):
   # (f5ks, f5ls, f5ms))
 
 class macc_exon(Variable):
-    cerfa_field = {QUIFOY['vous']: u"5NN",
-        QUIFOY['conj']: u"5ON",
-        QUIFOY['pac1']: u"5PN", }
+    cerfa_field = {
+        DECLARANT: [ u"5NN", u"5ON"],
+        PERSONNE_A_CHARGE: u"5PN",
+        }
     column = IntCol(val_type = "monetary")
     entity_class = Individus
     label = u"Revenus industriels et commerciaux non professionnels nets exonérés (régime micro entreprise)"
@@ -366,9 +394,10 @@ class macc_exon(Variable):
   # (f5nn, f5on, f5pn))
 
 class aacc_exon(Variable):
-    cerfa_field = {QUIFOY['vous']: u"5NB",
-        QUIFOY['conj']: u"5OB",
-        QUIFOY['pac1']: u"5PB", }
+    cerfa_field = {
+        DECLARANT: [ u"5NB", u"5OB"],
+        PERSONNE_A_CHARGE: u"5PB",
+        }
     column = IntCol(val_type = "monetary")
     entity_class = Individus
     label = u"Revenus industriels et commerciaux non professionnels exonérés yc plus-values avec CGA ou viseur (régime du bénéfice réel)"
@@ -376,9 +405,10 @@ class aacc_exon(Variable):
   # (f5nb, f5ob, f5pb))
 
 class nacc_exon(Variable):
-    cerfa_field = {QUIFOY['vous']: u"5NH",
-        QUIFOY['conj']: u"5OH",
-        QUIFOY['pac1']: u"5PH", }
+    cerfa_field = {
+        DECLARANT: [ u"5NH", u"5OH"],
+        PERSONNE_A_CHARGE: u"5PH",
+        }
     column = IntCol(val_type = "monetary")
     entity_class = Individus
     label = u"Revenus industriels et commerciaux non professionnels exonérés yc plus-values sans CGA (régime du bénéfice réel)"
@@ -386,9 +416,10 @@ class nacc_exon(Variable):
   # (f5nh, f5oh, f5ph))
 
 class macc_impv(Variable):
-    cerfa_field = {QUIFOY['vous']: u"5NO",
-        QUIFOY['conj']: u"5OO",
-        QUIFOY['pac1']: u"5PO", }
+    cerfa_field = {
+        DECLARANT: [ u"5NO", u"5OO"],
+        PERSONNE_A_CHARGE: u"5PO",
+        }
     column = IntCol(val_type = "monetary")
     entity_class = Individus
     label = u"Revenus industriels et commerciaux non professionnels imposables: vente de marchandises et assimilées (régime micro entreprise)"
@@ -396,9 +427,10 @@ class macc_impv(Variable):
   # (f5no, f5oo, f5po))
 
 class macc_imps(Variable):
-    cerfa_field = {QUIFOY['vous']: u"5NP",
-        QUIFOY['conj']: u"5OP",
-        QUIFOY['pac1']: u"5PP", }
+    cerfa_field = {
+        DECLARANT: [ u"5NP", u"5OP"],
+        PERSONNE_A_CHARGE: u"5PP",
+        }
     column = IntCol(val_type = "monetary")
     entity_class = Individus
     label = u"Revenus industriels et commerciaux non professionnels imposables: prestations de services (régime micro entreprise)"
@@ -406,9 +438,10 @@ class macc_imps(Variable):
   # (f5np, f5op, f5pp))
 
 class aacc_impn(Variable):
-    cerfa_field = {QUIFOY['vous']: u"5NC",
-        QUIFOY['conj']: u"5OC",
-        QUIFOY['pac1']: u"5PC", }
+    cerfa_field = {
+        DECLARANT: [ u"5NC", u"5OC"],
+        PERSONNE_A_CHARGE: u"5PC",
+        }
     column = IntCol(val_type = "monetary")
     entity_class = Individus
     label = u"Revenus industriels et commerciaux non professionnels imposables: régime normal ou simplifié avec CGA ou viseur (régime du bénéfice réel)"
@@ -416,9 +449,10 @@ class aacc_impn(Variable):
   # (f5nc, f5oc, f5pc))
 
 class aacc_imps(Variable):
-    cerfa_field = {QUIFOY['vous']: u"5ND",
-        QUIFOY['conj']: u"5OD",
-        QUIFOY['pac1']: u"5PD", }
+    cerfa_field = {
+        DECLARANT: [ u"5ND", u"5OD"],
+        PERSONNE_A_CHARGE: u"5PD",
+        }
     column = IntCol(val_type = "monetary")
     entity_class = Individus
     label = u"Locations meublées non professionnelles (régime micro entreprise)"
@@ -427,9 +461,10 @@ class aacc_imps(Variable):
   # (f5nd, f5od, f5pd)) #TODO: avant 2010
 
 class aacc_defn(Variable):
-    cerfa_field = {QUIFOY['vous']: u"5NF",
-        QUIFOY['conj']: u"5OF",
-        QUIFOY['pac1']: u"5PF", }
+    cerfa_field = {
+        DECLARANT: [ u"5NF", u"5OF"],
+        PERSONNE_A_CHARGE: u"5PF",
+        }
     column = IntCol(val_type = "monetary")
     entity_class = Individus
     label = u"Déficits industriels et commerciaux non professionnels: régime normal ou simplifié avec CGA ou viseur (régime du bénéfice réel)"
@@ -437,9 +472,10 @@ class aacc_defn(Variable):
   # (f5nf, f5of, f5pf))
 
 class aacc_gits(Variable):
-    cerfa_field = {QUIFOY['vous']: u"5NG",
-        QUIFOY['conj']: u"5OG",
-        QUIFOY['pac1']: u"5PG", }
+    cerfa_field = {
+        DECLARANT: [ u"5NG", u"5OG"],
+        PERSONNE_A_CHARGE: u"5PG",
+        }
     column = IntCol(val_type = "monetary")
     entity_class = Individus
     label = u"Location de gîtes ruraux, chambres d'hôtes et meublés de tourisme (régime micro entreprise)"
@@ -448,9 +484,10 @@ class aacc_gits(Variable):
   # (f5ng, f5og, f5pg))
 
 class nacc_impn(Variable):
-    cerfa_field = {QUIFOY['vous']: u"5NI",
-        QUIFOY['conj']: u"5OI",
-        QUIFOY['pac1']: u"5PI", }
+    cerfa_field = {
+        DECLARANT: [ u"5NI", u"5OI"],
+        PERSONNE_A_CHARGE: u"5PI",
+        }
     column = IntCol(val_type = "monetary")
     entity_class = Individus
     label = u"Revenus industriels et commerciaux non professionnels imposables: régime normal ou simplifié sans CGA (régime du bénéfice réel)"
@@ -458,9 +495,10 @@ class nacc_impn(Variable):
   # (f5ni, f5oi, f5pi))
 
 class aacc_defs(Variable):
-    cerfa_field = {QUIFOY['vous']: u"5NG",
-        QUIFOY['conj']: u"5OG",
-        QUIFOY['pac1']: u"5PG", }
+    cerfa_field = {
+        DECLARANT: [ u"5NG", u"5OG"],
+        PERSONNE_A_CHARGE: u"5PG",
+        }
     column = IntCol(val_type = "monetary")
     entity_class = Individus
     label = u"Déficits de revenus industriels et commerciaux non professionnels avec CGA (régime simplifié du bénéfice réel)"
@@ -469,9 +507,10 @@ class aacc_defs(Variable):
 
 
 class nacc_meup(Variable):
-    cerfa_field = {QUIFOY['vous']: u"5NJ",
-        QUIFOY['conj']: u"5OJ",
-        QUIFOY['pac1']: u"5PJ", }
+    cerfa_field = {
+        DECLARANT: [ u"5NJ", u"5OJ"],
+        PERSONNE_A_CHARGE: u"5PJ",
+        }
     column = IntCol(val_type = "monetary")
     entity_class = Individus
     label = u"Locations meublées non professionnelles: Locations déjà soumises aux prélèvements sociaux (régime micro entreprise)"
@@ -480,9 +519,10 @@ class nacc_meup(Variable):
   # (f5nj, f5oj, f5pj)) #TODO: dates 5PJ, 5PG, 5PD, 5OM
 
 class nacc_defn(Variable):
-    cerfa_field = {QUIFOY['vous']: u"5NL",
-        QUIFOY['conj']: u"5OL",
-        QUIFOY['pac1']: u"5PL", }
+    cerfa_field = {
+        DECLARANT: [ u"5NL", u"5OL"],
+        PERSONNE_A_CHARGE: u"5PL",
+        }
     column = IntCol(val_type = "monetary")
     entity_class = Individus
     label = u"Déficits industriels et commerciaux non professionnels: régime normal ou simplifié sans CGA (régime du bénéfice réel)"
@@ -490,9 +530,10 @@ class nacc_defn(Variable):
   # (f5nl, f5ol, f5pl))
 
 class nacc_defs(Variable):
-    cerfa_field = {QUIFOY['vous']: u"5NM",
-        QUIFOY['conj']: u"5OM",
-        QUIFOY['pac1']: u"5PM", }
+    cerfa_field = {
+        DECLARANT: [ u"5NM", u"5OM"],
+        PERSONNE_A_CHARGE: u"5PM",
+        }
     column = IntCol(val_type = "monetary")
     entity_class = Individus
     label = u"Locations meublées non professionnelles: Gîtes ruraux et chambres d'hôtes déjà soumis aux prélèvements sociaux avec CGA (régime du bénéfice réel)"
@@ -501,9 +542,10 @@ class nacc_defs(Variable):
   # (f5nm, f5om, f5pm)) #TODO autres 5NM
 
 class mncn_impo(Variable):
-    cerfa_field = {QUIFOY['vous']: u"5KU",
-        QUIFOY['conj']: u"5LU",
-        QUIFOY['pac1']: u"5MU", }
+    cerfa_field = {
+        DECLARANT: [ u"5KU", u"5LU"],
+        PERSONNE_A_CHARGE: u"5MU",
+        }
     column = IntCol(val_type = "monetary")
     entity_class = Individus
     label = u"Revenus non commerciaux non professionnels imposables (régime déclaratif spécial ou micro BNC)"
@@ -511,9 +553,10 @@ class mncn_impo(Variable):
   # (f5ku, f5lu, f5mu))
 
 class cncn_bene(Variable):
-    cerfa_field = {QUIFOY['vous']: u"5SN",
-        QUIFOY['conj']: u"5NS",
-        QUIFOY['pac1']: u"5OS", }
+    cerfa_field = {
+        DECLARANT: [ u"5SN", u"5NS"],
+        PERSONNE_A_CHARGE: u"5OS",
+        }
     column = IntCol(val_type = "monetary")
     entity_class = Individus
     label = u"Revenus non commerciaux non professionnels imposables sans AA (régime de la déclaration controlée)"
@@ -522,9 +565,10 @@ class cncn_bene(Variable):
   # (f5sn, f5ns, f5os))
 
 class cncn_defi(Variable):
-    cerfa_field = {QUIFOY['vous']: u"5SP",
-        QUIFOY['conj']: u"5NU",
-        QUIFOY['pac1']: u"5OU", }
+    cerfa_field = {
+        DECLARANT: [ u"5SP", u"5NU"],
+        PERSONNE_A_CHARGE: u"5OU",
+        }
     column = IntCol(val_type = "monetary")
     entity_class = Individus
     label = u"Déficits non commerciaux non professionnels sans AA (régime de la déclaration controlée)"
@@ -534,9 +578,10 @@ class cncn_defi(Variable):
                                                                   # pas de f5sr en 2013
 
 class mbnc_exon(Variable):
-    cerfa_field = {QUIFOY['vous']: u"5HP",
-        QUIFOY['conj']: u"5IP",
-        QUIFOY['pac1']: u"5JP", }
+    cerfa_field = {
+        DECLARANT: [ u"5HP", u"5IP"],
+        PERSONNE_A_CHARGE: u"5JP",
+        }
     column = IntCol(val_type = "monetary")
     entity_class = Individus
     label = u"Revenus non commerciaux professionnels nets exonérés (régime déclaratif spécial ou micro BNC)"
@@ -544,9 +589,10 @@ class mbnc_exon(Variable):
   # (f5hp, f5ip, f5jp))
 
 class abnc_exon(Variable):
-    cerfa_field = {QUIFOY['vous']: u"5QB",
-        QUIFOY['conj']: u"5RB",
-        QUIFOY['pac1']: u"5SB", }
+    cerfa_field = {
+        DECLARANT: [ u"5QB", u"5RB"],
+        PERSONNE_A_CHARGE: u"5SB",
+        }
     column = IntCol(val_type = "monetary")
     entity_class = Individus
     label = u"Revenus non commerciaux professionnels exonérés (yc compris plus-values) (régime de la déclaration controlée, revenus bénéficiant de l'abattement association agrée ou viseur)"
@@ -554,9 +600,10 @@ class abnc_exon(Variable):
   # (f5qb, f5rb, f5sb))
 
 class nbnc_exon(Variable):
-    cerfa_field = {QUIFOY['vous']: u"5QH",
-        QUIFOY['conj']: u"5RH",
-        QUIFOY['pac1']: u"5SH", }
+    cerfa_field = {
+        DECLARANT: [ u"5QH", u"5RH"],
+        PERSONNE_A_CHARGE: u"5SH",
+        }
     column = IntCol(val_type = "monetary")
     entity_class = Individus
     label = u"Revenus non commerciaux professionnels exonérés (yc compris plus-values) (régime de la déclaration controlée, revenus ne bénéficiant pas de l'abattement association agrée)"
@@ -564,9 +611,10 @@ class nbnc_exon(Variable):
   # (f5qh, f5rh, f5sh))
 
 class mbnc_impo(Variable):
-    cerfa_field = {QUIFOY['vous']: u"5HQ",
-        QUIFOY['conj']: u"5IQ",
-        QUIFOY['pac1']: u"5JQ", }
+    cerfa_field = {
+        DECLARANT: [ u"5HQ", u"5IQ"],
+        PERSONNE_A_CHARGE: u"5JQ",
+        }
     column = IntCol(val_type = "monetary")
     entity_class = Individus
     label = u"Revenus non commerciaux professionnels imposables (régime déclaratif spécial ou micro BNC)"
@@ -574,9 +622,10 @@ class mbnc_impo(Variable):
   # (f5hq, f5iq, f5jq))
 
 class abnc_impo(Variable):
-    cerfa_field = {QUIFOY['vous']: u"5QC",
-        QUIFOY['conj']: u"5RC",
-        QUIFOY['pac1']: u"5SC", }
+    cerfa_field = {
+        DECLARANT: [ u"5QC", u"5RC"],
+        PERSONNE_A_CHARGE: u"5SC",
+        }
     column = IntCol(val_type = "monetary")
     entity_class = Individus
     label = u"Revenus non commerciaux professionnels imposables (régime de la déclaration controlée, revenus bénéficiant de l'abattement association agrée ou viseur)"
@@ -584,9 +633,10 @@ class abnc_impo(Variable):
   # (f5qc, f5rc, f5sc))
 
 class abnc_defi(Variable):
-    cerfa_field = {QUIFOY['vous']: u"5QE",
-        QUIFOY['conj']: u"5RE",
-        QUIFOY['pac1']: u"5SE", }
+    cerfa_field = {
+        DECLARANT: [ u"5QE", u"5RE"],
+        PERSONNE_A_CHARGE: u"5SE",
+        }
     column = IntCol(val_type = "monetary")
     entity_class = Individus
     label = u"Déficits non commerciaux professionnels (régime de la déclaration controlée, revenus bénéficiant de l'abattement association agrée ou viseur)"
@@ -594,9 +644,10 @@ class abnc_defi(Variable):
   # (f5qe, f5re, f5se))
 
 class nbnc_impo(Variable):
-    cerfa_field = {QUIFOY['vous']: u"5QI",
-        QUIFOY['conj']: u"5RI",
-        QUIFOY['pac1']: u"5SI", }
+    cerfa_field = {
+        DECLARANT: [ u"5QI", u"5RI"],
+        PERSONNE_A_CHARGE: u"5SI",
+        }
     column = IntCol(val_type = "monetary")
     entity_class = Individus
     label = u"Revenus non commerciaux professionnels imposables (régime de la déclaration controlée, revenus ne bénéficiant pas de l'abattement association agrée)"
@@ -604,9 +655,10 @@ class nbnc_impo(Variable):
   # (f5qi, f5ri, f5si))
 
 class nbnc_defi(Variable):
-    cerfa_field = {QUIFOY['vous']: u"5QK",
-        QUIFOY['conj']: u"5RK",
-        QUIFOY['pac1']: u"5SK", }
+    cerfa_field = {
+        DECLARANT: [ u"5QK", u"5RK"],
+        PERSONNE_A_CHARGE: u"5SK",
+        }
     column = IntCol(val_type = "monetary")
     entity_class = Individus
     label = u"Déficits non commerciaux professionnels (régime de la déclaration controlée, revenus ne bénéficiant pas de l'abattement association agrée)"
@@ -640,9 +692,10 @@ class mncn_mvct(Variable):
   # (f5ju))
 
 class mbnc_mvct(Variable):
-    cerfa_field = {QUIFOY['vous']: u"5KZ", #TODO: pb cerfa field
-        QUIFOY['conj']: u"5LZ",
-        QUIFOY['pac1']: u"5MZ", }
+    cerfa_field = {
+        DECLARANT: [ u"5KZ", u"5LZ"], #TODO: pb cerfa field
+        PERSONNE_A_CHARGE: u"5MZ",
+        }
     column = IntCol(val_type = "monetary")
     entity_class = Individus
     label = u"Moins-values non commerciales professionnelles nettes à court terme (régime déclaratif spécial ou micro BNC)"
@@ -652,9 +705,10 @@ class mbnc_mvct(Variable):
 
 
 class frag_pvct(Variable):
-    cerfa_field = {QUIFOY['vous']: u"5HW",
-        QUIFOY['conj']: u"5IW",
-        QUIFOY['pac1']: u"5JW", }
+    cerfa_field = {
+        DECLARANT: [ u"5HW", u"5IW"],
+        PERSONNE_A_CHARGE: u"5JW",
+        }
     column = IntCol(val_type = "monetary")
     entity_class = Individus
     label = u"Plus-values agricoles  à court terme (régime du forfait)"
@@ -663,9 +717,10 @@ class frag_pvct(Variable):
   # (f5hw, f5iw, f5jw))
 
 class mbic_pvct(Variable):
-    cerfa_field = {QUIFOY['vous']: u"5KX",
-        QUIFOY['conj']: u"5LX",
-        QUIFOY['pac1']: u"5MX", }
+    cerfa_field = {
+        DECLARANT: [ u"5KX", u"5LX"],
+        PERSONNE_A_CHARGE: u"5MX",
+        }
     column = IntCol(val_type = "monetary")
     entity_class = Individus
     label = u"Plus-values industrielles et commerciales professionnels imposables: plus-values nettes à court terme (régime micro entreprise)"
@@ -673,9 +728,10 @@ class mbic_pvct(Variable):
   # (f5kx, f5lx, f5mx))
 
 class macc_pvct(Variable):
-    cerfa_field = {QUIFOY['vous']: u"5NX",
-        QUIFOY['conj']: u"5OX",
-        QUIFOY['pac1']: u"5PX", }
+    cerfa_field = {
+        DECLARANT: [ u"5NX", u"5OX"],
+        PERSONNE_A_CHARGE: u"5PX",
+        }
     column = IntCol(val_type = "monetary")
     entity_class = Individus
     label = u"Plus-values industrielles et commerciales non professionnelles imposables: plus-values nettes à court terme (régime micro entreprise)"
@@ -683,9 +739,10 @@ class macc_pvct(Variable):
   # (f5nx, f5ox, f5px))
 
 class mbnc_pvct(Variable):
-    cerfa_field = {QUIFOY['vous']: u"5HV",
-        QUIFOY['conj']: u"5IV",
-        QUIFOY['pac1']: u"5JV", }
+    cerfa_field = {
+        DECLARANT: [ u"5HV", u"5IV"],
+        PERSONNE_A_CHARGE: u"5JV",
+        }
     column = IntCol(val_type = "monetary")
     entity_class = Individus
     label = u"Plus-values non commerciales professionnelles imposables et Plus-values nettes à court terme (régime déclaratif spécial ou micro BNC)"
@@ -693,9 +750,10 @@ class mbnc_pvct(Variable):
   # (f5hv, f5iv, f5jv))
 
 class mncn_pvct(Variable):
-    cerfa_field = {QUIFOY['vous']: u"5KY",
-        QUIFOY['conj']: u"5LY",
-        QUIFOY['pac1']: u"5MY", }
+    cerfa_field = {
+        DECLARANT: [ u"5KY", u"5LY"],
+        PERSONNE_A_CHARGE: u"5MY",
+        }
     column = IntCol(val_type = "monetary")
     entity_class = Individus
     label = u"Plus-values non commerciales non professionnelles imposables et plus-values nettes à court terme (régime déclaratif spécial ou micro BNC)"
@@ -703,9 +761,10 @@ class mncn_pvct(Variable):
   # (f5ky, f5ly, f5my))
 
 class mbic_mvlt(Variable):
-    cerfa_field = {QUIFOY['vous']: u"5KR",
-        QUIFOY['conj']: u"5LR",
-        QUIFOY['pac1']: u"5MR", }
+    cerfa_field = {
+        DECLARANT: [ u"5KR", u"5LR"],
+        PERSONNE_A_CHARGE: u"5MR",
+        }
     column = IntCol(val_type = "monetary")
     entity_class = Individus
     label = u"Moins-values industrielles et commerciales professionnels à long terme (régime micro entreprise)"
@@ -713,9 +772,10 @@ class mbic_mvlt(Variable):
   # (f5kr, f5lr, f5mr))
 
 class macc_mvlt(Variable):
-    cerfa_field = {QUIFOY['vous']: u"5NR",
-        QUIFOY['conj']: u"5OR",
-        QUIFOY['pac1']: u"5PR", }
+    cerfa_field = {
+        DECLARANT: [ u"5NR", u"5OR"],
+        PERSONNE_A_CHARGE: u"5PR",
+        }
     column = IntCol(val_type = "monetary")
     entity_class = Individus
     label = u"Moins-values industrielles et commerciales non professionnelles à long terme (régime micro entreprise)"
@@ -723,9 +783,10 @@ class macc_mvlt(Variable):
   # (f5nr, f5or, f5pr))
 
 class mncn_mvlt(Variable):
-    cerfa_field = {QUIFOY['vous']: u"5KW",
-        QUIFOY['conj']: u"5LW",
-        QUIFOY['pac1']: u"5MW", }
+    cerfa_field = {
+        DECLARANT: [ u"5KW", u"5LW"],
+        PERSONNE_A_CHARGE: u"5MW",
+        }
     column = IntCol(val_type = "monetary")
     entity_class = Individus
     label = u"Moins-values non commerciales non professionnelles à long terme (régime déclaratif spécial ou micro BNC)"
@@ -733,9 +794,10 @@ class mncn_mvlt(Variable):
   # (f5kw, f5lw, f5mw))
 
 class mbnc_mvlt(Variable):
-    cerfa_field = {QUIFOY['vous']: u"5HS",
-        QUIFOY['conj']: u"5IS",
-        QUIFOY['pac1']: u"5JS", }
+    cerfa_field = {
+        DECLARANT: [ u"5HS", u"5IS"],
+        PERSONNE_A_CHARGE: u"5JS",
+        }
     column = IntCol(val_type = "monetary")
     entity_class = Individus
     label = u"Moins-values non commerciales professionnelles à long terme (régime déclaratif spécial ou micro BNC)"
@@ -743,9 +805,10 @@ class mbnc_mvlt(Variable):
   # (f5hs, f5is, f5js))
 
 class frag_pvce(Variable):
-    cerfa_field = {QUIFOY['vous']: u"5HX",
-        QUIFOY['conj']: u"5IX",
-        QUIFOY['pac1']: u"5JX", }
+    cerfa_field = {
+        DECLARANT: [ u"5HX", u"5IX"],
+        PERSONNE_A_CHARGE: u"5JX",
+        }
     column = IntCol(val_type = "monetary")
     entity_class = Individus
     label = u"Plus-values agricoles de cession taxables à 16% (régime du forfait)"
@@ -754,9 +817,10 @@ class frag_pvce(Variable):
   # (f5hx, f5ix, f5jx))
 
 class arag_pvce(Variable):
-    cerfa_field = {QUIFOY['vous']: u"5HE",
-        QUIFOY['conj']: u"5IE",
-        QUIFOY['pac1']: u"5JE", }
+    cerfa_field = {
+        DECLARANT: [ u"5HE", u"5IE"],
+        PERSONNE_A_CHARGE: u"5JE",
+        }
     column = IntCol(val_type = "monetary")
     entity_class = Individus
     label = u"Plus-values agricoles de cession taxables à 16% (Régime du bénéfice réel, revenus bénéficiant de l'abattement CGA ou viseur)"
@@ -765,9 +829,10 @@ class arag_pvce(Variable):
   # (f5he, f5ie, f5je))
 
 class nrag_pvce(Variable):
-    cerfa_field = {QUIFOY['vous']: u"5HK",
-        QUIFOY['conj']: u"5LK",
-        QUIFOY['pac1']: u"5JK", }
+    cerfa_field = {
+        DECLARANT: [ u"5HK", u"5LK"],
+        PERSONNE_A_CHARGE: u"5JK",
+        }
     column = IntCol(val_type = "monetary")
     entity_class = Individus
     label = u"Plus-values agricoles de cession taxables à 16% (Régime du bénéfice réel, revenus ne bénéficiant pas de l'abattement CGA ou viseur)"
@@ -776,9 +841,10 @@ class nrag_pvce(Variable):
   # TODO: vérif <=2012))  # (f5hk, f5lk, f5jk) codent autre chose sur d'autres années),
 
 class mbic_pvce(Variable):
-    cerfa_field = {QUIFOY['vous']: u"5KQ",
-        QUIFOY['conj']: u"5LQ",
-        QUIFOY['pac1']: u"5MQ", }
+    cerfa_field = {
+        DECLARANT: [ u"5KQ", u"5LQ"],
+        PERSONNE_A_CHARGE: u"5MQ",
+        }
     column = IntCol(val_type = "monetary")
     entity_class = Individus
     label = u"Plus-values industrielles et commerciales professionnelles imposables: plus-values de cession taxables à 16% (régime micro entreprise)"
@@ -786,9 +852,10 @@ class mbic_pvce(Variable):
   # (f5kq, f5lq, f5mq))
 
 class abic_pvce(Variable):
-    cerfa_field = {QUIFOY['vous']: u"5KE",
-        QUIFOY['conj']: u"5LE",
-        QUIFOY['pac1']: u"5ME", }
+    cerfa_field = {
+        DECLARANT: [ u"5KE", u"5LE"],
+        PERSONNE_A_CHARGE: u"5ME",
+        }
     column = IntCol(val_type = "monetary")
     entity_class = Individus
     label = u"Plus-values industrielles et commerciales de cession taxables à 16% avec CGA ou viseur (régime du bénéfice réel)"
@@ -796,9 +863,10 @@ class abic_pvce(Variable):
   # (f5ke, f5le, f5me))
 
 class nbic_pvce(Variable):
-    cerfa_field = {QUIFOY['vous']: u"5IK",
-        QUIFOY['conj']: u"5KK",
-        QUIFOY['pac1']: u"5MK", }
+    cerfa_field = {
+        DECLARANT: [ u"5IK", u"5KK"],
+        PERSONNE_A_CHARGE: u"5MK",
+        }
     column = IntCol(val_type = "monetary")
     entity_class = Individus
     label = u"Revenus non commerciaux non professionnels exonérés sans AA (régime de la déclaration controlée)"
@@ -807,9 +875,10 @@ class nbic_pvce(Variable):
   # (f5kk, f5ik, f5mk)) TODO: autre 5KK 2005/20006
 
 class macc_pvce(Variable):
-    cerfa_field = {QUIFOY['vous']: u"5NQ",
-        QUIFOY['conj']: u"5OQ",
-        QUIFOY['pac1']: u"5PQ", }
+    cerfa_field = {
+        DECLARANT: [ u"5NQ", u"5OQ"],
+        PERSONNE_A_CHARGE: u"5PQ",
+        }
     column = IntCol(val_type = "monetary")
     entity_class = Individus
     label = u"Plus-values industrielles et commerciales non professionnelles imposables: plus-values de cession taxables à 16% (régime micro entreprise)"
@@ -817,9 +886,10 @@ class macc_pvce(Variable):
   # (f5nq, f5oq, f5pq))
 
 class aacc_pvce(Variable):
-    cerfa_field = {QUIFOY['vous']: u"5NE",
-        QUIFOY['conj']: u"5OE",
-        QUIFOY['pac1']: u"5PE", }
+    cerfa_field = {
+        DECLARANT: [ u"5NE", u"5OE"],
+        PERSONNE_A_CHARGE: u"5PE",
+        }
     column = IntCol(val_type = "monetary")
     entity_class = Individus
     label = u"Plus-values industrielles et commerciales non professionnelles de cession taxables à 16% avec CGA ou viseur (régime du bénéfice réel)"
@@ -827,9 +897,10 @@ class aacc_pvce(Variable):
   # (f5ne, f5oe, f5pe))
 
 class nacc_pvce(Variable):
-    cerfa_field = {QUIFOY['vous']: u"5NK",
-        QUIFOY['conj']: u"5OK",
-        QUIFOY['pac1']: u"5PK", }
+    cerfa_field = {
+        DECLARANT: [ u"5NK", u"5OK"],
+        PERSONNE_A_CHARGE: u"5PK",
+        }
     column = IntCol(val_type = "monetary")
     entity_class = Individus
     label = u"Locations meublées non professionnelles: Revenus imposables sans CGA (régime du bénéfice réel)"
@@ -839,9 +910,10 @@ class nacc_pvce(Variable):
   # (f5nk, f5ok, f5pk)) TODO: 5NK 2005/2006
 
 class mncn_pvce(Variable):
-    cerfa_field = {QUIFOY['vous']: u"5KV",
-        QUIFOY['conj']: u"5LV",
-        QUIFOY['pac1']: u"5MV", }
+    cerfa_field = {
+        DECLARANT: [ u"5KV", u"5LV"],
+        PERSONNE_A_CHARGE: u"5MV",
+        }
     column = IntCol(val_type = "monetary")
     entity_class = Individus
     label = u"Plus-values non commerciales non professionnelles de cession taxables à 16% (régime déclaratif spécial ou micro BNC)"
@@ -849,9 +921,10 @@ class mncn_pvce(Variable):
   # (f5kv, f5lv, f5mv))
 
 class cncn_pvce(Variable):
-    cerfa_field = {QUIFOY['vous']: u"5SO",
-        QUIFOY['conj']: u"5NT",
-        QUIFOY['pac1']: u"5OT", }
+    cerfa_field = {
+        DECLARANT: [ u"5SO", u"5NT"],
+        PERSONNE_A_CHARGE: u"5OT",
+        }
     column = IntCol(val_type = "monetary")
     entity_class = Individus
     label = u"Plus-values non commerciales non professionnelles taxables à 16% avec AA ou viseur (régime de la déclaration controlée)"
@@ -860,9 +933,10 @@ class cncn_pvce(Variable):
   # (f5so, f5nt, f5ot))
 
 class mbnc_pvce(Variable):
-    cerfa_field = {QUIFOY['vous']: u"5HR",
-        QUIFOY['conj']: u"5IR",
-        QUIFOY['pac1']: u"5JR", }
+    cerfa_field = {
+        DECLARANT: [ u"5HR", u"5IR"],
+        PERSONNE_A_CHARGE: u"5JR",
+        }
     column = IntCol(val_type = "monetary")
     entity_class = Individus
     label = u"Plus-values non commerciales professionnelles de cession taxables à 16% (régime déclaratif spécial ou micro BNC)"
@@ -870,9 +944,10 @@ class mbnc_pvce(Variable):
   # (f5hr, f5ir, f5jr))
 
 class abnc_pvce(Variable):
-    cerfa_field = {QUIFOY['vous']: u"5QD",
-        QUIFOY['conj']: u"5RD",
-        QUIFOY['pac1']: u"5SD", }
+    cerfa_field = {
+        DECLARANT: [ u"5QD", u"5RD"],
+        PERSONNE_A_CHARGE: u"5SD",
+        }
     column = IntCol(val_type = "monetary")
     entity_class = Individus
     label = u"Plus-values non commerciaux professionnels de cession taxables à 16% (régime de la déclaration controlée, revenus bénéficiant de l'abattement association agrée ou viseur)"
@@ -880,9 +955,10 @@ class abnc_pvce(Variable):
   # (f5qd, f5rd, f5sd))
 
 class nbnc_pvce(Variable):
-    cerfa_field = {QUIFOY['vous']: u"5QJ",
-        QUIFOY['conj']: u"5RJ",
-        QUIFOY['pac1']: u"5SJ", }
+    cerfa_field = {
+        DECLARANT: [ u"5QJ", u"5RJ"],
+        PERSONNE_A_CHARGE: u"5SJ",
+        }
     column = IntCol(val_type = "monetary")
     entity_class = Individus
     label = u"Déficits industriels et commerciaux: locations meublées sans CGA (régime du bénéfice réel)"
@@ -891,9 +967,10 @@ class nbnc_pvce(Variable):
   # (f5qj, f5rj, f5sj)) #TODO 5*J 2005/2006 (qui se transforme en 5*D...)
 
 class frag_fore(Variable):
-    cerfa_field = {QUIFOY['vous']: u"5HD",
-        QUIFOY['conj']: u"5ID",
-        QUIFOY['pac1']: u"5JD", }
+    cerfa_field = {
+        DECLARANT: [ u"5HD", u"5ID"],
+        PERSONNE_A_CHARGE: u"5JD",
+        }
     column = IntCol(val_type = "monetary")
     entity_class = Individus
     label = u"Revenus des exploitants forestiers (régime du forfait)"
@@ -902,9 +979,10 @@ class frag_fore(Variable):
 
 
 class arag_sjag(Variable):
-    cerfa_field = {QUIFOY['vous']: u"5HZ",
-        QUIFOY['conj']: u"5IZ",
-        QUIFOY['pac1']: u"5JZ", }
+    cerfa_field = {
+        DECLARANT: [ u"5HZ", u"5IZ"],
+        PERSONNE_A_CHARGE: u"5JZ",
+        }
     column = IntCol(val_type = "monetary")
     entity_class = Individus
     label = u"Abattement pour les jeunes agriculteurs des revenus agricoles sans CGA (régime du bénéfice réel)"
@@ -913,9 +991,10 @@ class arag_sjag(Variable):
 
 
 class abic_impm(Variable):
-    cerfa_field = {QUIFOY['vous']: u"5HA",
-        QUIFOY['conj']: u"5IA",
-        QUIFOY['pac1']: u"5JA", }
+    cerfa_field = {
+        DECLARANT: [ u"5HA", u"5IA"],
+        PERSONNE_A_CHARGE: u"5JA",
+        }
     column = IntCol(val_type = "monetary")
     entity_class = Individus
     label = u"Locations meublées imposables avec CGA ou viseur (régime du bénéfice réel pour les revenus industriels et commerciaux professionnels)"
@@ -924,9 +1003,10 @@ class abic_impm(Variable):
 
 
 class nbic_impm(Variable):
-    cerfa_field = {QUIFOY['vous']: u"5KA",
-        QUIFOY['conj']: u"5LA",
-        QUIFOY['pac1']: u"5MA", }
+    cerfa_field = {
+        DECLARANT: [ u"5KA", u"5LA"],
+        PERSONNE_A_CHARGE: u"5MA",
+        }
     column = IntCol(val_type = "monetary")
     entity_class = Individus
     label = u"Locations meublées imposables sans CGA (régime du bénéfice réel)"
@@ -935,9 +1015,10 @@ class nbic_impm(Variable):
 
 
 class abic_defm(Variable):
-    cerfa_field = {QUIFOY['vous']: u"5QA",
-        QUIFOY['conj']: u"5RA",
-        QUIFOY['pac1']: u"5SA", }
+    cerfa_field = {
+        DECLARANT: [ u"5QA", u"5RA"],
+        PERSONNE_A_CHARGE: u"5SA",
+        }
     column = IntCol(val_type = "monetary")
     entity_class = Individus
     label = u"Déficits de locations meubléesavec CGA ou viseur (régime du bénéfice réel pour les revenus industriels et commerciaux professionnels)"
@@ -946,9 +1027,10 @@ class abic_defm(Variable):
 
 
 class alnp_imps(Variable):
-    cerfa_field = {QUIFOY['vous']: u"5NA",
-        QUIFOY['conj']: u"5OA",
-        QUIFOY['pac1']: u"5PA", }
+    cerfa_field = {
+        DECLARANT: [ u"5NA", u"5OA"],
+        PERSONNE_A_CHARGE: u"5PA",
+        }
     column = IntCol(val_type = "monetary")
     entity_class = Individus
     label = u"Locations meublées non professionnelles imposables avec CGA ou viseur (régime du bénéfice réel)"
@@ -958,9 +1040,10 @@ class alnp_imps(Variable):
 
 
 class alnp_defs(Variable):
-    cerfa_field = {QUIFOY['vous']: u"5NY",
-        QUIFOY['conj']: u"5OY",
-        QUIFOY['pac1']: u"5PY", }
+    cerfa_field = {
+        DECLARANT: [ u"5NY", u"5OY"],
+        PERSONNE_A_CHARGE: u"5PY",
+        }
     column = IntCol(val_type = "monetary")
     entity_class = Individus
     label = u"Déficits de locations meublées non professionnelles avec CGA ou viseur (régime du bénéfice réel)"
@@ -970,9 +1053,10 @@ class alnp_defs(Variable):
 
 
 class nlnp_defs(Variable):
-    cerfa_field = {QUIFOY['vous']: u"5NZ",
-        QUIFOY['conj']: u"5OZ",
-        QUIFOY['pac1']: u"5PZ", }
+    cerfa_field = {
+        DECLARANT: [ u"5NZ", u"5OZ"],
+        PERSONNE_A_CHARGE: u"5PZ",
+        }
     column = IntCol(val_type = "monetary")
     entity_class = Individus
     label = u"Déficits de locations meublées non professionnelles imposables sans CGA (régime du bénéfice réel)"
@@ -982,8 +1066,9 @@ class nlnp_defs(Variable):
 
 
 class cbnc_assc(Variable):
-    cerfa_field = {QUIFOY['vous']: u"5QM",
-        QUIFOY['conj']: u"5RM", }
+    cerfa_field = {
+        DECLARANT: [ u"5QM", u"5RM",]
+        }
     column = IntCol(val_type = "monetary")
     entity_class = Individus
     label = u"Agents généraux d'assurances : indemnités de cessation d'activité (revenus non commerciaux professionnels, régime de la déclaration contrôlée)"
@@ -992,9 +1077,10 @@ class cbnc_assc(Variable):
 
 
 class abnc_proc(Variable):
-    cerfa_field = {QUIFOY['vous']: u"5TF",
-        QUIFOY['conj']: u"5UF",
-        QUIFOY['pac1']: u"5VF", }
+    cerfa_field = {
+        DECLARANT: [ u"5TF", u"5UF"],
+        PERSONNE_A_CHARGE: u"5VF",
+        }
     column = IntCol(val_type = "monetary")
     entity_class = Individus
     label = u"Honoraires de prospection commerciale exonérés avec CGA ou viseur (revenus non commerciaux professionnels, régime de la déclaration contrôlée)"
@@ -1003,9 +1089,10 @@ class abnc_proc(Variable):
 
 
 class nbnc_proc(Variable):
-    cerfa_field = {QUIFOY['vous']: u"5TI",
-        QUIFOY['conj']: u"5UI",
-        QUIFOY['pac1']: u"5VI", }
+    cerfa_field = {
+        DECLARANT: [ u"5TI", u"5UI"],
+        PERSONNE_A_CHARGE: u"5VI",
+        }
     column = IntCol(val_type = "monetary")
     entity_class = Individus
     label = u"Honoraires de prospection commerciale exonérés sans CGA (revenus non commerciaux professionnels, régime de la déclaration contrôlée)"
@@ -1014,9 +1101,10 @@ class nbnc_proc(Variable):
 
 
 class mncn_exon(Variable):
-    cerfa_field = {QUIFOY['vous']: u"5TH",
-        QUIFOY['conj']: u"5UH",
-        QUIFOY['pac1']: u"5VH", }
+    cerfa_field = {
+        DECLARANT: [ u"5TH", u"5UH"],
+        PERSONNE_A_CHARGE: u"5VH",
+        }
     column = IntCol(val_type = "monetary")
     entity_class = Individus
     label = u"Revenus nets exonérés non commerciaux non professionnels (régime déclaratif spécial ou micro BNC)"
@@ -1025,9 +1113,10 @@ class mncn_exon(Variable):
 
 
 class cncn_exon(Variable):
-    cerfa_field = {QUIFOY['vous']: u"5HK",
-        QUIFOY['conj']: u"5JK",
-        QUIFOY['pac1']: u"5LK", }
+    cerfa_field = {
+        DECLARANT: [ u"5HK", u"5JK"],
+        PERSONNE_A_CHARGE: u"5LK",
+        }
     column = IntCol(val_type = "monetary")
     entity_class = Individus
     label = u"Revenus nets exonérés non commerciaux non professionnels (régime de la déclaration contrôlée)"
@@ -1036,9 +1125,10 @@ class cncn_exon(Variable):
 
 
 class cncn_aimp(Variable):
-    cerfa_field = {QUIFOY['vous']: u"5JG",
-        QUIFOY['conj']: u"5RF",
-        QUIFOY['pac1']: u"5SF", }
+    cerfa_field = {
+        DECLARANT: [ u"5JG", u"5RF"],
+        PERSONNE_A_CHARGE: u"5SF",
+        }
     column = IntCol(val_type = "monetary")
     entity_class = Individus
     label = u"Revenus imposables non commerciaux non professionnels avec CGA (régime de la déclaration contrôlée)"
@@ -1047,9 +1137,10 @@ class cncn_aimp(Variable):
 
 
 class cncn_adef(Variable):
-    cerfa_field = {QUIFOY['vous']: u"5JJ",
-        QUIFOY['conj']: u"5RG",
-        QUIFOY['pac1']: u"5SG", }
+    cerfa_field = {
+        DECLARANT: [ u"5JJ", u"5RG"],
+        PERSONNE_A_CHARGE: u"5SG",
+        }
     column = IntCol(val_type = "monetary")
     entity_class = Individus
     label = u"Déficits non commerciaux non professionnels avec CGA (régime de la déclaration contrôlée)"
@@ -1058,9 +1149,10 @@ class cncn_adef(Variable):
 
 
 class cncn_info(Variable):
-    cerfa_field = {QUIFOY['vous']: u"5TC",
-        QUIFOY['conj']: u"5UC",
-        QUIFOY['pac1']: u"5VC", }
+    cerfa_field = {
+        DECLARANT: [ u"5TC", u"5UC"],
+        PERSONNE_A_CHARGE: u"5VC",
+        }
     column = IntCol(val_type = "monetary")
     entity_class = Individus
     label = u"Inventeurs et auteurs de logiciels : produits taxables à 16%, revenus non commerciaux non professionnels avec CGA (régime de la déclaration contrôlée)"
@@ -1069,9 +1161,10 @@ class cncn_info(Variable):
 
 
 class cncn_jcre(Variable):
-    cerfa_field = {QUIFOY['vous']: u"5SV",
-        QUIFOY['conj']: u"5SW",
-        QUIFOY['pac1']: u"5SX", }
+    cerfa_field = {
+        DECLARANT: [ u"5SV", u"5SW"],
+        PERSONNE_A_CHARGE: u"5SX",
+        }
     column = IntCol(val_type = "monetary")
     entity_class = Individus
     label = u"Jeunes créateurs : abattement de 50%, revenus non commerciaux non professionnels avec CGA (régime de la déclaration contrôlée)"
@@ -1080,9 +1173,10 @@ class cncn_jcre(Variable):
 
 
 class revimpres(Variable):
-    cerfa_field = {QUIFOY['vous']: u"5HY",
-        QUIFOY['conj']: u"5IY",
-        QUIFOY['pac1']: u"5JY", }
+    cerfa_field = {
+        DECLARANT: [ u"5HY", u"5IY"],
+        PERSONNE_A_CHARGE: u"5JY",
+        }
     column = IntCol(val_type = "monetary")
     entity_class = Individus
     label = u"Revenus nets à imposer aux prélèvements sociaux"
@@ -1090,8 +1184,9 @@ class revimpres(Variable):
 
 
 class pveximpres(Variable):
-    cerfa_field = {QUIFOY['vous']: u"5HG",
-        QUIFOY['conj']: u"5IG", }
+    cerfa_field = {
+        DECLARANT: [ u"5HG", u"5IG"]
+        }
     column = IntCol
     entity_class = Individus
     label = u"Plus-values à long terme exonérées en cas de départ à la retraite à imposer aux prélèvements sociaux"
@@ -1101,9 +1196,10 @@ class pveximpres(Variable):
 
 
 class pvtaimpres(Variable):
-    cerfa_field = {QUIFOY['vous']: u"5HZ",
-        QUIFOY['conj']: u"5IZ",
-        QUIFOY['pac1']: u"5JZ", }
+    cerfa_field = {
+        DECLARANT: [ u"5HZ", u"5IZ"],
+        PERSONNE_A_CHARGE: u"5JZ",
+        }
     column = IntCol
     entity_class = Individus
     label = u"Plus-values à long terme taxables à 16% à la retraite à imposer aux prélèvements sociaux"

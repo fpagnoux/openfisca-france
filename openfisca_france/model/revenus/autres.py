@@ -4,11 +4,9 @@ from openfisca_france.model.base import *  # noqa analysis:ignore
 
 
 class pensions_alimentaires_percues(Variable):
-    cerfa_field = {QUIFOY['vous']: u"1AO",
-        QUIFOY['conj']: u"1BO",
-        QUIFOY['pac1']: u"1CO",
-        QUIFOY['pac2']: u"1DO",
-        QUIFOY['pac3']: u"1EO",
+    cerfa_field = {
+        DECLARANT: [ u"1AO", u"1BO"],
+        PERSONNE_A_CHARGE: [u"1CO", u"1DO", u"1EO"]
         }
     column = FloatCol(val_type = "monetary")
     entity_class = Individus
