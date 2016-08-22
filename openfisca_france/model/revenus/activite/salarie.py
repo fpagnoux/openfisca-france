@@ -609,10 +609,10 @@ class indemnite_residence(Variable):
         traitement_indiciaire_brut = simulation.calculate('traitement_indiciaire_brut', period)
         salaire_de_base = simulation.calculate('salaire_de_base', period)
         categorie_salarie = simulation.calculate('categorie_salarie', period)
-        zone_apl_individu = simulation.calculate('zone_apl_individu', period)
         _P = simulation.legislation_at(period.start)
 
-        zone_apl = zone_apl_individu  # TODO: ces zones ne correpondent pas aux zones APL
+        zone_apl = simulation.calculate('zone_apl', period) # vaut pour une famille
+        zone_apl = simulation.project_on_persons(zone_apl, entity = Familles)  # TODO: ces zones ne correpondent pas aux zones APL
         P = _P.fonc.indem_resid
         min_zone_1, min_zone_2, min_zone_3 = P.min * P.taux.zone1, P.min * P.taux.zone2, P.min * P.taux.zone3
         taux = P.taux.zone1 * (zone_apl == 1) + P.taux.zone2 * (zone_apl == 2) + P.taux.zone3 * (zone_apl == 3)

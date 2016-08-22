@@ -287,13 +287,13 @@ class aide_logement_loyer_retenu(Variable):
         al = simulation.legislation_at(period.start).al
         al_nb_pac = simulation.calculate('al_nb_personnes_a_charge', period)
         couple = simulation.calculate('al_couple', period)
-        statut_occupation_logement = simulation.calculate('statut_occupation_logement_famille', period)
+        statut_occupation_logement = simulation.calculate('statut_occupation_logement', period)
         loyer = simulation.calculate('loyer', period)
         coloc_holder = simulation.compute('coloc', period)
         coloc = self.any_by_roles(coloc_holder)
         logement_chambre_holder = simulation.compute('logement_chambre', period)
         chambre = self.any_by_roles(logement_chambre_holder)
-        zone_apl = simulation.calculate('zone_apl_famille', period)
+        zone_apl = simulation.calculate('zone_apl', period)
 
         def loyer_reel():  # L1
             coeff_meuble = where(statut_occupation_logement == 5, 2 / 3, 1)  # Coeff de 2/3 pour les meublés
@@ -467,7 +467,7 @@ class aide_logement_montant_brut(Variable):
 
         al = simulation.legislation_at(period.start).al
 
-        statut_occupation_logement = simulation.calculate('statut_occupation_logement_famille', period)
+        statut_occupation_logement = simulation.calculate('statut_occupation_logement', period)
         locataire = ((3 <= statut_occupation_logement) * (5 >= statut_occupation_logement)) + (statut_occupation_logement == 7)
         accedant = (statut_occupation_logement == 1)
 
@@ -508,7 +508,7 @@ class alf(Variable):
         period = period.this_month
         aide_logement_montant = simulation.calculate('aide_logement_montant', period)
         al_nb_pac = simulation.calculate('al_nb_personnes_a_charge', period)
-        statut_occupation_logement = simulation.calculate('statut_occupation_logement_famille', period)
+        statut_occupation_logement = simulation.calculate('statut_occupation_logement', period)
         proprietaire_proche_famille = simulation.calculate('proprietaire_proche_famille', period)
 
         result = (al_nb_pac >= 1) * (statut_occupation_logement != 3) * not_(proprietaire_proche_famille) * aide_logement_montant
@@ -524,7 +524,7 @@ class als_non_etudiant(Variable):
         aide_logement_montant = simulation.calculate('aide_logement_montant', period)
         al_nb_pac = simulation.calculate('al_nb_personnes_a_charge', period)
         etudiant_holder = simulation.compute('etudiant', period)
-        statut_occupation_logement = simulation.calculate('statut_occupation_logement_famille', period)
+        statut_occupation_logement = simulation.calculate('statut_occupation_logement', period)
         proprietaire_proche_famille = simulation.calculate('proprietaire_proche_famille', period)
 
         etudiant = self.split_by_roles(etudiant_holder, roles = [CHEF, PART])
@@ -545,7 +545,7 @@ class als_etudiant(Variable):
         aide_logement_montant = simulation.calculate('aide_logement_montant', period)
         al_nb_pac = simulation.calculate('al_nb_personnes_a_charge', period)
         etudiant_holder = simulation.compute('etudiant', period)
-        statut_occupation_logement = simulation.calculate('statut_occupation_logement_famille', period)
+        statut_occupation_logement = simulation.calculate('statut_occupation_logement', period)
         proprietaire_proche_famille = simulation.calculate('proprietaire_proche_famille', period)
 
         etudiant = self.split_by_roles(etudiant_holder, roles = [CHEF, PART])
@@ -580,7 +580,7 @@ class apl(Variable):
     def function(self, simulation, period):
         period = period.this_month
         aide_logement_montant = simulation.calculate('aide_logement_montant', period)
-        statut_occupation_logement = simulation.calculate('statut_occupation_logement_famille', period)
+        statut_occupation_logement = simulation.calculate('statut_occupation_logement', period)
 
         return period, aide_logement_montant * (statut_occupation_logement == 3)
 
@@ -598,7 +598,7 @@ class aide_logement_non_calculable(Variable):
 
     def function(self, simulation, period):
         period = period.this_month
-        statut_occupation_logement = simulation.calculate('statut_occupation_logement_famille', period)
+        statut_occupation_logement = simulation.calculate('statut_occupation_logement', period)
 
         return period, (statut_occupation_logement == 1) * 1 + (statut_occupation_logement == 7) * 2
 
@@ -629,17 +629,6 @@ class crds_logement(Variable):
         crds = simulation.legislation_at(period.start).fam.af.crds
         return period, -aide_logement_montant_brut * crds
 
-class statut_occupation_logement_individu(EntityToPersonColumn):
-    entity_class = Individus
-    label = u"Statut d'occupation de l'individu"
-    variable = statut_occupation_logement
-
-class statut_occupation_logement_famille(PersonToEntityColumn):
-    entity_class = Familles
-    label = u"Statut d'occupation de la famille"
-    role = CHEF
-    variable = statut_occupation_logement_individu
-
 class zone_apl(Variable):
     column = EnumCol(
         enum = Enum([
@@ -650,7 +639,7 @@ class zone_apl(Variable):
             ]),
         default = 2
         )
-    entity_class = Menages
+    entity_class = Familles
     label = u"Zone APL"
 
     def function(self, simulation, period):
@@ -692,14 +681,3 @@ def preload_zone_apl():
             commune_depcom_by_subcommune_depcom = json.load(json_file)
             for subcommune_depcom, commune_depcom in commune_depcom_by_subcommune_depcom.iteritems():
                 zone_apl_by_depcom[subcommune_depcom] = zone_apl_by_depcom[commune_depcom]
-
-class zone_apl_individu(EntityToPersonColumn):
-    entity_class = Individus
-    label = u"Zone apl de la personne"
-    variable = zone_apl
-
-class zone_apl_famille(PersonToEntityColumn):
-    entity_class = Familles
-    label = u"Zone apl de la famille"
-    role = CHEF
-    variable = zone_apl_individu

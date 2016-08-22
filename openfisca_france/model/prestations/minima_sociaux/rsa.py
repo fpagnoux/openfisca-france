@@ -865,7 +865,7 @@ class rsa_forfait_logement(Variable):
         nb_pac = simulation.calculate('nb_parents', period) + simulation.calculate('rsa_nb_enfants', period)
         aide_logement = simulation.calculate('aide_logement', period)
 
-        statut_occupation_logement = simulation.calculate('statut_occupation_logement_famille', period)
+        statut_occupation_logement = simulation.calculate('statut_occupation_logement', period)
 
         participation_frais_holder = simulation.compute('participation_frais', period)
         participation_frais = self.cast_from_entity_to_roles(participation_frais_holder)

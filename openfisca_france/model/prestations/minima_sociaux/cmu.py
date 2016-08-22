@@ -235,7 +235,7 @@ class cmu_base_ressources(Variable):
         paje_clca = simulation.calculate_add('paje_clca', previous_year)
         paje_prepare = simulation.calculate_add('paje_prepare', previous_year)
         aide_logement = simulation.calculate_add('aide_logement', previous_year)
-        statut_occupation_logement = simulation.calculate('statut_occupation_logement_famille', period)
+        statut_occupation_logement = simulation.calculate('statut_occupation_logement', period)
         cmu_forfait_logement_base = simulation.calculate('cmu_forfait_logement_base', period)
         cmu_forfait_logement_al = simulation.calculate('cmu_forfait_logement_al', period)
         age_holder = simulation.compute('age', period)

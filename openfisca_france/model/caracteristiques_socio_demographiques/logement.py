@@ -54,7 +54,7 @@ class statut_occupation_logement(Variable):
             u"Locataire d'un foyer (résidence universitaire, maison de retraite, foyer de jeune travailleur, résidence sociale...)",
             u"Sans domicile stable"])
     )
-    entity_class = Menages
+    entity_class = Familles
     label = u"Statut d'occupation du logement"
     set_input = set_input_dispatch_by_period
 
