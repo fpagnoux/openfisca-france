@@ -115,6 +115,10 @@ def test_sum_in_entity():
 
     assert_near(salaire_total_par_famille, [2500, 3500])
 
+    salaire_conjoint_par_menage = simulation.sum_in_entity(salaire, entity = Menages, role = CONJOINT)
+
+    assert_near(salaire_conjoint_par_menage, [1500, 0])
+
 def test_transpose_to_entity():
     test_case = deepcopy(TEST_CASE)
     test_case['familles'][0]['af'] = 20000
