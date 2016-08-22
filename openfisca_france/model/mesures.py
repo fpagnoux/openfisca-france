@@ -425,28 +425,31 @@ class crds(Variable):
     def function(self, simulation, period):
         """Contribution au remboursement de la dette sociale"""
         period = period.this_year
+
+        # CRDS sur revenus individuels
         crds_salaire = simulation.calculate_add('crds_salaire', period)
         crds_retraite = simulation.calculate_add('crds_retraite', period)
         crds_chomage = simulation.calculate_add('crds_chomage', period)
-        crds_fon_holder = simulation.compute('crds_fon', period)
-        crds_cap_bar_declarant1 = simulation.calculate('crds_cap_bar_declarant1', period)
-        crds_cap_lib_declarant1 = simulation.calculate('crds_cap_lib_declarant1', period)
-        crds_pfam_holder = simulation.compute('crds_pfam', period)
-        crds_logement_holder = simulation.compute_add('crds_logement', period)
-        crds_mini_holder = simulation.compute_add('crds_mini', period)
-        crds_pv_mo_holder = simulation.compute('crds_pv_mo', period)
-        crds_pv_immo_holder = simulation.compute('crds_pv_immo', period)
+        crds_individu = crds_salaire + crds_retraite + crds_chomage
 
-        crds_fon = self.cast_from_entity_to_role(crds_fon_holder, role = VOUS)
-        crds_logement = self.cast_from_entity_to_role(crds_logement_holder, role = CHEF)
-        crds_mini = self.cast_from_entity_to_role(crds_mini_holder, role = CHEF)
-        crds_pfam = self.cast_from_entity_to_role(crds_pfam_holder, role = CHEF)
-        crds_pv_immo = self.cast_from_entity_to_role(crds_pv_immo_holder, role = VOUS)
-        crds_pv_mo = self.cast_from_entity_to_role(crds_pv_mo_holder, role = VOUS)
 
-        return period, (crds_salaire + crds_retraite + crds_chomage +
-                crds_fon + crds_cap_bar_declarant1 + crds_cap_lib_declarant1 + crds_pv_mo + crds_pv_immo +
-                crds_pfam + crds_logement + crds_mini)
+        # CRDS sur revenus de la famille
+        crds_pfam = simulation.calculate('crds_pfam', period)
+        crds_logement = simulation.calculate_add('crds_logement', period)
+        crds_mini = simulation.calculate_add('crds_mini', period)
+        crds_famille =  crds_pfam + crds_logement + crds_mini
+        crds_famille_projetes = simulation.project_on_first_person(revenus_famille, entity = Familles)
+
+        # CRDS sur revenus du foyer fiscal
+        crds_fon = simulation.calculate('crds_fon', period)
+        crds_pv_mo = simulation.calculate('crds_pv_mo', period)
+        crds_pv_immo = simulation.calculate('crds_pv_immo', period)
+        crds_cap_bar = simulation.calculate('crds_cap_bar', period)
+        crds_cap_lib = simulation.calculate('crds_cap_lib', period)
+        crds_foyer_fiscal = crds_fon + crds_pv_mo + crds_pv_immo + crds_cap_bar + crds_cap_lib
+        crds_foyer_fiscal_projetes = simulation.project_on_first_person(revenus_famille, entity = FoyersFiscaux)
+
+        return period, crds_individu + crds_famille_projetes + crds_foyer_fiscal_projetes
 
 
 class csg(Variable):
@@ -568,11 +571,11 @@ class check_crds(Variable):
 
     def function(self, simulation, period):
         period = period.this_year
-        crds_cap_bar_declarant1_holder = simulation.compute('crds_cap_bar_declarant1', period)
         crds_pv_mo_holder = simulation.compute('crds_pv_mo', period)
         crds_fon_holder = simulation.compute('crds_fon', period)
 
-        crds_cap_bar = self.sum_by_entity(crds_cap_bar_declarant1_holder)
+        crds_cap_bar = simulation.calculate('crds_cap_bar', period)
+
         crds_pv_mo = self.cast_from_entity_to_role(crds_pv_mo_holder, role = CHEF)
         crds_pv_mo = self.sum_by_entity(crds_pv_mo)
         crds_fon = self.cast_from_entity_to_role(crds_fon_holder, role = CHEF)
