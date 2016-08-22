@@ -49,11 +49,6 @@ class Scenario(scenarios.AbstractScenario):
                 famille.setdefault('enfants', []).append(id)
                 foyer_fiscal.setdefault('personnes_a_charge', []).append(id)
                 menage.setdefault('enfants', []).append(id)
-        from pprint import pprint
-        pprint([famille])
-        pprint([foyer_fiscal])
-        pprint(individus)
-        pprint([menage])
         conv.check(self.make_json_or_python_to_attributes())(dict(
             axes = axes,
             period = period,
