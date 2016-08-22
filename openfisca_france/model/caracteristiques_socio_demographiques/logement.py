@@ -12,43 +12,25 @@ class coloc(Variable):
     entity_class = Individus
     label = u"Vie en colocation"
 
-
-
-
-
-
-
 class logement_chambre(Variable):
     column = BoolCol
     entity_class = Individus
     label = u"Le logement est considéré comme une chambre"
 
-
-
 class loyer(Variable):
     column = FloatCol()
-    entity_class = Menages
+    entity_class = Familles
     set_input = set_input_divide_by_period
     label = u"Loyer ou mensualité d'emprunt pour un primo-accédant"
 
-class loyer_individu(EntityToPersonColumn):
-    entity_class = Individus
-    label = u"Zone apl de la personne"
-    variable = loyer
 class depcom(Variable):
     column = FixedStrCol(max_length = 5)
     entity_class = Menages
     label = u"Code INSEE (depcom) du lieu de résidence"
 
-class loyer_famille(PersonToEntityColumn):
-    entity_class = Familles
-    label = u"Zone apl de la famille"
-    role = CHEF
-    variable = loyer_individu
-
 class charges_locatives(Variable):
     column = FloatCol()
-    entity_class = Menages
+    entity_class = Familles
     set_input = set_input_divide_by_period
     label = u'Charges locatives'
 

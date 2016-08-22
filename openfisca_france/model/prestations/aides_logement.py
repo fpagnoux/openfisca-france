@@ -288,7 +288,7 @@ class aide_logement_loyer_retenu(Variable):
         al_nb_pac = simulation.calculate('al_nb_personnes_a_charge', period)
         couple = simulation.calculate('al_couple', period)
         statut_occupation_logement = simulation.calculate('statut_occupation_logement_famille', period)
-        loyer = simulation.calculate('loyer_famille', period)
+        loyer = simulation.calculate('loyer', period)
         coloc_holder = simulation.compute('coloc', period)
         coloc = self.any_by_roles(coloc_holder)
         logement_chambre_holder = simulation.compute('logement_chambre', period)
