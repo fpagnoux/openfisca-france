@@ -2,27 +2,35 @@ from copy import deepcopy
 
 from openfisca_core.taxbenefitsystems import TaxBenefitSystem
 from openfisca_core.variables import Variable
-from openfisca_core.columns import FloatCol
+from openfisca_core.columns import FloatCol, IntCol, BoolCol
 from openfisca_core.tools import assert_near, assert_equal
 
 from openfisca_france.scenarios import Scenario
 from openfisca_france.entities import entities, Individus, Familles, FoyersFiscaux, Menages, PARENT, ENFANT, CONJOINT, PERSONNE_DE_REFERENCE
 
+
+# When the TBS is repaired, we can use it instead of the fake one
 class af(Variable):
     column = FloatCol
     entity_class = Familles
-    label = u"Allocations familiales"
 
 class salaire(Variable):
     column = FloatCol
     entity_class = Individus
-    label = u"Salaire"
+
+class age(Variable):
+    column = IntCol
+    entity_class = Individus
+
+class autonomie_financiere(Variable):
+    column = BoolCol
+    entity_class = Individus
 
 class DummyTaxBenefitSystem(TaxBenefitSystem):
     def __init__(self):
         TaxBenefitSystem.__init__(self, entities)
         self.Scenario = Scenario
-        self.add_variables(af, salaire)
+        self.add_variables(af, salaire, age, autonomie_financiere)
 
 tbs = DummyTaxBenefitSystem()
 
@@ -123,3 +131,23 @@ def test_transpose_to_entity():
     af_foyer_fiscal = simulation.transpose_to_entity(af, target_entity = FoyersFiscaux, origin_entity = Familles)
 
     assert_near(af_foyer_fiscal, [20000, 10000, 0])
+
+def test_nb_enfants():
+    test_case = deepcopy(TEST_CASE)
+    ages = [40, 37, 7, 9, 54, 20]
+    for (individu, age) in zip(test_case['individus'], ages):
+        individu['age'] = age
+
+    simulation = new_simulation(test_case)
+    from openfisca_france.model.prestations.prestations_familiales.base_ressource import nb_enf
+
+    assert_near(nb_enf(simulation, 2013, 3, 18), [2, 0])
+    assert_near(nb_enf(simulation, 2013, 19, 50), [0, 1]) # Adults don't count
+
+    test_case['individus'][5]['autonomie_financiere'] = True
+    simulation_2 = new_simulation(test_case)
+
+    assert_near(nb_enf(simulation_2, 2013, 19, 50), [0, 0])
+
+
+test_sum_in_entity()

@@ -167,18 +167,22 @@ class prestations_familiales_base_ressources(Variable):
 ############################################################################
 
 
-def nb_enf(ages, autonomie_financiere, ag1, ag2):
+def nb_enf(simulation, period, age_min, age_max):
     """
     Renvoie le nombre d'enfant au sens des allocations familiales dont l'âge est compris entre ag1 et ag2
     """
+    age = simulation.calculate('age', period)
+    autonomie_financiere = simulation.calculate('autonomie_financiere', period)
+
 #        Les allocations sont dues à compter du mois civil qui suit la naissance
 #        ag1==0 ou suivant les anniversaires ag1>0.
 #        Un enfant est reconnu à charge pour le versement des prestations
 #        jusqu'au mois précédant son age limite supérieur (ag2 + 1) mais
 #        le versement à lieu en début de mois suivant
-    return sum(
-        (age >= ag1) & (age <= ag2) & not_(autonomie_financiere[key]) for key, age in ages.iteritems()
-    )
+    condition = (age >= age_min) * (age <= age_max) * not_(autonomie_financiere)
+
+    return simulation.sum_in_entity(condition, entity = Familles, role = ENFANT)
+
 
 
 def age_en_mois_benjamin(ages_en_mois):

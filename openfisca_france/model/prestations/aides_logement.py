@@ -54,12 +54,8 @@ class al_nb_personnes_a_charge(Variable):
         residence_dom = simulation.calculate('residence_dom', period)
 
         def al_nb_enfants():
-            autonomie_financiere_holder = simulation.compute('autonomie_financiere', period)
-            age = self.split_by_roles(age_holder, roles = ENFS)
-            autonomie_financiere = self.split_by_roles(autonomie_financiere_holder, roles = ENFS)
             age_min_enfant = simulation.legislation_at(period.start).fam.af.age1
-
-            return nb_enf(age, autonomie_financiere, age_min_enfant, age_max_enfant - 1)  # La limite sur l'age max est stricte.
+            return nb_enf(simulation, period, age_min_enfant, age_max_enfant - 1)  # La limite sur l'age max est stricte.
 
         def al_nb_adultes_handicapes():
 

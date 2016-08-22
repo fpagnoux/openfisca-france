@@ -2,7 +2,7 @@
 
 from functools import partial
 from numpy import (
-    busday_count as original_busday_count, datetime64, maximum as max_, minimum as min_, timedelta64,
+    busday_count as original_busday_count, datetime64, maximum as max_, minimum as min_, timedelta64, logical_not as not_,
     )
 
 from openfisca_france.model.base import *  # noqa analysis:ignore
@@ -667,17 +667,16 @@ class af_nbenf_fonc(Variable):
     def function(self, simulation, period):
         # Note : Cette variable est "instantanée" : quelque soit la période demandée, elle retourne la valeur au premier
         # jour, sans changer la période.
-        age_holder = simulation.compute('age', period)
         salaire_de_base = simulation.calculate_add('salaire_de_base', period.start.period('month', 6).offset(-6))
         law = simulation.legislation_at(period.start)
         nbh_travaillees = 169
         smic_mensuel_brut = law.cotsoc.gen.smic_h_b * nbh_travaillees
-        autonomie_financiere_holder = (salaire_de_base / 6) >= (law.fam.af.seuil_rev_taux * smic_mensuel_brut)
-        age = self.split_by_roles(age_holder, roles = ENFS)
-        autonomie_financiere = self.split_by_roles(autonomie_financiere_holder, roles = ENFS)
-        af_nbenf = nb_enf(age, autonomie_financiere, law.fam.af.age1, law.fam.af.age2)
 
-        return period, af_nbenf
+        autonomie_financiere = (salaire_de_base / 6) >= (law.fam.af.seuil_rev_taux * smic_mensuel_brut)
+        age = simulation.calculate('age', period)
+        condition_enfant = (age >= law.fam.af.age1) * (age <= law.fam.af.age2) * not_(autonomie_financiere)
+
+        return period, simulation.sum_in_entity(condition_enfant, entity = Familles, role = ENFANT)
 
 
 class supp_familial_traitement(Variable):

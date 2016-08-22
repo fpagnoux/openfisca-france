@@ -49,12 +49,8 @@ class af_allocation_forfaitaire_nb_enfants(Variable):
 
     def function(self, simulation, period):
         period = period.this_month
-        age_holder = simulation.compute('age', period)
-        age = self.split_by_roles(age_holder, roles = ENFS)
-        autonomie_financiere_holder = simulation.compute('autonomie_financiere', period)
-        autonomie_financiere = self.split_by_roles(autonomie_financiere_holder, roles = ENFS)
         pfam = simulation.legislation_at(period.start).fam.af
-        af_forfaitaire_nbenf = nb_enf(age, autonomie_financiere, pfam.age3, pfam.age3)
+        af_forfaitaire_nbenf = nb_enf(simulation, period, pfam.age3, pfam.age3)
 
         return period, af_forfaitaire_nbenf
 

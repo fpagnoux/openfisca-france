@@ -32,8 +32,6 @@ class aefa(DatedVariable):
     @dated_function(start = date(2009, 1, 1), stop = date(2015, 12, 31))
     def function_2009__(self, simulation, period):
         period = period.this_year
-        age_holder = simulation.compute('age', period)
-        autonomie_financiere_holder = simulation.compute('autonomie_financiere', period, accept_other_period = True)
         af_nbenf = simulation.calculate('af_nbenf', period)
         nb_parents = simulation.calculate('nb_parents', period)
         ass = simulation.calculate_add('ass', period)
@@ -43,9 +41,7 @@ class aefa(DatedVariable):
         P = simulation.legislation_at(period.start).minim.aefa
         af = simulation.legislation_at(period.start).fam.af
 
-        age = self.split_by_roles(age_holder, roles = ENFS)
         aer = self.sum_by_entity(aer_holder)
-        autonomie_financiere = self.split_by_roles(autonomie_financiere_holder, roles = ENFS)
         dummy_ass = ass > 0
         dummy_aer = aer > 0
         dummy_api = api > 0
@@ -53,7 +49,7 @@ class aefa(DatedVariable):
         maj = 0  # TODO
         condition = (dummy_ass + dummy_aer + dummy_api + dummy_rmi > 0)
         if hasattr(af, "age3"):
-            nbPAC = nb_enf(age, autonomie_financiere, af.age1, af.age3)
+            nbPAC = nb_enf(simulation, period, af.age1, af.age3)
         else:
             nbPAC = af_nbenf
         # TODO check nombre de PAC pour une famille
@@ -69,8 +65,6 @@ class aefa(DatedVariable):
     @dated_function(start = date(2008, 1, 1), stop = date(2008, 12, 31))
     def function_2008(self, simulation, period):
         period = period.this_year
-        age_holder = simulation.compute('age', period)
-        autonomie_financiere_holder = simulation.compute('autonomie_financiere', period, accept_other_period = True)
         af_nbenf = simulation.calculate('af_nbenf', period)
         nb_parents = simulation.calculate('nb_parents', period)
         ass = simulation.calculate_add('ass', period)
@@ -80,9 +74,7 @@ class aefa(DatedVariable):
         P = simulation.legislation_at(period.start).minim.aefa
         af = simulation.legislation_at(period.start).fam.af
 
-        age = self.split_by_roles(age_holder, roles = ENFS)
         aer = self.sum_by_entity(aer_holder)
-        autonomie_financiere = self.split_by_roles(autonomie_financiere_holder, roles = ENFS)
         dummy_ass = ass > 0
         dummy_aer = aer > 0
         dummy_api = api > 0
@@ -90,7 +82,7 @@ class aefa(DatedVariable):
         maj = 0  # TODO
         condition = (dummy_ass + dummy_aer + dummy_api + dummy_rmi > 0)
         if hasattr(af, "age3"):
-            nbPAC = nb_enf(age, autonomie_financiere, af.age1, af.age3)
+            nbPAC = nb_enf(simulation, period, af.age1, af.age3)
         else:
             nbPAC = af_nbenf
         # TODO check nombre de PAC pour une famille
@@ -107,8 +99,6 @@ class aefa(DatedVariable):
     @dated_function(start = date(2002, 1, 1), stop = date(2007, 12, 31))
     def function__2008_(self, simulation, period):
         period = period.this_year
-        age_holder = simulation.compute('age', period)
-        autonomie_financiere_holder = simulation.compute('autonomie_financiere', period, accept_other_period = True)
         af_nbenf = simulation.calculate('af_nbenf', period)
         nb_parents = simulation.calculate('nb_parents', period)
         ass = simulation.calculate_add('ass', period)
@@ -118,9 +108,7 @@ class aefa(DatedVariable):
         P = simulation.legislation_at(period.start).minim.aefa
         af = simulation.legislation_at(period.start).fam.af
 
-        age = self.split_by_roles(age_holder, roles = ENFS)
         aer = self.sum_by_entity(aer_holder)
-        autonomie_financiere = self.split_by_roles(autonomie_financiere_holder, roles = ENFS)
         dummy_ass = ass > 0
         dummy_aer = aer > 0
         dummy_api = api > 0
@@ -128,7 +116,7 @@ class aefa(DatedVariable):
         maj = 0  # TODO
         condition = (dummy_ass + dummy_aer + dummy_api + dummy_rmi > 0)
         if hasattr(af, "age3"):
-            nbPAC = nb_enf(age, autonomie_financiere, af.age1, af.age3)
+            nbPAC = nb_enf(simulation, period, af.age1, af.age3)
         else:
             nbPAC = af_nbenf
         # TODO check nombre de PAC pour une famille
@@ -155,8 +143,6 @@ class api(DatedVariable):
         """
         period = period.this_month
         age_en_mois_holder = simulation.compute('age_en_mois', period)
-        age_holder = simulation.compute('age', period)
-        autonomie_financiere_holder = simulation.compute('autonomie_financiere', period)
         isole = not_(simulation.calculate('en_couple', period))
         rsa_forfait_logement = simulation.calculate('rsa_forfait_logement', period)
         rsa_base_ressources = simulation.calculate('rsa_base_ressources', period)
@@ -165,9 +151,8 @@ class api(DatedVariable):
         af = simulation.legislation_at(period.start).fam.af
         api = simulation.legislation_at(period.start).minim.api
 
-        age = self.split_by_roles(age_holder, roles = ENFS)
+
         age_en_mois = self.split_by_roles(age_en_mois_holder, roles = ENFS)
-        autonomie_financiere = self.split_by_roles(autonomie_financiere_holder, roles = ENFS)
         # TODO:
         #    Majoration pour isolement
         #    Si vous êtes parent isolé, c’est-à-dire célibataire, divorcé(e), séparé(e) ou veuf(ve) avec des enfants
@@ -198,11 +183,11 @@ class api(DatedVariable):
         # # Calcul de l'année et mois de naissance du benjamin
 
         condition = (floor(benjamin / 12) <= api.age - 1)
-        eligib = isole * ((enceinte != 0) | (nb_enf(age, autonomie_financiere, 0, api.age - 1) > 0)) * condition
+        eligib = isole * ((enceinte != 0) | (nb_enf(simulation, period, 0, api.age - 1) > 0)) * condition
 
         # moins de 20 ans avant inclusion dans rsa
         # moins de 25 ans après inclusion dans rsa
-        api1 = eligib * af.bmaf * (api.base + api.enf_sup * nb_enf(age, autonomie_financiere, af.age1, api.age_pac - 1))
+        api1 = eligib * af.bmaf * (api.base + api.enf_sup * nb_enf(simulation, period, af.age1, api.age_pac - 1))
         rsa = (api.age_pac >= 25)  # dummy passage au rsa majoré
         br_api = rsa_base_ressources + af_majoration * not_(rsa)
         # On pourrait mensualiser RMI, BRrmi et forfait logement
@@ -922,13 +907,7 @@ class rsa_majore_eligibilite(Variable):
     def function(self, simulation, period):
 
         def has_enfant_moins_3_ans():
-            age_holder = simulation.compute('age', period)
-            autonomie_financiere_holder = simulation.compute('autonomie_financiere', period)
-            age_enf = self.split_by_roles(age_holder, roles = ENFS)
-            autonomie_financiere_enf = self.split_by_roles(autonomie_financiere_holder, roles = ENFS)
-            nbenf = nb_enf(age_enf, autonomie_financiere_enf, 0, 2)
-
-            return nbenf > 0
+            return nb_enf(simulation, period, 0, 2) > 0
 
         period = period.this_month
         isole = not_(simulation.calculate('en_couple', period))
