@@ -1628,13 +1628,6 @@ class pensions_alimentaires_versees(Variable):
         return period, -(f6gi + f6gj + f6el + f6em + f6gp + f6gu)
 
 
-class pensions_alimentaires_versees_declarant1(EntityToPersonColumn):
-    entity_class = Individus
-    label = u"Pensions alimentaires versées (pour le premier déclarant du foyer fiscal)"
-    role = VOUS
-    variable = pensions_alimentaires_versees
-
-
 class rfr(Variable):
     column = FloatCol
     entity_class = FoyersFiscaux

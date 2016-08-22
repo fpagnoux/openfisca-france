@@ -238,14 +238,14 @@ class pen(Variable):
         chomage_net = simulation.calculate('chomage_net', period)
         retraite_nette = simulation.calculate('retraite_nette', period)
         pensions_alimentaires_percues = simulation.calculate('pensions_alimentaires_percues', period)
-        pensions_alimentaires_versees_declarant1 = simulation.calculate(
-            'pensions_alimentaires_versees_declarant1', period
-            )
-        retraite_titre_onereux = simulation.calculate_add('retraite_titre_onereux', period) # Pour le foyer fiscal
-        retraite_titre_onereux_declarant1 = simulation.project_on_first_person(retraite_titre_onereux, entity = FoyersFiscaux)
 
-        return period, (chomage_net + retraite_nette + pensions_alimentaires_percues + pensions_alimentaires_versees_declarant1 +
-                    retraite_titre_onereux_declarant1)
+        # Revenus du foyer fiscal
+        pensions_alimentaires_versees = simulation.calculate('pensions_alimentaires_versees', period)
+        retraite_titre_onereux = simulation.calculate_add('retraite_titre_onereux', period)
+        pen_foyer_fiscal = pensions_alimentaires_versees + retraite_titre_onereux
+        pen_foyer_fiscal_projetees = simulation.project_on_first_person(pen_foyer_fiscal, entity = FoyersFiscaux)
+
+        return period, (chomage_net + retraite_nette + pensions_alimentaires_percues + pen_foyer_fiscal_projetees)
 
 
 class cotsoc_bar_declarant1(Variable):

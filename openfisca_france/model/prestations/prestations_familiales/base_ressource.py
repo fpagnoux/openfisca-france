@@ -129,8 +129,8 @@ class rev_coll(Variable):
         rev_cat_pv = simulation.calculate('rev_cat_pv', period)
 
         # TODO: ajouter les revenus de l'étranger etr*0.9
-        # pensions_alimentaires_versees_declarant1 is negative since it is paid by the declaree
-        return period, (retraite_titre_onereux_net + rev_cap_lib + rev_cat_rvcm + fon + pensions_alimentaires_versees_declarant1 - f7ga - f7gb
+        # pensions_alimentaires_versees is negative since it is paid by the declaree
+        return period, (retraite_titre_onereux_net + rev_cap_lib + rev_cat_rvcm + fon + pensions_alimentaires_versees - f7ga - f7gb
             - f7gc - abat_spe + rev_cat_pv)
 
 
