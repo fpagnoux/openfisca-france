@@ -106,13 +106,6 @@ class prelsoc_cap_bar(DatedVariable):
         return period, -rev_cap_bar * total
 
 
-class prelsoc_cap_bar_declarant1(EntityToPersonColumn):
-    entity_class = Individus
-    label = u"Prélèvements sociaux sur les revenus du capital soumis au barème (pour le premier déclarant du foyer fiscal)"  # noqa
-    role = VOUS
-    variable = prelsoc_cap_bar
-
-
 # plus-values de valeurs mobilières
 
 
@@ -390,14 +383,6 @@ class csg_cap_lib(Variable):
 
         return period, -rev_cap_lib * _P.csg.capital.glob
 
-
-class csg_cap_lib_declarant1(EntityToPersonColumn):
-    entity_class = Individus
-    label = u"CSG sur les revenus du capital soumis au prélèvement libératoire (pour le premier déclarant du foyer fiscal)"  # noqa
-    role = VOUS
-    variable = csg_cap_lib
-
-
 class crds_cap_lib(Variable):
     """Calcule la CRDS sur les revenus du capital soumis au prélèvement libératoire."""
     column = FloatCol
@@ -411,13 +396,6 @@ class crds_cap_lib(Variable):
         _P = simulation.legislation_at(period.start)
 
         return period, -rev_cap_lib * _P.crds.capital
-
-
-class crds_cap_lib_declarant1(EntityToPersonColumn):
-    entity_class = Individus
-    label = u"CRDS sur les revenus du capital soumis au prélèvement libératoire (pour le premier déclarant du foyer fiscal)"  # noqa
-    role = VOUS
-    variable = crds_cap_lib
 
 
 class prelsoc_cap_lib(Variable):
@@ -440,14 +418,6 @@ class prelsoc_cap_lib(Variable):
         else:
             total = prelsoc.base_pat + prelsoc.add_pat + prelsoc.rsa
         return period, -rev_cap_lib * total
-
-
-class prelsoc_cap_lib_declarant1(EntityToPersonColumn):
-    entity_class = Individus
-    label = u"Prélèvements sociaux sur les revenus du capital soumis au prélèvement libératoire (pour le premier déclarant du foyer fiscal)"  # noqa
-    role = VOUS
-    variable = prelsoc_cap_lib
-
 
 # TODO: non_imposabilité pour les revenus au barème
 #        verse = (-csgcap_bar - crdscap_bar - prelsoccap_bar) > bareme.csg.capital.nonimp
