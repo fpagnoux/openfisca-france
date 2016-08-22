@@ -248,9 +248,9 @@ class pen(Variable):
         return period, (chomage_net + retraite_nette + pensions_alimentaires_percues + pen_foyer_fiscal_projetees)
 
 
-class cotsoc_bar_declarant1(Variable):
+class cotsoc_bar(Variable):
     column = FloatCol(default = 0)
-    entity_class = Individus
+    entity_class = FoyersFiscaux
     label = u"Cotisations sociales sur les revenus du capital imposés au barème"
 
     def function(self, simulation, period):
@@ -258,16 +258,16 @@ class cotsoc_bar_declarant1(Variable):
         Cotisations sociales sur les revenus du capital imposés au barème
         '''
         period = period.start.period('year').offset('first-of')
-        csg_cap_bar_declarant1 = simulation.calculate('csg_cap_bar_declarant1', period)
-        prelsoc_cap_bar_declarant1 = simulation.calculate('prelsoc_cap_bar_declarant1', period)
-        crds_cap_bar_declarant1 = simulation.calculate('crds_cap_bar_declarant1', period)
+        csg_cap_bar = simulation.calculate('csg_cap_bar', period)
+        prelsoc_cap_bar = simulation.calculate('prelsoc_cap_bar', period)
+        crds_cap_bar = simulation.calculate('crds_cap_bar', period)
 
-        return period, csg_cap_bar_declarant1 + prelsoc_cap_bar_declarant1 + crds_cap_bar_declarant1
+        return period, csg_cap_bar + prelsoc_cap_bar + crds_cap_bar
 
 
-class cotsoc_lib_declarant1(Variable):
-    column = FloatCol(default = 0)
-    entity_class = Individus
+class cotsoc_lib(Variable):
+    column = FloatCol
+    entity_class = FoyersFiscaux
     label = u"Cotisations sociales sur les revenus du capital soumis au prélèvement libératoire"
 
     def function(self, simulation, period):
@@ -275,11 +275,11 @@ class cotsoc_lib_declarant1(Variable):
         Cotisations sociales sur les revenus du capital soumis au prélèvement libératoire
         '''
         period = period.this_year
-        csg_cap_lib_declarant1 = simulation.calculate('csg_cap_lib_declarant1', period)
-        prelsoc_cap_lib_declarant1 = simulation.calculate('prelsoc_cap_lib_declarant1', period)
-        crds_cap_lib_declarant1 = simulation.calculate('crds_cap_lib_declarant1', period)
+        csg_cap_lib = simulation.calculate('csg_cap_lib', period)
+        prelsoc_cap_lib = simulation.calculate('prelsoc_cap_lib', period)
+        crds_cap_lib = simulation.calculate('crds_cap_lib', period)
 
-        return period, csg_cap_lib_declarant1 + prelsoc_cap_lib_declarant1 + crds_cap_lib_declarant1
+        return period, csg_cap_lib + prelsoc_cap_lib + crds_cap_lib
 
 
 class rev_cap(Variable):
@@ -293,20 +293,21 @@ class rev_cap(Variable):
         Revenus du patrimoine
         '''
         period = period.this_year
-        fon_holder = simulation.compute('fon', period)
-        rev_cap_bar_holder = simulation.compute_add('rev_cap_bar', period)
-        cotsoc_bar_declarant1 = simulation.calculate('cotsoc_bar_declarant1', period)
-        rev_cap_lib_holder = simulation.compute_add('rev_cap_lib', period)
-        cotsoc_lib_declarant1 = simulation.calculate('cotsoc_lib_declarant1', period)
-        imp_lib_holder = simulation.compute('imp_lib', period)
+
+        # Revenus du foyer fiscal
+        fon = simulation.calculate('fon', period)
+        rev_cap_bar = simulation.calculate_add('rev_cap_bar', period)
+        cotsoc_lib = simulation.calculate('cotsoc_lib', period)
+        rev_cap_lib = simulation.calculate_add('rev_cap_lib', period)
+        imp_lib = simulation.calculate('imp_lib', period)
+        cotsoc_bar = simulation.calculate('cotsoc_bar', period)
+
+        revenus_foyer_fiscal = fon + rev_cap_bar + cotsoc_lib + rev_cap_lib + imp_lib + cotsoc_bar
+        revenus_foyer_fiscal_i = simulation.project_on_first_person(revenus_foyer_fiscal, entity = FoyersFiscaux)
+
         rac = simulation.calculate('rac', period)
 
-        fon = self.cast_from_entity_to_role(fon_holder, role = VOUS)
-        imp_lib = self.cast_from_entity_to_role(imp_lib_holder, role = VOUS)
-        rev_cap_bar = self.cast_from_entity_to_role(rev_cap_bar_holder, role = VOUS)
-        rev_cap_lib = self.cast_from_entity_to_role(rev_cap_lib_holder, role = VOUS)
-
-        return period, fon + rev_cap_bar + cotsoc_bar_declarant1 + rev_cap_lib + cotsoc_lib_declarant1 + imp_lib + rac
+        return period, revenus_foyer_fiscal_i + rac
 
 
 class psoc(Variable):

@@ -56,13 +56,6 @@ class csg_cap_bar(Variable):
         return period, -rev_cap_bar * _P.csg.capital.glob
 
 
-class csg_cap_bar_declarant1(EntityToPersonColumn):
-    entity_class = Individus
-    label = u"CSG sur les revenus du capital soumis au barème (pour le premier déclarant du foyer fiscal)"
-    role = VOUS
-    variable = csg_cap_bar
-
-
 class crds_cap_bar(Variable):
     """Calcule la CRDS sur les revenus du capital soumis au barème."""
     column = FloatCol
