@@ -193,9 +193,12 @@ class salaire_imposable(Variable):
         cotisations_salariales = simulation.calculate('cotisations_salariales', period)
         remuneration_principale = simulation.calculate('remuneration_principale', period)
         hsup = simulation.calculate('hsup', period)
-        rev_microsocial_declarant1 = simulation.calculate_divide('rev_microsocial_declarant1', period)
         indemnite_fin_contrat = simulation.calculate('indemnite_fin_contrat', period)
         complementaire_sante_salarie = simulation.calculate('complementaire_sante_salarie', period)
+
+        # Revenu du foyer fiscal projeté sur le demandeur
+        rev_microsocial = simulation.calculate_divide('rev_microsocial', period)
+        rev_microsocial_declarant1 = simulation.project_on_first_person(rev_microsocial, entity = FoyersFiscaux)
 
         return period, (
             salaire_de_base + primes_salaires + remuneration_principale +
@@ -268,10 +271,3 @@ class rev_microsocial(Variable):
         total = assiette_service + assiette_vente + assiette_proflib
         prelsoc_ms = assiette_service * P.servi + assiette_vente * P.vente + assiette_proflib * P.rsi
         return period, total - prelsoc_ms
-
-
-class rev_microsocial_declarant1(EntityToPersonColumn):
-    entity_class = Individus
-    label = u"Revenu net des cotisations sociales sous régime microsocial (auto-entrepreneur) (pour le premier déclarant du foyer fiscal)"  # noqa
-    role = VOUS
-    variable = rev_microsocial
