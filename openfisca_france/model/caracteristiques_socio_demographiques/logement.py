@@ -25,7 +25,7 @@ class loyer(Variable):
 
 class depcom(Variable):
     column = FixedStrCol(max_length = 5)
-    entity_class = Menages
+    entity_class = Familles
     label = u"Code INSEE (depcom) du lieu de résidence"
 
 class charges_locatives(Variable):
@@ -77,10 +77,7 @@ class residence_guadeloupe(Variable):
     entity_class = Familles
 
     def function(self, simulation, period):
-        depcom_holder = simulation.compute('depcom', period)
-
-        depcom = self.cast_from_entity_to_roles(depcom_holder)
-        depcom = self.filter_role(depcom, role = CHEF)
+        depcom = simulation.calculate('depcom', period)
         return period, startswith(depcom, '971')
 
 
@@ -89,10 +86,7 @@ class residence_martinique(Variable):
     entity_class = Familles
 
     def function(self, simulation, period):
-        depcom_holder = simulation.compute('depcom', period)
-
-        depcom = self.cast_from_entity_to_roles(depcom_holder)
-        depcom = self.filter_role(depcom, role = CHEF)
+        depcom = simulation.calculate('depcom', period)
         return period, startswith(depcom, '972')
 
 
@@ -101,10 +95,7 @@ class residence_guyane(Variable):
     entity_class = Familles
 
     def function(self, simulation, period):
-        depcom_holder = simulation.compute('depcom', period)
-
-        depcom = self.cast_from_entity_to_roles(depcom_holder)
-        depcom = self.filter_role(depcom, role = CHEF)
+        depcom = simulation.calculate('depcom', period)
         return period, startswith(depcom, '973')
 
 
@@ -113,10 +104,7 @@ class residence_reunion(Variable):
     entity_class = Familles
 
     def function(self, simulation, period):
-        depcom_holder = simulation.compute('depcom', period)
-
-        depcom = self.cast_from_entity_to_roles(depcom_holder)
-        depcom = self.filter_role(depcom, role = CHEF)
+        depcom = simulation.calculate('depcom', period)
         return period, startswith(depcom, '974')
 
 
@@ -125,8 +113,5 @@ class residence_mayotte(Variable):
     entity_class = Familles
 
     def function(self, simulation, period):
-        depcom_holder = simulation.compute('depcom', period)
-
-        depcom = self.cast_from_entity_to_roles(depcom_holder)
-        depcom = self.filter_role(depcom, role = CHEF)
+        depcom = simulation.calculate('depcom', period)
         return period, startswith(depcom, '976')

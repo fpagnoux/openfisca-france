@@ -16,7 +16,7 @@ class perte_autonomie(Variable):
 class resident_93(Variable):
     column = BoolCol
     label = u"Résident en Seine-Saint-Denis"
-    entity_class = Menages
+    entity_class = Familles
 
     def function(self, simulation, period):
         period = period.this_month
