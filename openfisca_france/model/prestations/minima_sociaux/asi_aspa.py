@@ -37,10 +37,7 @@ class asi_aspa_base_ressources_individu(Variable):
         pensions_alimentaires_versees_individu = simulation.calculate(
             'pensions_alimentaires_versees_individu', three_previous_months
             )
-        retraite_titre_onereux_declarant1 = simulation.calculate_add('retraite_titre_onereux_declarant1', three_previous_months)
         rpns = simulation.calculate_add_divide('rpns', three_previous_months)
-        rev_cap_bar_holder = simulation.compute_add_divide('rev_cap_bar', three_previous_months)
-        rev_cap_lib_holder = simulation.compute_add_divide('rev_cap_lib', three_previous_months)
         revenus_fonciers_minima_sociaux = simulation.calculate_add('revenus_fonciers_minima_sociaux', three_previous_months)
         div_ms = simulation.calculate_add('div_ms', three_previous_months)
         revenus_stage_formation_pro = simulation.calculate('revenus_stage_formation_pro', three_previous_months)
@@ -76,8 +73,14 @@ class asi_aspa_base_ressources_individu(Variable):
         leg_1er_janvier = simulation.legislation_at(period.start.offset('first-of', 'year'))
 
         aspa_couple = self.cast_from_entity_to_role(aspa_couple_holder, role = VOUS)
-        rev_cap_bar = self.cast_from_entity_to_role(rev_cap_bar_holder, role = VOUS)
-        rev_cap_lib = self.cast_from_entity_to_role(rev_cap_lib_holder, role = VOUS)
+
+        # Revenus du foyer fiscal que l'on projette sur le premier invidividus
+        rev_cap_bar_foyer_fiscal = max_(0, simulation.calculate_add('rev_cap_bar', three_previous_months))
+        rev_cap_lib_foyer_fiscal = max_(0, simulation.calculate_add('rev_cap_lib', three_previous_months))
+        retraite_titre_onereux_foyer_fiscal = simulation.calculate_add('retraite_titre_onereux', three_previous_months)
+        revenus_foyer_fiscal = rev_cap_bar_foyer_fiscal + rev_cap_lib_foyer_fiscal + retraite_titre_onereux_foyer_fiscal
+        revenus_foyer_fiscal_individu = simulation.project_on_first_person(revenus_foyer_fiscal, entity = FoyerFiscaux)
+
 
         # Inclus l'AAH si conjoint non pensionné ASPA, retraite et pension invalidité
         # FIXME Il faudrait vérifier que le conjoint est pensionné ASPA, pas qu'il est juste éligible !
@@ -94,8 +97,8 @@ class asi_aspa_base_ressources_individu(Variable):
         salaire_de_base = max_(0, salaire_de_base - abattement_forfaitaire)
 
         return period, (salaire_de_base + chomage_net + retraite_brute + pensions_alimentaires_percues -
-               abs_(pensions_alimentaires_versees_individu) + retraite_titre_onereux_declarant1 + rpns +
-               max_(0, rev_cap_bar) + max_(0, rev_cap_lib) + max_(0, revenus_fonciers_minima_sociaux) + max_(0, div_ms) +  # max_(0,etr) +
+               abs_(pensions_alimentaires_versees_individu) + revenus_foyer_fiscal_individu + rpns +
+               max_(0, revenus_fonciers_minima_sociaux) + max_(0, div_ms) +  # max_(0,etr) +
                revenus_stage_formation_pro + allocation_securisation_professionnelle +
                prime_forfaitaire_mensuelle_reprise_activite + dedommagement_victime_amiante + prestation_compensatoire +
                pensions_invalidite + gains_exceptionnels + indemnites_journalieres + indemnites_chomage_partiel +

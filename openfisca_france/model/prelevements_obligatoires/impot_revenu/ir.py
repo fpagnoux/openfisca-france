@@ -474,13 +474,6 @@ class retraite_titre_onereux(Variable):
         return period, (f1aw + f1bw + f1cw + f1dw) / 12
 
 
-class retraite_titre_onereux_declarant1(EntityToPersonColumn):
-    entity_class = Individus
-    label = u"Rentes viagères (rentes à titre onéreux) (pour le premier déclarant du foyer fiscal)"
-    role = VOUS
-    variable = retraite_titre_onereux
-
-
 class retraite_titre_onereux_net(Variable):
     column = FloatCol
     entity_class = FoyersFiscaux

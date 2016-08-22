@@ -284,7 +284,6 @@ class rsa_base_ressources_individu(Variable):
         allocation_aide_retour_emploi = r.calcule_ressource('allocation_aide_retour_emploi')
         allocation_securisation_professionnelle = r.calcule_ressource('allocation_securisation_professionnelle')
         prestation_compensatoire = r.calcule_ressource('prestation_compensatoire')
-        retraite_titre_onereux_declarant1 = r.calcule_ressource('retraite_titre_onereux_declarant1')
         revenus_fonciers_minima_sociaux = r.calcule_ressource('revenus_fonciers_minima_sociaux')
         div_ms = r.calcule_ressource('div_ms')
         gains_exceptionnels = r.calcule_ressource('gains_exceptionnels')
@@ -292,14 +291,17 @@ class rsa_base_ressources_individu(Variable):
         pensions_invalidite = r.calcule_ressource('pensions_invalidite')
         rsa_base_ressources_patrimoine_i = r.calcule_ressource('rsa_base_ressources_patrimoine_individu')
         prime_forfaitaire_mensuelle_reprise_activite = r.calcule_ressource('prime_forfaitaire_mensuelle_reprise_activite')
-        rev_cap_bar_holder = simulation.compute_add('rev_cap_bar', three_previous_months)
-        rev_cap_lib_holder = simulation.compute_add('rev_cap_lib', three_previous_months)
-        rev_cap_bar = self.cast_from_entity_to_role(rev_cap_bar_holder, role = VOUS)
-        rev_cap_lib = self.cast_from_entity_to_role(rev_cap_lib_holder, role = VOUS)
+
+        # Revenus du foyer fiscal que l'on projette sur le premier invidividus
+        rev_cap_bar_foyer_fiscal = max_(0, simulation.calculate_add('rev_cap_bar', three_previous_months))
+        rev_cap_lib_foyer_fiscal = max_(0, simulation.calculate_add('rev_cap_lib', three_previous_months))
+        retraite_titre_onereux_foyer_fiscal = simulation.calculate_add('retraite_titre_onereux', three_previous_months)
+        revenus_foyer_fiscal = rev_cap_bar_foyer_fiscal + rev_cap_lib_foyer_fiscal + retraite_titre_onereux_foyer_fiscal
+        revenus_foyer_fiscal_individu = simulation.project_on_first_person(revenus_foyer_fiscal, entity = FoyerFiscaux)
 
         result = (
-            chomage_net + retraite_nette + pensions_alimentaires_percues + retraite_titre_onereux_declarant1 + rev_cap_bar +
-            rev_cap_lib + revenus_fonciers_minima_sociaux + div_ms +
+            chomage_net + retraite_nette + pensions_alimentaires_percues + revenus_foyer_fiscal_individu +
+            revenus_fonciers_minima_sociaux + div_ms +
             gains_exceptionnels + dedommagement_victime_amiante + pensions_invalidite + allocation_aide_retour_emploi +
             allocation_securisation_professionnelle + prestation_compensatoire +
             rsa_base_ressources_patrimoine_i + prime_forfaitaire_mensuelle_reprise_activite

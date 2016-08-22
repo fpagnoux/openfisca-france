@@ -241,7 +241,8 @@ class pen(Variable):
         pensions_alimentaires_versees_declarant1 = simulation.calculate(
             'pensions_alimentaires_versees_declarant1', period
             )
-        retraite_titre_onereux_declarant1 = simulation.calculate_add('retraite_titre_onereux_declarant1', period)
+        retraite_titre_onereux = simulation.calculate_add('retraite_titre_onereux', period) # Pour le foyer fiscal
+        retraite_titre_onereux_declarant1 = simulation.project_on_first_person(retraite_titre_onereux, entity = FoyersFiscaux)
 
         return period, (chomage_net + retraite_nette + pensions_alimentaires_percues + pensions_alimentaires_versees_declarant1 +
                     retraite_titre_onereux_declarant1)
@@ -373,7 +374,7 @@ class mini(Variable):
         aah = self.sum_by_entity(aah_holder)
         caah = self.sum_by_entity(caah_holder)
 
-        return period, aspa + aah + caah + asi + rsa + aefa + api + ass + psa + ppa 
+        return period, aspa + aah + caah + asi + rsa + aefa + api + ass + psa + ppa
 
 
 class aides_logement(Variable):
