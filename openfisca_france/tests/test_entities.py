@@ -70,7 +70,7 @@ def test_entities_id_and_role_columns():
         [PERSONNE_DE_REFERENCE, CONJOINT, ENFANT, ENFANT, PERSONNE_DE_REFERENCE, ENFANT]
         )
 
-def test_projection():
+def test_project_on_persons():
     test_case = deepcopy(TEST_CASE)
     test_case['familles'][0]['af'] = 20000
 
@@ -80,6 +80,32 @@ def test_projection():
     af_projete = simulation.project_on_persons(af, entity = Familles)
 
     assert_near(af_projete, [20000, 20000, 20000, 20000, 0, 0])
+
+def test_project_on_first_person():
+    test_case = deepcopy(TEST_CASE)
+    test_case['familles'][0]['af'] = 20000
+    test_case['familles'][1]['af'] = 5000
+
+    simulation = new_simulation(test_case)
+
+    af = simulation.calculate('af')
+    af_projete = simulation.project_on_first_person(af, entity = Familles)
+
+    assert_near(af_projete, [20000, 0, 0, 0, 5000, 0])
+
+def test_sum_in_entity():
+    test_case = deepcopy(TEST_CASE)
+    test_case['individus'][0]['salaire'] = 1000
+    test_case['individus'][1]['salaire'] = 1500
+    test_case['individus'][4]['salaire'] = 3000
+    test_case['individus'][5]['salaire'] = 500
+
+    simulation = new_simulation(test_case)
+
+    salaire = simulation.calculate('salaire')
+    salaire_total_par_famille = simulation.sum_in_entity(salaire, entity = Familles)
+
+    assert_near(salaire_total_par_famille, [2500, 3500])
 
 def test_transpose_to_entity():
     test_case = deepcopy(TEST_CASE)
