@@ -195,8 +195,6 @@ class aide_logement_base_ressources_defaut(Variable):
 
     def function(self, simulation, period):
         period = period.this_month
-        rev_coll_holder = simulation.compute('rev_coll', period.n_2)
-        rev_coll = self.sum_by_entity(rev_coll_holder)
         biactivite = simulation.calculate('biactivite', period)
         Pr = simulation.legislation_at(period.start).al.ressources
         base_ressources_holder = simulation.compute('prestations_familiales_base_ressources_individu', period)
@@ -209,8 +207,13 @@ class aide_logement_base_ressources_defaut(Variable):
         abattement_ressources_enfant = simulation.legislation_at(period.n_2.stop).minim.aspa.plaf_seul * 1.25
         br_enfants = self.sum_by_entity(
             max_(0, base_ressources_holder.array - abattement_ressources_enfant), roles = ENFS)
+
+        # Revenus du foyer fiscal
+        rev_coll = simulation.calculate('rev_coll', period.n_2)
+        rev_coll_famille = simulation.transpose_to_entity(rev_coll, origin_entity = FoyersFiscaux, target_entity = Familles)
+
         ressources = (
-            base_ressources_parents + br_enfants + rev_coll -
+            base_ressources_parents + br_enfants + rev_coll_famille -
             (abattement_chomage_indemnise + abattement_depart_retraite + neutralisation_rsa)
         )
 

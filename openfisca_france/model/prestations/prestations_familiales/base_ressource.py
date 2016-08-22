@@ -57,8 +57,9 @@ class prestations_familiales_base_ressources_individu(Variable):
         traitements_salaires_pensions_rentes = simulation.calculate('traitements_salaires_pensions_rentes', annee_fiscale_n_2)
         hsup = simulation.calculate('hsup', annee_fiscale_n_2)
         rpns = simulation.calculate('rpns', annee_fiscale_n_2)
+        glo = simulation.calculate('glo', annee_fiscale_n_2)
 
-        return period, traitements_salaires_pensions_rentes + hsup + rpns
+        return period, traitements_salaires_pensions_rentes + hsup + rpns + glo
 
 
 class biactivite(Variable):
@@ -109,40 +110,27 @@ class div(Variable):
 
 class rev_coll(Variable):
     column = FloatCol(default = 0)
-    entity_class = Individus
-    label = u"Revenus collectifs"
+    entity_class = FoyersFiscaux
+    label = u"Revenus perçus par le foyer fiscal à prendre en compte dans la base ressource des prestations familiales"
 
     def function(self, simulation, period):
         period = period.start.offset('first-of', 'month').period('year')
-        # Quand rev_coll est calculé sur une année glissante, retraite_titre_onereux_net_declarant1 est calculé sur l'année légale
-        # correspondante.
-        retraite_titre_onereux_net_declarant1 = simulation.calculate('retraite_titre_onereux_net_declarant1', period.offset('first-of'))
-        rev_cap_lib_holder = simulation.compute_add('rev_cap_lib', period)
-        rev_cat_rvcm_holder = simulation.compute('rev_cat_rvcm', period)
-        # div = simulation.calculate('div', period)  # TODO why is this variable not used ?
-        abat_spe_holder = simulation.compute('abat_spe', period)
-        glo = simulation.calculate('glo', period)
-        fon_holder = simulation.compute('fon', period)
-        # Quand rev_coll est calculé sur une année glissante, pensions_alimentaires_versees_declarant1 est calculé sur l'année légale
-        # correspondante.
-        pensions_alimentaires_versees_declarant1 = simulation.calculate('pensions_alimentaires_versees_declarant1', period.offset('first-of'))
-        f7ga_holder = simulation.compute('f7ga', period)
-        f7gb_holder = simulation.compute('f7gb', period)
-        f7gc_holder = simulation.compute('f7gc', period)
-        rev_cat_pv_holder = simulation.compute('rev_cat_pv', period)
+
+        # Quand rev_coll est calculé sur une année glissante, retraite_titre_onereux_net et pensions_alimentaires_versees sont calculés sur l'année légale correspondante.
+        retraite_titre_onereux_net = simulation.calculate('retraite_titre_onereux_net', period.offset('first-of'))
+        pensions_alimentaires_versees = simulation.calculate('pensions_alimentaires_versees', period.offset('first-of'))
+        rev_cap_lib = simulation.calculate_add('rev_cap_lib', period)
+        rev_cat_rvcm = simulation.calculate('rev_cat_rvcm', period)
+        abat_spe = simulation.calculate('abat_spe', period)
+        fon = simulation.calculate('fon', period)
+        f7ga = simulation.calculate('f7ga', period)
+        f7gb = simulation.calculate('f7gb', period)
+        f7gc = simulation.calculate('f7gc', period)
+        rev_cat_pv = simulation.calculate('rev_cat_pv', period)
 
         # TODO: ajouter les revenus de l'étranger etr*0.9
         # pensions_alimentaires_versees_declarant1 is negative since it is paid by the declaree
-        rev_cap_lib = self.cast_from_entity_to_role(rev_cap_lib_holder, role = VOUS)
-        rev_cat_rvcm = self.cast_from_entity_to_role(rev_cat_rvcm_holder, role = VOUS)
-        abat_spe = self.cast_from_entity_to_role(abat_spe_holder, role = VOUS)
-        fon = self.cast_from_entity_to_role(fon_holder, role = VOUS)
-        f7ga = self.cast_from_entity_to_role(f7ga_holder, role = VOUS)
-        f7gb = self.cast_from_entity_to_role(f7gb_holder, role = VOUS)
-        f7gc = self.cast_from_entity_to_role(f7gc_holder, role = VOUS)
-        rev_cat_pv = self.cast_from_entity_to_role(rev_cat_pv_holder, role = VOUS)
-
-        return period, (retraite_titre_onereux_net_declarant1 + rev_cap_lib + rev_cat_rvcm + fon + glo + pensions_alimentaires_versees_declarant1 - f7ga - f7gb
+        return period, (retraite_titre_onereux_net + rev_cap_lib + rev_cat_rvcm + fon + pensions_alimentaires_versees_declarant1 - f7ga - f7gb
             - f7gc - abat_spe + rev_cat_pv)
 
 
@@ -166,11 +154,11 @@ class prestations_familiales_base_ressources(Variable):
         ressources_i = (not_(enfant_i) + enfant_a_charge_i) * base_ressources_i
         base_ressources_i_total = self.sum_by_entity(ressources_i)
 
-        rev_coll_holder = simulation.compute('rev_coll', annee_fiscale_n_2)
+        # Revenus du foyer fiscal
+        rev_coll = simulation.calculate('rev_coll', annee_fiscale_n_2)
+        rev_coll_famille = simulation.transpose_to_entity(rev_coll, origin_entity = FoyersFiscaux, target_entity = Familles)
 
-        rev_coll = self.split_by_roles(rev_coll_holder, roles = [CHEF, PART])
-
-        base_ressources = base_ressources_i_total + rev_coll[CHEF] + rev_coll[PART]
+        base_ressources = base_ressources_i_total + rev_coll_famille
         return period, base_ressources
 
 
