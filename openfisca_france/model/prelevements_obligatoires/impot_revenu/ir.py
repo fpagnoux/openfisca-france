@@ -491,13 +491,6 @@ class retraite_titre_onereux_net(Variable):
         return period, round(abatviag.taux1 * f1aw + abatviag.taux2 * f1bw + abatviag.taux3 * f1cw + abatviag.taux4 * f1dw)
 
 
-class retraite_titre_onereux_net_declarant1(EntityToPersonColumn):
-    entity_class = Individus
-    label = u"Rentes viagères après abattements (pour le premier déclarant du foyer fiscal)"
-    role = VOUS
-    variable = retraite_titre_onereux_net
-
-
 class traitements_salaires_pensions_rentes(Variable):
     column = FloatCol
     entity_class = Individus
@@ -510,9 +503,10 @@ class traitements_salaires_pensions_rentes(Variable):
         revenu_assimile_pension_apres_abattements = simulation.calculate('revenu_assimile_pension_apres_abattements', period)
         abattement_salaires_pensions = simulation.calculate('abattement_salaires_pensions', period)
 
-        # Quand tspr est calculé sur une année glissante, retraite_titre_onereux_net_declarant1 est calculé sur l'année légale
+        # Quand tspr est calculé sur une année glissante, retraite_titre_onereux_net est calculé sur l'année légale
         # correspondante.
-        retraite_titre_onereux_net_declarant1 = simulation.calculate('retraite_titre_onereux_net_declarant1', period.offset('first-of'))
+        retraite_titre_onereux_net = simulation.calculate('retraite_titre_onereux_net', period.offset('first-of'))
+        retraite_titre_onereux_net_declarant1 = simulation.project_on_first_person(retraite_titre_onereux_net, entity = FoyersFiscaux)
 
         return period, revenu_assimile_salaire_apres_abattements + revenu_assimile_pension_apres_abattements - abattement_salaires_pensions + retraite_titre_onereux_net_declarant1
 
