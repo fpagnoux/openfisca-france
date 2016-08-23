@@ -209,3 +209,13 @@ def test_all_in_entity():
     all_parents_age_sup_18 = simulation.all_in_entity(condition_age, entity = Familles, role = PARENT)
     assert_near(all_parents_age_sup_18, [True, True])
 
+def test_value_from_person():
+    test_case = deepcopy(TEST_CASE_AGES)
+    simulation = new_simulation(test_case)
+
+    age = simulation.calculate('age')
+
+    age_conjoint = simulation.value_from_person(age, entity = FoyersFiscaux, role = CONJOINT, default = -1)
+
+    assert_near(age_conjoint, [37, -1])
+
