@@ -71,13 +71,12 @@ class biactivite(Variable):
         period = period.this_month
         annee_fiscale_n_2 = period.n_2
 
-        base_ressources_i_holder = simulation.compute('prestations_familiales_base_ressources_individu', period)
-        base_ressources_i = self.split_by_roles(base_ressources_i_holder, roles = [CHEF, PART])
-
         pfam = simulation.legislation_at(annee_fiscale_n_2.start).fam
         seuil_rev = 12 * pfam.af.bmaf
 
-        return period, (base_ressources_i[CHEF] >= seuil_rev) & (base_ressources_i[PART] >= seuil_rev)
+        base_ressources_i = simulation.calculate('prestations_familiales_base_ressources_individu', period)
+
+        return period, simulation.all_in_entity(base_ressources_i >= seuil_rev, entity = Familles, role = PARENT)
 
 
 class div(Variable):
