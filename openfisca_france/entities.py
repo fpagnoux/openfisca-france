@@ -12,64 +12,77 @@ Individus = Entity(
     is_person = True
     )
 
-ENFANT = "enfants" # Commun avec l'entité Ménages
-PARENT = "parents"
-
 Familles = Entity(
     key = "familles",
     label = u'Famille',
-    roles = {
-        ENFANT: {
-            'label': u'Enfants'
-            },
-        PARENT: {
+    roles = [
+        {
+            'key': 'parents',
             'label': u'Parents',
             'max': 2
+            },
+        {
+            'key': 'enfants',
+            'label': u'Enfants'
             }
-        }
+        ]
     )
 
-DECLARANT = 'declarants'
-PERSONNE_A_CHARGE = 'personnes_a_charge'
+Individus = Entity(
+    key = "individus",
+    label = u'Individus',
+    is_person = True
+    )
+
 
 FoyersFiscaux = Entity(
     key = "foyers_fiscaux",
     label = u'Déclaration d’impôts',
-    roles = {
-        PERSONNE_A_CHARGE: {
+    roles = [
+        {
+            'key': 'declarant',
+            'label': u'Déclarants',
+            'max': 1,
+            'role_in_scenario': 'declarants'
+            },
+        {
+            'key': 'conjoint',
+            'label': u'Déclarants',
+            'max': 1,
+            'role_in_scenario': 'declarants'
+            },
+        {
+            'key': 'personnes_a_charge',
             'label': u'Personnes à charge'
             },
-        DECLARANT: {
-            'label': u'Déclarants',
-            'max': 2
-            }
-        }
+        ]
     )
 
-PERSONNE_DE_REFERENCE = 'personne_de_reference'
-CONJOINT = 'conjoint'
-AUTRE = 'autres'
 
 Menages = Entity(
     key = "menages",
     label = u'Logement principal',
-    roles = {
-        PERSONNE_DE_REFERENCE: {
+    roles = [
+        {
+            'key': 'personne_de_reference',
             'label': u'Personne de référence',
             'max': 1
-        },
-        CONJOINT: {
+            },
+        {
+            'key': 'conjoint',
             'label': u'Conjoint',
             'max': 1
             },
-        ENFANT: {
+        {
+            'key': 'enfants',
             'label': u'Enfants',
             'max': 2
             },
-        AUTRE: {
+        {
+            'key': 'autres',
             'label': u'Autres'
             }
-        }
+        ]
     )
 
 entities = [Individus, Familles, FoyersFiscaux, Menages]
