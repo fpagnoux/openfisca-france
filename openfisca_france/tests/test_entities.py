@@ -153,5 +153,21 @@ def test_nb_enfants():
 
     assert_near(nb_enf(simulation_2, 2013, 19, 50), [0, 0])
 
+def test_any_in_entity():
+    test_case = deepcopy(TEST_CASE)
+    ages = [40, 37, 7, 9, 54, 20]
+    for (individu, age) in zip(test_case['individus'], ages):
+        individu['age'] = age
+    simulation = new_simulation(test_case)
 
-test_sum_in_entity()
+    ages = simulation.calculate('age')
+    condition_age = (ages <= 18)
+    has_famille_member_with_age_inf_18 = simulation.any_in_entity(condition_age, entity = Familles)
+    assert_near(has_famille_member_with_age_inf_18, [True,False])
+
+    condition_age_2 = (ages > 18)
+    has_famille_enfant_with_age_sup_18 = simulation.any_in_entity(condition_age_2, entity = Familles, role = ENFANT)
+    assert_near(has_famille_enfant_with_age_sup_18, [False, True])
+
+    # has_famille_enfant_with_age_sup_18
+
