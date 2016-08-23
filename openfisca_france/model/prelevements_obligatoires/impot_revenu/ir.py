@@ -260,53 +260,49 @@ class maries_ou_pacses(Variable):
 
     def function(self, simulation, period):
         period = period.this_year
-        statut_marital_holder = simulation.compute('statut_marital', period)
+        statut_marital = simulation.calculate('statut_marital', period)
+        individu_marie = (statut_marital == 1) | (statut_marital == 5)
 
-        statut_marital = self.filter_role(statut_marital_holder, role = VOUS)
-
-        return period, (statut_marital == 1) | (statut_marital == 5)
+        return period, simulation.any_in_entity(individu_marie, entity = FoyersFiscaux, role = DECLARANT)
 
 
 class celibataire_ou_divorce(Variable):
-    column = BoolCol(default = False)
+    column = BoolCol
     entity_class = FoyersFiscaux
     label = u"Déclarant célibataire ou divorcé"
 
     def function(self, simulation, period):
         period = period.this_year
-        statut_marital_holder = simulation.compute('statut_marital', period)
+        statut_marital = simulation.calculate('statut_marital', period)
+        individu_celibataire_ou_divorce = (statut_marital == 2) | (statut_marital == 3)
 
-        statut_marital = self.filter_role(statut_marital_holder, role = VOUS)
-
-        return period, (statut_marital == 2) | (statut_marital == 3)
+        return period, simulation.any_in_entity(individu_marie, entity = FoyersFiscaux, role = DECLARANT)
 
 
 class veuf(Variable):
-    column = BoolCol(default = False)
+    column = BoolCol
     entity_class = FoyersFiscaux
     label = u"Déclarant veuf"
 
     def function(self, simulation, period):
         period = period.this_year
-        statut_marital_holder = simulation.compute('statut_marital', period)
+        statut_marital = simulation.calculate('statut_marital', period)
+        individu_veuf = (statut_marital == 4)
 
-        statut_marital = self.filter_role(statut_marital_holder, role = VOUS)
-
-        return period, statut_marital == 4
+        return period, simulation.any_in_entity(individu_marie, entity = FoyersFiscaux, role = DECLARANT)
 
 
 class jeune_veuf(Variable):
-    column = BoolCol(default = False)
+    column = BoolCol
     entity_class = FoyersFiscaux
     label = u"Déclarant jeune veuf"
 
     def function(self, simulation, period):
         period = period.this_year
-        statut_marital_holder = simulation.compute('statut_marital', period)
+        statut_marital = simulation.calculate('statut_marital', period)
+        individu_veuf = (statut_marital == 6)
 
-        statut_marital = self.filter_role(statut_marital_holder, role = VOUS)
-
-        return period, statut_marital == 6
+        return period, simulation.any_in_entity(individu_marie, entity = FoyersFiscaux, role = DECLARANT)
 
 
 ###############################################################################
@@ -1251,13 +1247,12 @@ class teicaa(Variable):  # f5rm
         Taxe exceptionelle sur l'indemnité compensatrice des agents d'assurance
         """
         period = period.this_year
-        f5qm_holder = simulation.compute('f5qm', period)
         bareme = simulation.legislation_at(period.start).ir.teicaa
 
-        f5qm = self.filter_role(f5qm_holder, role = VOUS)
-        f5rm = self.filter_role(f5qm_holder, role = CONJ)
+        f5qm = simulation.calculate('f5qm', period)
+        teicaa_individu = barem.calc(f5qm)
 
-        return period, bareme.calc(f5qm) + bareme.calc(f5rm)
+        return period, simulation.sum_in_entity(f5qm, entity = FoyersFiscaux, role = DECLARANT)
 
 
 class assiette_vente(Variable):
