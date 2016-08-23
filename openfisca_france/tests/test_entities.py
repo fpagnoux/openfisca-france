@@ -6,7 +6,7 @@ from openfisca_core.columns import FloatCol, IntCol, BoolCol
 from openfisca_core.tools import assert_near, assert_equal
 
 from openfisca_france.scenarios import Scenario
-from openfisca_france.entities import entities, Individus, Familles, FoyersFiscaux, Menages, PARENT, ENFANT, CONJOINT, PERSONNE_DE_REFERENCE
+from openfisca_france.entities import entities, Individus, Familles, FoyersFiscaux, Menages, PARENT, ENFANT, CONJOINT, PERSONNE_DE_REFERENCE, DECLARANT, PERSONNE_A_CHARGE
 
 
 # When the TBS is repaired, we can use it instead of the fake one
@@ -77,6 +77,10 @@ def test_entities_id_and_role_columns():
         simulation.calculate(role_in_menage_column_name),
         [PERSONNE_DE_REFERENCE, CONJOINT, ENFANT, ENFANT, PERSONNE_DE_REFERENCE, ENFANT]
         )
+
+    assert_equal(
+        simulation.get_role_in_entity(FoyersFiscaux),
+        [DECLARANT, CONJOINT, PERSONNE_A_CHARGE, PERSONNE_A_CHARGE, DECLARANT, PERSONNE_A_CHARGE])
 
 def test_project_on_persons():
     test_case = deepcopy(TEST_CASE)
