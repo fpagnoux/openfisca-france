@@ -2,63 +2,16 @@
 
 from openfisca_france.model.base import *  # noqa
 
-
-# class idmen(Variable):
-#     column = IntCol
-#     entity_class = Individus
-#     is_permanent = True
-#     label = u"Identifiant du ménage"
-
-
-# class idfoy(Variable):
-#     column = IntCol
-#     entity_class = Individus
-#     is_permanent = True
-#     label = u"Identifiant du foyer"
-
-
-# class idfam(Variable):
-#     column = IntCol
-#     entity_class = Individus
-#     is_permanent = True
-#     label = u"Identifiant de la famille"
-
-
-
-# class quimen(Variable):
-#     column = EnumCol(enum = QUIMEN)
-#     entity_class = Individus
-#     is_permanent = True
-
-
-# class quifoy(Variable):
-#     column = EnumCol(enum = QUIFOY)
-#     entity_class = Individus
-#     is_permanent = True
-
-
-# class quifam(Variable):
-#     column = EnumCol(enum = QUIFAM)
-#     entity_class = Individus
-#     is_permanent = True
-
-
-
 class date_naissance(Variable):
     column = DateCol(default = date(1970, 1, 1))
     entity_class = Individus
     is_permanent = True
     label = u"Date de naissance"
 
-
-
-
 class adoption(Variable):
     column = BoolCol
     entity_class = Individus
     label = u"Enfant adopté"
-
-
 
 class garde_alternee(Variable):
     column = BoolCol
@@ -78,16 +31,10 @@ class activite(Variable):
     entity_class = Individus
     label = u"Activité"
 
-
-
-
 class enceinte(Variable):
     column = BoolCol
     entity_class = Individus
     label = u"Est enceinte"
-
-
-
 
 class statut_marital(Variable):
     column = EnumCol(
@@ -227,11 +174,9 @@ class nb_parents(Variable):
     def function(self, simulation, period):
         # Note : Cette variable est "instantanée" : quelque soit la période demandée, elle retourne la valeur au premier
         # jour, sans changer la période.
-        quifam_holder = simulation.compute('quifam', period)
 
-        quifam = self.filter_role(quifam_holder, role = PART)
-
-        return period, 1 + 1 * (quifam == PART)
+        condition_role = simulation.get_role_in_entity(Familles) == PARENT
+        return period, simulation.sum_in_entity(condition_role, entity = Familles)
 
 
 class maries(Variable):
@@ -243,11 +188,10 @@ class maries(Variable):
         """couple = 1 si couple marié sinon 0 TODO: faire un choix avec couple ?"""
         # Note : Cette variable est "instantanée" : quelque soit la période demandée, elle retourne la valeur au premier
         # jour, sans changer la période.
-        statut_marital_holder = simulation.compute('statut_marital', period)
+        statut_marital = simulation.calculate('statut_marital', period)
+        individu_marie = (statut_marital == 1)
 
-        statut_marital = self.filter_role(statut_marital_holder, role = CHEF)
-
-        return period, statut_marital == 1
+        return simulation.any_in_entity(individu_marie, entity = Familles, role = PARENT)
 
 
 class en_couple(Variable):
@@ -272,9 +216,7 @@ class est_enfant_dans_famille(Variable):
     label = u"Indique qe l'individu est un enfant dans une famille"
 
     def function(self, simulation, period):
-        quifam = simulation.calculate('quifam', period)
-        return period, quifam > PART
-
+        return period, simulation.get_role_in_entity(Familles) == ENFANT
 
 class etudiant(Variable):
     column = BoolCol(default = False)
