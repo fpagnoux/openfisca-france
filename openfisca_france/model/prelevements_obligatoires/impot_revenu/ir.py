@@ -2492,16 +2492,16 @@ class abat_spe(Variable):
           pour un célibataire avec un jeune enfant en résidence alternée.
         """
         period = period.this_year
-        age_holder = simulation.compute('age', period)
         caseP = simulation.calculate('caseP', period)
         caseF = simulation.calculate('caseF', period)
         rng = simulation.calculate('rng', period)
         nbN = simulation.calculate('nbN', period)
         abattements_speciaux = simulation.legislation_at(period.start).ir.abattements_speciaux
 
-        age = self.split_by_roles(age_holder, roles = [VOUS, CONJ])
+        age = simulation.calculate('age', period)
+        ageV = simulation.value_from_person(age, FoyersFiscaux, DECLARANT)
+        ageC = simulation.value_from_person(age, FoyersFiscaux, CONJOINT)
 
-        ageV, ageC = age[VOUS], age[CONJ]
         invV, invC = caseP, caseF
         nb_elig_as = (1 * (((ageV >= 65) | invV) & (ageV > 0)) +
                       1 * (((ageC >= 65) | invC) & (ageC > 0))
