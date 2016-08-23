@@ -136,13 +136,15 @@ def test_transpose_to_entity():
 
     assert_near(af_foyer_fiscal, [20000, 10000, 0])
 
-def test_nb_enfants():
-    test_case = deepcopy(TEST_CASE)
-    ages = [40, 37, 7, 9, 54, 20]
-    for (individu, age) in zip(test_case['individus'], ages):
+TEST_CASE_AGES = deepcopy(TEST_CASE)
+AGES = [40, 37, 7, 9, 54, 20]
+for (individu, age) in zip(TEST_CASE_AGES['individus'], AGES):
         individu['age'] = age
 
+def test_nb_enfants():
+    test_case = deepcopy(TEST_CASE_AGES)
     simulation = new_simulation(test_case)
+
     from openfisca_france.model.prestations.prestations_familiales.base_ressource import nb_enf
 
     assert_near(nb_enf(simulation, 2013, 3, 18), [2, 0])
@@ -154,34 +156,52 @@ def test_nb_enfants():
     assert_near(nb_enf(simulation_2, 2013, 19, 50), [0, 0])
 
 def test_any_in_entity():
-    test_case = deepcopy(TEST_CASE)
-    ages = [40, 37, 7, 9, 54, 20]
-    for (individu, age) in zip(test_case['individus'], ages):
-        individu['age'] = age
+    test_case = deepcopy(TEST_CASE_AGES)
     simulation = new_simulation(test_case)
 
-    ages = simulation.calculate('age')
-    condition_age = (ages <= 18)
+    age = simulation.calculate('age')
+    condition_age = (age <= 18)
     has_famille_member_with_age_inf_18 = simulation.any_in_entity(condition_age, entity = Familles)
     assert_near(has_famille_member_with_age_inf_18, [True,False])
 
-    condition_age_2 = (ages > 18)
+    condition_age_2 = (age > 18)
     has_famille_enfant_with_age_sup_18 = simulation.any_in_entity(condition_age_2, entity = Familles, role = ENFANT)
     assert_near(has_famille_enfant_with_age_sup_18, [False, True])
 
 def test_max_in_entity():
-    test_case = deepcopy(TEST_CASE)
-    ages = [40, 37, 7, 9, 54, 20]
-    for (individu, age) in zip(test_case['individus'], ages):
-        individu['age'] = age
+    test_case = deepcopy(TEST_CASE_AGES)
     simulation = new_simulation(test_case)
 
-    ages = simulation.calculate('age')
+    age = simulation.calculate('age')
 
-    age_max = simulation.max_in_entity(ages, entity = Familles)
+    age_max = simulation.max_in_entity(age, entity = Familles)
     assert_near(age_max, [40, 54])
 
-    age_max_enfants = simulation.max_in_entity(ages, entity = Familles, role = ENFANT)
+    age_max_enfants = simulation.max_in_entity(age, entity = Familles, role = ENFANT)
     assert_near(age_max_enfants, [9, 20])
 
+def test_min_in_entity():
+    test_case = deepcopy(TEST_CASE_AGES)
+    simulation = new_simulation(test_case)
+
+    age = simulation.calculate('age')
+
+    age_min = simulation.min_in_entity(age, entity = Familles)
+    assert_near(age_min, [7, 20])
+
+    age_min_parents = simulation.min_in_entity(age, entity = Familles, role = PARENT)
+    assert_near(age_min_parents, [37, 54])
+
+def test_all_in_entity():
+    test_case = deepcopy(TEST_CASE_AGES)
+    simulation = new_simulation(test_case)
+
+    age = simulation.calculate('age')
+
+    condition_age = (age >= 18)
+    all_persons_age_sup_18 = simulation.all_in_entity(condition_age, entity = Familles)
+    assert_near(all_persons_age_sup_18, [False, True])
+
+    all_parents_age_sup_18 = simulation.all_in_entity(condition_age, entity = Familles, role = PARENT)
+    assert_near(all_parents_age_sup_18, [True, True])
 
