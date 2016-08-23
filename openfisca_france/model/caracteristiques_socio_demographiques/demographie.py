@@ -191,7 +191,7 @@ class maries(Variable):
         statut_marital = simulation.calculate('statut_marital', period)
         individu_marie = (statut_marital == 1)
 
-        return simulation.any_in_entity(individu_marie, entity = Familles, role = PARENT)
+        return period, simulation.any_in_entity(individu_marie, entity = Familles, role = PARENT)
 
 
 class en_couple(Variable):
