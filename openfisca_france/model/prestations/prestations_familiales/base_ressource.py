@@ -170,6 +170,7 @@ def nb_enf(simulation, period, age_min, age_max):
     """
     Renvoie le nombre d'enfant au sens des allocations familiales dont l'âge est compris entre ag1 et ag2
     """
+    period = period.this_month
     age = simulation.calculate('age', period)
     autonomie_financiere = simulation.calculate('autonomie_financiere', period)
 
