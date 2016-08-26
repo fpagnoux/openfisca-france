@@ -282,7 +282,7 @@ class celibataire_ou_divorce(Variable):
         statut_marital = simulation.calculate('statut_marital', period)
         individu_celibataire_ou_divorce = (statut_marital == 2) | (statut_marital == 3)
 
-        return period, simulation.any_in_entity(individu_marie, entity = FoyersFiscaux, role = DECLARANT)
+        return period, simulation.any_in_entity(individu_celibataire_ou_divorce, entity = FoyersFiscaux, role = DECLARANT)
 
 
 class veuf(Variable):
@@ -295,7 +295,7 @@ class veuf(Variable):
         statut_marital = simulation.calculate('statut_marital', period)
         individu_veuf = (statut_marital == 4)
 
-        return period, simulation.any_in_entity(individu_marie, entity = FoyersFiscaux, role = DECLARANT)
+        return period, simulation.any_in_entity(individu_veuf, entity = FoyersFiscaux, role = DECLARANT)
 
 
 class jeune_veuf(Variable):
@@ -306,9 +306,9 @@ class jeune_veuf(Variable):
     def function(self, simulation, period):
         period = period.this_year
         statut_marital = simulation.calculate('statut_marital', period)
-        individu_veuf = (statut_marital == 6)
+        individu_jeune_veuf = (statut_marital == 6)
 
-        return period, simulation.any_in_entity(individu_marie, entity = FoyersFiscaux, role = DECLARANT)
+        return period, simulation.any_in_entity(individu_jeune_veuf, entity = FoyersFiscaux, role = DECLARANT)
 
 
 ###############################################################################
