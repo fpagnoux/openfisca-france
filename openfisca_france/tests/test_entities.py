@@ -6,25 +6,27 @@ from openfisca_core.columns import FloatCol, IntCol, BoolCol
 from openfisca_core.tools import assert_near, assert_equal
 
 from openfisca_france.scenarios import Scenario
-from openfisca_france.entities import entities, Individus, Familles, FoyersFiscaux, Menages, PARENT, ENFANT, CONJOINT, PERSONNE_DE_REFERENCE, DECLARANT, PERSONNE_A_CHARGE
+from openfisca_france.entities import entities, Individus, Familles, FoyersFiscaux, Menages
+from openfisca_france.model.base import *  # noqa analysis:ignore
+
 
 
 # When the TBS is repaired, we can use it instead of the fake one
 class af(Variable):
     column = FloatCol
-    entity_class = Familles
+    entity = Familles
 
 class salaire(Variable):
     column = FloatCol
-    entity_class = Individus
+    entity = Individus
 
 class age(Variable):
     column = IntCol
-    entity_class = Individus
+    entity = Individus
 
 class autonomie_financiere(Variable):
     column = BoolCol
-    entity_class = Individus
+    entity = Individus
 
 class DummyTaxBenefitSystem(TaxBenefitSystem):
     def __init__(self):
@@ -60,23 +62,13 @@ def test_entities_id_and_role_columns():
 
     simulation = new_simulation(TEST_CASE)
 
-    id_famille_column_name = tbs.get_entity_index_column_name(Familles)
-    role_in_famille_column_name = tbs.get_entity_role_column_name(Familles)
-    postion_in_famille_column_name = tbs.get_entity_position_column_name(Familles)
 
-    assert_near(simulation.calculate(id_famille_column_name), [0,0,0,0,1,1])
+    assert_near(simulation.get_entity_id(Familles), [0,0,0,0,1,1])
     assert_equal(
-        simulation.calculate(role_in_famille_column_name),
+        simulation.get_role_in_entity(Familles),
         [PARENT, PARENT, ENFANT, ENFANT, PARENT, ENFANT]
         )
-    assert_near(simulation.calculate(postion_in_famille_column_name), [0,1,2,3,0,1])
-
-    role_in_menage_column_name = tbs.get_entity_role_column_name(Menages)
-
-    assert_equal(
-        simulation.calculate(role_in_menage_column_name),
-        [PERSONNE_DE_REFERENCE, CONJOINT, ENFANT, ENFANT, PERSONNE_DE_REFERENCE, ENFANT]
-        )
+    assert_near(simulation.get_position_in_entity(Familles), [0,1,2,3,0,1])
 
     assert_equal(
         simulation.get_role_in_entity(FoyersFiscaux),
@@ -218,4 +210,3 @@ def test_value_from_person():
     age_conjoint = simulation.value_from_person(age, entity = FoyersFiscaux, role = CONJOINT, default = -1)
 
     assert_near(age_conjoint, [37, -1])
-
