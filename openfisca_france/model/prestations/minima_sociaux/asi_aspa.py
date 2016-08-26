@@ -79,7 +79,7 @@ class asi_aspa_base_ressources_individu(Variable):
         rev_cap_lib_foyer_fiscal = max_(0, simulation.calculate_add('rev_cap_lib', three_previous_months))
         retraite_titre_onereux_foyer_fiscal = simulation.calculate_add('retraite_titre_onereux', three_previous_months)
         revenus_foyer_fiscal = rev_cap_bar_foyer_fiscal + rev_cap_lib_foyer_fiscal + retraite_titre_onereux_foyer_fiscal
-        revenus_foyer_fiscal_individu = simulation.project_on_first_person(revenus_foyer_fiscal, entity = FoyerFiscaux)
+        revenus_foyer_fiscal_individu = simulation.project_on_first_person(revenus_foyer_fiscal, entity = FoyersFiscaux)
 
 
         # Inclus l'AAH si conjoint non pensionné ASPA, retraite et pension invalidité
