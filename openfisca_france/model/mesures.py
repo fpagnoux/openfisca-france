@@ -129,12 +129,15 @@ class revenu_net_individu(Variable):
         return period, pen + rev_cap + rev_trav
 
 
-class revnet(PersonToEntityColumn):
+class revnet(Variable):
     entity_class = Menages
     label = u"Revenu net du ménage"
-    operation = 'add'
+    column = FloatCol
     url = u"http://impotsurlerevenu.org/definitions/115-revenu-net-imposable.php",
-    variable = revenu_net_individu
+
+    def function(self, simulation, period):
+        revenu_net_individu = simulation.calculate('revenu_net_individu', period)
+        return period, simulation.sum_in_entity(revenu_net_individu, entity = Menages)
 
 
 class nivvie_net(Variable):
@@ -171,11 +174,14 @@ class revenu_initial_individu(Variable):
             cotisations_salariales_contributives)
 
 
-class revini(PersonToEntityColumn):
+class revini(Variable):
     entity_class = Menages
     label = u"Revenu initial du ménage"
-    operation = 'add'
-    variable = revenu_initial_individu
+    column = FloatCol
+
+    def function(self, simulation, period):
+        revenu_initial_individu = simulation.calculate('revenu_initial_individu', period)
+        return period, simulation.sum_in_entity(revenu_initial_individu, entity = Menages)
 
 
 class nivvie_ini(Variable):

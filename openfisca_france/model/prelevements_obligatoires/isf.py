@@ -625,13 +625,6 @@ class maj_cga_individu(Variable):
         return period, max_(0, P.cga_taux2 * (ntimp + frag_impo))
 
 
-class maj_cga(PersonToEntityColumn):
-    entity_class = FoyersFiscaux
-    label = u"Majoration pour non adhésion à un centre de gestion agréé"
-    operation = 'add'
-    variable = maj_cga_individu
-
-
 class bouclier_rev(Variable):
     column = FloatCol(default = 0)
     entity_class = FoyersFiscaux
@@ -645,7 +638,6 @@ class bouclier_rev(Variable):
         '''
         period = period.this_year
         rbg = simulation.calculate('rbg', period)
-        maj_cga = simulation.calculate('maj_cga', period)
         csg_deduc = simulation.calculate('csg_deduc', period)
         rvcm_plus_abat = simulation.calculate('rvcm_plus_abat', period)
         rev_cap_lib = simulation.calculate('rev_cap_lib', period)
@@ -654,6 +646,8 @@ class bouclier_rev(Variable):
         cd_penali = simulation.calculate('cd_penali', period)
         cd_eparet = simulation.calculate('cd_eparet', period)
 
+        maj_cga_individu = simulation.calculate('maj_cga_individu', period)
+        maj_cga = simulation.sum_in_entity(maj_cga_individu, entity = FoyersFiscaux)
 
         # TODO: réintégrer les déficits antérieur
         # TODO: intégrer les revenus soumis au prélèvement libératoire

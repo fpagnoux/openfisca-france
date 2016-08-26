@@ -7,7 +7,7 @@ from openfisca_core.columns import (AgeCol, BoolCol, DateCol, EnumCol, FixedStrC
 from openfisca_core.enumerations import Enum
 from openfisca_core.formulas import (calculate_output_add, calculate_output_add_divide, calculate_output_divide,
     dated_function, missing_value, set_input_dispatch_by_period, set_input_divide_by_period)
-from openfisca_core.variables import DatedVariable, EntityToPersonColumn, PersonToEntityColumn, Variable
+from openfisca_core.variables import DatedVariable, Variable
 from openfisca_core.base_functions import (
     last_duration_last_value,
     requested_period_added_value,
@@ -36,7 +36,6 @@ __all__ = [
     'dated_function',
     'DatedVariable',
     'ENFS',
-    'EntityToPersonColumn',
     'Enum',
     'EnumCol',
     'Familles',
@@ -53,7 +52,6 @@ __all__ = [
     'PAC3',
     'PART',
     'PeriodSizeIndependentIntCol',
-    'PersonToEntityColumn',
     'PREF',
     'QUIFAM',
     'QUIFOY',

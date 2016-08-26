@@ -238,19 +238,25 @@ class enfant_majeur_celibataire_sans_enfant(Variable):
         return period, (quifoy >= 2) * (age >= 18) * not_(handicap)
 
 
-class nbJ(PersonToEntityColumn):
+class nbJ(Variable):
     cerfa_field = u'J'
     entity_class = FoyersFiscaux
     label = u"Nombre d'enfants majeurs célibataires sans enfant"
-    operation = 'add'
-    variable = enfant_majeur_celibataire_sans_enfant
+    column = IntCol
+
+    def function(self, simulation, period):
+        enfant_majeur_celibataire_sans_enfant = simulation.calculate('enfant_majeur_celibataire_sans_enfant', period)
+        return period, simulation.sum_in_entity(enfant_majeur_celibataire_sans_enfant, entity = FoyersFiscaux)
 
 
-class nombre_enfants_majeurs_celibataires_sans_enfant(PersonToEntityColumn):
+class nombre_enfants_majeurs_celibataires_sans_enfant(Variable):
     entity_class = Menages
     label = u"Nombre d'enfants majeurs célibataires sans enfant"
-    operation = 'add'
-    variable = enfant_majeur_celibataire_sans_enfant
+    column = IntCol
+
+    def function(self, simulation, period):
+        enfant_majeur_celibataire_sans_enfant = simulation.calculate('enfant_majeur_celibataire_sans_enfant', period)
+        return period, simulation.sum_in_entity(enfant_majeur_celibataire_sans_enfant, entity = Menages)
 
 
 class maries_ou_pacses(Variable):
