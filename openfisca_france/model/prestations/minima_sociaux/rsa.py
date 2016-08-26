@@ -25,7 +25,7 @@ class aefa(DatedVariable):
     pour la Création ou la Reprise d'Entreprise (ACCRE-ASS) ou encore allocation chômage.
     '''
     column = FloatCol
-    entity_class = Familles
+    entity = Familles
     label = u"Aide exceptionelle de fin d'année (prime de Noël)"
     url = u"http://www.pole-emploi.fr/candidat/aide-exceptionnelle-de-fin-d-annee-dite-prime-de-noel--@/suarticle.jspz?id=70996"  # noqa
 
@@ -132,7 +132,7 @@ class aefa(DatedVariable):
 
 class api(DatedVariable):
     column = FloatCol
-    entity_class = Familles
+    entity = Familles
     label = u"Allocation de parent isolé"
     url = u"http://fr.wikipedia.org/wiki/Allocation_de_parent_isol%C3%A9",
 
@@ -221,7 +221,7 @@ class api(DatedVariable):
 class rsa_base_ressources(DatedVariable):
     column = FloatCol
     label = u"Base ressources du Rmi ou du Rsa"
-    entity_class = Familles
+    entity = Familles
 
     @dated_function(stop = date(2009, 5, 31))
     def function_rmi(self, simulation, period):
@@ -253,7 +253,7 @@ class rsa_base_ressources(DatedVariable):
 class rsa_base_ressources_individu(Variable):
     column = FloatCol
     label = u"Base ressource individuelle du RSA/RMI (hors revenus d'actvité)"
-    entity_class = Individus
+    entity = Individus
 
     def function(self, simulation, period):
         period = period.this_month
@@ -298,7 +298,7 @@ class rsa_base_ressources_individu(Variable):
 class rsa_base_ressources_minima_sociaux(Variable):
     column = FloatCol
     label = u"Minima sociaux inclus dans la base ressource RSA/RMI"
-    entity_class = Familles
+    entity = Familles
 
     def function(self, simulation, period):
         period = period.this_month
@@ -317,7 +317,7 @@ class rsa_base_ressources_minima_sociaux(Variable):
 
 class rsa_base_ressources_prestations_familiales(DatedVariable):
     column = FloatCol
-    entity_class = Familles
+    entity = Familles
     label = u"Prestations familiales inclues dans la base ressource RSA/RMI"
 
     @dated_function(date(2002, 1, 1), date(2003, 12, 31))
@@ -380,7 +380,7 @@ class rsa_base_ressources_prestations_familiales(DatedVariable):
 
 class crds_mini(DatedVariable):
     column = FloatCol
-    entity_class = Familles
+    entity = Familles
     label = u"CRDS versée sur les minimas sociaux"
 
     @dated_function(start = date(2009, 6, 1))
@@ -397,7 +397,7 @@ class crds_mini(DatedVariable):
 
 class div_ms(Variable):
     column = FloatCol
-    entity_class = Individus
+    entity = Individus
     label = u"Dividende entrant en compte dans le calcul des minimas"
 
     def function(self, simulation, period):
@@ -420,7 +420,7 @@ class div_ms(Variable):
 
 class enceinte_fam(Variable):
     column = BoolCol
-    entity_class = Familles
+    entity = Familles
 
     def function(self, simulation, period):
         period = period
@@ -436,7 +436,7 @@ class enceinte_fam(Variable):
 
 class rsa_enfant_a_charge(Variable):
     column = BoolCol
-    entity_class = Individus
+    entity = Individus
     label = u"Enfant pris en compte dans le calcul du RSA"
 
     def function(self, simulation, period):
@@ -474,7 +474,7 @@ class rsa_enfant_a_charge(Variable):
 
 class rsa_nb_enfants(Variable):
     column = IntCol
-    entity_class = Familles
+    entity = Familles
     label = u"Nombre d'enfants pris en compte pour le calcul du RSA"
 
     def function(self, simulation, period):
@@ -483,12 +483,12 @@ class rsa_nb_enfants(Variable):
 
 class participation_frais(Variable):
     column = BoolCol
-    entity_class = Menages
+    entity = Menages
     label = u"Partipation aux frais de logement pour un hebergé à titre gratuit"
 
 class psa(DatedVariable):
     column = FloatCol
-    entity_class = Familles
+    entity = Familles
     label = u"Prime de solidarité active"
     url = u"http://www.service-public.fr/actualites/001077.html"
 
@@ -524,7 +524,7 @@ class psa(DatedVariable):
 class rsa_revenu_activite(Variable):
     column = FloatCol
     label = u"Revenus d'activité du RSA"
-    entity_class = Familles
+    entity = Familles
     start_date = date(2009, 6, 1)
 
     def function(self, simulation, period):
@@ -540,7 +540,7 @@ class rsa_revenu_activite(Variable):
 class rsa_revenu_activite_individu(Variable):
     column = FloatCol
     label = u"Revenus d'activité du Rsa - Individuel"
-    entity_class = Individus
+    entity = Individus
     start_date = date(2009, 6, 1)
 
     def function(self, simulation, period):
@@ -577,7 +577,7 @@ class rsa_revenu_activite_individu(Variable):
 
 class revenus_fonciers_minima_sociaux(Variable):
     column = FloatCol
-    entity_class = Individus
+    entity = Individus
     label = u"Revenus fonciers pour la base ressource du rmi/rsa"
 
     def function(self, simulation, period):
@@ -594,7 +594,7 @@ class revenus_fonciers_minima_sociaux(Variable):
 
 class rmi(DatedVariable):
     column = FloatCol
-    entity_class = Familles
+    entity = Familles
     label = u"Revenu Minimum d'Insertion"
 
     @dated_function(start = date(1988, 12, 1), stop = date(2009, 5, 31))
@@ -614,7 +614,7 @@ class rsa(DatedVariable):
     calculate_output = calculate_output_add
     column = FloatCol
     label = u"Revenu de solidarité active"
-    entity_class = Familles
+    entity = Familles
 
     @dated_function(start = date(2009, 06, 1))
     def function(self, simulation, period):
@@ -631,7 +631,7 @@ class rsa(DatedVariable):
 class rsa_activite(DatedVariable):
     base_function = requested_period_added_value
     column = FloatCol
-    entity_class = Familles
+    entity = Familles
     label = u"Revenu de solidarité active - activité"
     start_date = date(2009, 6, 1)
 
@@ -650,7 +650,7 @@ class rsa_activite(DatedVariable):
 
 class rsa_activite_individu(DatedVariable):
     column = FloatCol
-    entity_class = Individus
+    entity = Individus
     label = u"Revenu de solidarité active - activité au niveau de l'individu"
     start_date = date(2009, 6, 1)
 
@@ -680,7 +680,7 @@ class rsa_activite_individu(DatedVariable):
 class rsa_base_ressources_patrimoine_individu(DatedVariable):
     column = FloatCol
     label = u"Base de ressources des revenus du patrimoine du RSA"
-    entity_class = Individus
+    entity = Individus
     start_date = date(2009, 6, 1)
 
     @dated_function(start = date(2009, 6, 1))
@@ -705,7 +705,7 @@ class rsa_base_ressources_patrimoine_individu(DatedVariable):
 
 class rsa_condition_nationalite(Variable):
     column = BoolCol
-    entity_class = Individus
+    entity = Individus
     label = u"Conditions de nationnalité et de titre de séjour pour bénéficier du RSA"
 
     def function(self, simulation, period):
@@ -719,7 +719,7 @@ class rsa_condition_nationalite(Variable):
 
 class rsa_eligibilite(Variable):
     column = BoolCol
-    entity_class = Familles
+    entity = Familles
     label = u"Eligibilité au RSA"
 
     def function(self, simulation, period):
@@ -749,7 +749,7 @@ class rsa_eligibilite(Variable):
 
 class rsa_eligibilite_tns(Variable):
     column = BoolCol
-    entity_class = Familles
+    entity = Familles
     label = u"Eligibilité au RSA pour un travailleur non salarié"
 
     def function(self, simulation, period):
@@ -806,7 +806,7 @@ class rsa_eligibilite_tns(Variable):
 
 class rsa_forfait_asf(Variable):
     column = FloatCol(default = 0)
-    entity_class = Familles
+    entity = Familles
     label = u"Allocation de soutien familial forfaitisée pour le RSA"
     start_date = date(2014, 4, 1)
 
@@ -822,7 +822,7 @@ class rsa_forfait_asf(Variable):
 
 class rsa_forfait_asf_individu(Variable):
     column = FloatCol(default = 0)
-    entity_class = Individus
+    entity = Individus
     label = u"RSA - Montant individuel de forfait ASF"
     start_date = date(2014, 4, 1)
 
@@ -838,7 +838,7 @@ class rsa_forfait_asf_individu(Variable):
 
 class rsa_forfait_logement(Variable):
     column = FloatCol
-    entity_class = Familles
+    entity = Familles
     label = u"Forfait logement intervenant dans le calcul du Rmi ou du Rsa"
 
     def function(self, simulation, period):
@@ -879,13 +879,13 @@ class rsa_forfait_logement(Variable):
 
 class rsa_isolement_recent(Variable):
     column = BoolCol
-    entity_class = Familles
+    entity = Familles
     label = u"Situation d'isolement depuis moins de 18 mois"
 
 class rsa_majore(Variable):
     column = FloatCol
     label = u"Revenu de solidarité active - majoré"
-    entity_class = Familles
+    entity = Familles
 
     def function(self, simulation, period):
         period = period.this_month
@@ -901,7 +901,7 @@ class rsa_majore(Variable):
 
 class rsa_majore_eligibilite(Variable):
     column = BoolCol
-    entity_class = Familles
+    entity = Familles
     label = u"Eligibilité au RSA majoré pour parent isolé"
 
     def function(self, simulation, period):
@@ -935,7 +935,7 @@ class rsa_non_calculable(Variable):
         ]),
         default = 0
     )
-    entity_class = Familles
+    entity = Familles
     label = u"RSA non calculable"
 
     def function(self, simulation, period):
@@ -963,7 +963,7 @@ class rsa_non_calculable(Variable):
 
 class rsa_non_calculable_tns_individu(Variable):
     column = BoolCol
-    entity_class = Individus
+    entity = Individus
     label = u"RSA non calculable du fait de la situation de l'individu. Dans le cas des TNS, l'utilisateur est renvoyé vers son PCG"
 
     def function(self, simulation, period):
@@ -982,7 +982,7 @@ class rsa_non_calculable_tns_individu(Variable):
 class rsa_non_majore(Variable):
     column = FloatCol
     label = u"Revenu de solidarité active - non majoré"
-    entity_class = Familles
+    entity = Familles
 
     def function(self, simulation, period):
         period = period.this_month
@@ -1035,7 +1035,7 @@ class rsa_ressource_calculator:
 
 class rsa_socle(Variable):
     column = FloatCol
-    entity_class = Familles
+    entity = Familles
     label = "RSA socle"
 
     def function(self, simulation, period):
@@ -1059,7 +1059,7 @@ class rsa_socle(Variable):
 
 class rsa_socle_majore(Variable):
     column = FloatCol
-    entity_class = Familles
+    entity = Familles
     label = u"Majoration pour parent isolé du Revenu de solidarité active socle"
     start_date = date(2009, 6, 1)
 
