@@ -1,6 +1,6 @@
 from copy import deepcopy
 
-from openfisca_core.tools import assert_near, assert_equal
+from openfisca_core.tools import assert_near
 
 from openfisca_france.model.base import *  # noqa analysis:ignore
 from openfisca_france.tests.test_entities import TEST_CASE, tax_benefit_system
