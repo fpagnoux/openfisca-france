@@ -637,10 +637,6 @@ class rsa_activite(DatedVariable):
 
     @dated_function(start = date(2009, 6, 1), stop = date(2015, 12, 31))
     def function_2009(self, simulation, period):
-        '''
-        Calcule le montant du RSA activité
-        Note: le partage en moitié est un point de législation, pas un choix arbitraire
-        '''
         period = period
         rsa = simulation.calculate_add('rsa', period)
         rmi = simulation.calculate_add('rmi', period)
@@ -656,25 +652,21 @@ class rsa_activite_individu(DatedVariable):
 
     @dated_function(start = date(2009, 6, 1))
     def function_2009_(self, simulation, period):
+        '''
+        Note: le partage en moitié est un point de législation, pas un choix arbitraire
+        '''
         period = period   # TODO: rentre dans le calcul de la PPE check period !!!
-        rsa_activite_holder = simulation.compute('rsa_activite', period)
-        en_couple_holder = simulation.compute('en_couple', period)
-        maries_holder = simulation.compute('maries', period)
-        quifam = simulation.calculate('quifam', period)
+        rsa_activite = simulation.calculate('rsa_activite', period)
 
-        en_couple = self.cast_from_entity_to_roles(en_couple_holder)
-        maries = self.cast_from_entity_to_roles(maries_holder)
-        rsa_activite = self.cast_from_entity_to_roles(rsa_activite_holder)
+        # On partage le rsa_activite entre les parents
+        rsa_activite_individu = simulation.share_between_members(rsa_activite, Familles, role = PARENT)
 
-        conj = or_(en_couple, maries)
+        # Si la personne est mariée et qu'aucun conjoint n'a été déclaré, on divise par 2
+        marie = simulation.calculate('statut_marital', period) == 1
+        no_conjoint = simulation.nb_persons_in_entity(Familles, role = PARENT) == 1
 
-        rsa_activite_i = self.zeros()
-
-        chef_filter = quifam == 0
-        rsa_activite_i[chef_filter] = rsa_activite[chef_filter] / (1 + conj[chef_filter])
-        partenaire_filter = quifam == 1
-        rsa_activite_i[partenaire_filter] = rsa_activite[partenaire_filter] * conj[partenaire_filter] / 2
-        return period, rsa_activite_i
+        return period, where(
+            marie * no_conjoint, rsa_activite_individu / 2, rsa_activite_individu)
 
 
 class rsa_base_ressources_patrimoine_individu(DatedVariable):
