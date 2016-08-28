@@ -1,11 +1,40 @@
 from copy import deepcopy
 
+from openfisca_core.taxbenefitsystems import TaxBenefitSystem
+from openfisca_core.variables import Variable
+from openfisca_core.columns import FloatCol, IntCol, BoolCol
 from openfisca_core.tools import assert_near, assert_equal
 
+from openfisca_france.scenarios import Scenario
+from openfisca_france.entities import entities, Individus, Familles, FoyersFiscaux, Menages
 from openfisca_france.model.base import *  # noqa analysis:ignore
-from openfisca_france import CountryTaxBenefitSystem as FranceTBS
 
-tbs = FranceTBS()
+
+
+# When the TBS is repaired, we can use it instead of the fake one
+class af(Variable):
+    column = FloatCol
+    entity = Familles
+
+class salaire(Variable):
+    column = FloatCol
+    entity = Individus
+
+class age(Variable):
+    column = IntCol
+    entity = Individus
+
+class autonomie_financiere(Variable):
+    column = BoolCol
+    entity = Individus
+
+class DummyTaxBenefitSystem(TaxBenefitSystem):
+    def __init__(self):
+        TaxBenefitSystem.__init__(self, entities)
+        self.Scenario = Scenario
+        self.add_variables(af, salaire, age, autonomie_financiere)
+
+tbs = DummyTaxBenefitSystem()
 
 TEST_CASE = {
     'individus': [{'id': 'ind0'}, {'id': 'ind1'}, {'id': 'ind2'}, {'id': 'ind3'},{'id': 'ind4'}, {'id': 'ind5'}],
@@ -74,14 +103,14 @@ def test_project_on_first_person():
 
 def test_sum_in_entity():
     test_case = deepcopy(TEST_CASE)
-    test_case['individus'][0]['salaire_net'] = 1000
-    test_case['individus'][1]['salaire_net'] = 1500
-    test_case['individus'][4]['salaire_net'] = 3000
-    test_case['individus'][5]['salaire_net'] = 500
+    test_case['individus'][0]['salaire'] = 1000
+    test_case['individus'][1]['salaire'] = 1500
+    test_case['individus'][4]['salaire'] = 3000
+    test_case['individus'][5]['salaire'] = 500
 
     simulation = new_simulation(test_case)
 
-    salaire = simulation.calculate('salaire_net')
+    salaire = simulation.calculate('salaire')
     salaire_total_par_famille = simulation.sum_in_entity(salaire, entity = Familles)
 
     assert_near(salaire_total_par_famille, [2500, 3500])
@@ -118,13 +147,13 @@ def test_nb_enfants():
 
     from openfisca_france.model.prestations.prestations_familiales.base_ressource import nb_enf
 
-    assert_near(nb_enf(simulation, simulation.period, 3, 18), [2, 0])
-    assert_near(nb_enf(simulation, simulation.period, 19, 50), [0, 1]) # Adults don't count
+    assert_near(nb_enf(simulation, 2013, 3, 18), [2, 0])
+    assert_near(nb_enf(simulation, 2013, 19, 50), [0, 1]) # Adults don't count
 
     test_case['individus'][5]['autonomie_financiere'] = True
     simulation_2 = new_simulation(test_case)
 
-    assert_near(nb_enf(simulation_2, simulation.period, 19, 50), [0, 0])
+    assert_near(nb_enf(simulation_2, 2013, 19, 50), [0, 0])
 
 def test_any_in_entity():
     test_case = deepcopy(TEST_CASE_AGES)
