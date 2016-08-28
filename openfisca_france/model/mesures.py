@@ -444,7 +444,7 @@ class crds(Variable):
         crds_logement = simulation.calculate_add('crds_logement', period)
         crds_mini = simulation.calculate_add('crds_mini', period)
         crds_famille =  crds_pfam + crds_logement + crds_mini
-        crds_famille_projetes = simulation.project_on_first_person(revenus_famille, entity = Familles)
+        crds_famille_projetes = simulation.project_on_first_person(crds_famille, entity = Familles)
 
         # CRDS sur revenus du foyer fiscal
         crds_fon = simulation.calculate('crds_fon', period)
@@ -453,7 +453,7 @@ class crds(Variable):
         crds_cap_bar = simulation.calculate('crds_cap_bar', period)
         crds_cap_lib = simulation.calculate('crds_cap_lib', period)
         crds_foyer_fiscal = crds_fon + crds_pv_mo + crds_pv_immo + crds_cap_bar + crds_cap_lib
-        crds_foyer_fiscal_projetee = simulation.project_on_first_person(revenus_famille, entity = FoyersFiscaux)
+        crds_foyer_fiscal_projetee = simulation.project_on_first_person(crds_foyer_fiscal, entity = FoyersFiscaux)
 
         return period, crds_individu + crds_famille_projetes + crds_foyer_fiscal_projetee
 
