@@ -163,9 +163,9 @@ class enfant_a_charge(Variable):
     def function(self, simulation, period):
         age = simulation.calculate('age', period)
         handicap = simulation.calculate('handicap', period)
-        quifoy = simulation.calculate('quifoy', period)
+        is_pac = simulation.get_role_in_entity(FoyersFiscaux) == PERSONNE_A_CHARGE
 
-        return period, (quifoy >= 2) * ((age < 18) + handicap)
+        return period, is_pac * ((age < 18) + handicap)
 
 
 class nbF(Variable):
@@ -233,9 +233,9 @@ class enfant_majeur_celibataire_sans_enfant(Variable):
         period = period.this_year
         age = simulation.calculate('age', period)
         handicap = simulation.calculate('handicap', period)
-        quifoy = simulation.calculate('quifoy', period)
+        is_pac = simulation.get_role_in_entity(FoyersFiscaux) == PERSONNE_A_CHARGE
 
-        return period, (quifoy >= 2) * (age >= 18) * not_(handicap)
+        return period, is_pac * (age >= 18) * not_(handicap)
 
 
 class nbJ(Variable):
@@ -1256,7 +1256,7 @@ class teicaa(Variable):  # f5rm
         bareme = simulation.legislation_at(period.start).ir.teicaa
 
         f5qm = simulation.calculate('f5qm', period)
-        teicaa_individu = barem.calc(f5qm)
+        teicaa_individu = bareme.calc(f5qm)
 
         return period, simulation.sum_in_entity(f5qm, entity = FoyersFiscaux, role = DECLARANT)
 
