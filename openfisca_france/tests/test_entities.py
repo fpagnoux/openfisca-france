@@ -52,6 +52,11 @@ TEST_CASE = {
         ],
     }
 
+TEST_CASE_AGES = deepcopy(TEST_CASE)
+AGES = [40, 37, 7, 9, 54, 20]
+for (individu, age) in zip(TEST_CASE_AGES['individus'], AGES):
+        individu['age'] = age
+
 def new_simulation(test_case):
     return tbs.new_scenario().init_from_test_case(
         period = 2013,
@@ -135,11 +140,6 @@ def test_transpose_to_entity():
     af_foyer_fiscal = simulation.transpose_to_entity(af, target_entity = FoyersFiscaux, origin_entity = Familles)
 
     assert_near(af_foyer_fiscal, [20000, 10000, 0])
-
-TEST_CASE_AGES = deepcopy(TEST_CASE)
-AGES = [40, 37, 7, 9, 54, 20]
-for (individu, age) in zip(TEST_CASE_AGES['individus'], AGES):
-        individu['age'] = age
 
 def test_nb_enfants():
     test_case = deepcopy(TEST_CASE_AGES)
