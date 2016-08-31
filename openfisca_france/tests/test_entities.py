@@ -214,3 +214,19 @@ def test_share_between_members():
     af_shared = simulation.share_between_members(af, entity = Familles, role = PARENT)
 
     assert_near(af_shared, [10000, 10000, 0, 0, 5000, 0])
+
+def test_swap_between_members():
+    test_case = deepcopy(TEST_CASE)
+    test_case['individus'][0]['salaire'] = 1000
+    test_case['individus'][1]['salaire'] = 1500
+    test_case['individus'][4]['salaire'] = 3000
+    test_case['individus'][5]['salaire'] = 500
+
+    simulation = new_simulation(test_case)
+
+    salaire = simulation.calculate('salaire')
+
+    salaire_conjoint = simulation.swap_in_entity(salaire, entity = Familles, role = PARENT)
+
+    assert_near(salaire_conjoint, [1500, 1000, 0, 0, 0, 0])
+test_swap_between_members()
