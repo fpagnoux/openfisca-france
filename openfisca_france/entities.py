@@ -6,15 +6,10 @@ import itertools
 from openfisca_core.entities import Entity
 
 
-Individus = Entity(
-    key = "individus",
-    label = u'Individus',
-    is_person = True
-    )
-
-Familles = Entity(
-    key = "familles",
-    label = u'Famille',
+class Familles(Entity):
+    key = "famille"
+    plural = "familles"
+    label = u'Famille'
     roles = [
         {
             'key': 'parents',
@@ -26,16 +21,15 @@ Familles = Entity(
             'label': u'Enfants'
             }
         ]
-    )
 
-Individus = Entity(
-    key = "individus",
-    label = u'Individus',
+class Individus(Entity):
+    key = "individu"
+    plural = "individus"
+    label = u'Individu'
     is_person = True
-    )
 
 
-FoyersFiscaux = Entity(
+class FoyersFiscaux(Entity):
     key = "foyers_fiscaux",
     label = u'Déclaration d’impôts',
     roles = [
@@ -56,10 +50,9 @@ FoyersFiscaux = Entity(
             'label': u'Personnes à charge'
             },
         ]
-    )
 
 
-Menages = Entity(
+class Menages(Entity):
     key = "menages",
     label = u'Logement principal',
     roles = [
@@ -83,6 +76,5 @@ Menages = Entity(
             'label': u'Autres'
             }
         ]
-    )
 
 entities = [Individus, Familles, FoyersFiscaux, Menages]

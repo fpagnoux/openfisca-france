@@ -63,66 +63,6 @@ def new_simulation(test_case):
         test_case = test_case
     ).new_simulation()
 
-def test_entities_id_and_role_columns():
-
-    simulation = new_simulation(TEST_CASE)
-
-
-    assert_near(simulation.get_entity_id(Familles), [0,0,0,0,1,1])
-    assert_near(
-        simulation.get_role_in_entity(Familles),
-        [PARENT, PARENT, ENFANT, ENFANT, PARENT, ENFANT]
-        )
-    assert_near(simulation.get_position_in_entity(Familles), [0,1,2,3,0,1])
-
-    assert_near(
-        simulation.get_role_in_entity(FoyersFiscaux),
-        [DECLARANT, CONJOINT, PERSONNE_A_CHARGE, PERSONNE_A_CHARGE, DECLARANT, PERSONNE_A_CHARGE])
-
-def test_project_on_persons():
-    test_case = deepcopy(TEST_CASE)
-    test_case['familles'][0]['af'] = 20000
-
-    simulation = new_simulation(test_case)
-
-    af = simulation.calculate('af')
-    af_projete = simulation.project_on_persons(af, entity = Familles)
-
-    assert_near(af_projete, [20000, 20000, 20000, 20000, 0, 0])
-
-    af_projete_parents = simulation.project_on_persons(af, entity = Familles, role = PARENT)
-    assert_near(af_projete_parents, [20000, 20000, 0, 0, 0, 0])
-
-
-def test_project_on_first_person():
-    test_case = deepcopy(TEST_CASE)
-    test_case['familles'][0]['af'] = 20000
-    test_case['familles'][1]['af'] = 5000
-
-    simulation = new_simulation(test_case)
-
-    af = simulation.calculate('af')
-    af_projete = simulation.project_on_first_person(af, entity = Familles)
-
-    assert_near(af_projete, [20000, 0, 0, 0, 5000, 0])
-
-def test_sum_in_entity():
-    test_case = deepcopy(TEST_CASE)
-    test_case['individus'][0]['salaire'] = 1000
-    test_case['individus'][1]['salaire'] = 1500
-    test_case['individus'][4]['salaire'] = 3000
-    test_case['individus'][5]['salaire'] = 500
-
-    simulation = new_simulation(test_case)
-
-    salaire = simulation.calculate('salaire')
-    salaire_total_par_famille = simulation.sum_in_entity(salaire, entity = Familles)
-
-    assert_near(salaire_total_par_famille, [2500, 3500])
-
-    salaire_conjoint_par_menage = simulation.sum_in_entity(salaire, entity = Menages, role = CONJOINT)
-
-    assert_near(salaire_conjoint_par_menage, [1500, 0])
 
 def test_transpose_to_entity():
     test_case = deepcopy(TEST_CASE)
@@ -142,56 +82,6 @@ def test_transpose_to_entity():
     assert_near(af_foyer_fiscal, [20000, 10000, 0])
 
 
-def test_any_in_entity():
-    test_case = deepcopy(TEST_CASE_AGES)
-    simulation = new_simulation(test_case)
-
-    age = simulation.calculate('age')
-    condition_age = (age <= 18)
-    has_famille_member_with_age_inf_18 = simulation.any_in_entity(condition_age, entity = Familles)
-    assert_near(has_famille_member_with_age_inf_18, [True,False])
-
-    condition_age_2 = (age > 18)
-    has_famille_enfant_with_age_sup_18 = simulation.any_in_entity(condition_age_2, entity = Familles, role = ENFANT)
-    assert_near(has_famille_enfant_with_age_sup_18, [False, True])
-
-def test_max_in_entity():
-    test_case = deepcopy(TEST_CASE_AGES)
-    simulation = new_simulation(test_case)
-
-    age = simulation.calculate('age')
-
-    age_max = simulation.max_in_entity(age, entity = Familles)
-    assert_near(age_max, [40, 54])
-
-    age_max_enfants = simulation.max_in_entity(age, entity = Familles, role = ENFANT)
-    assert_near(age_max_enfants, [9, 20])
-
-def test_min_in_entity():
-    test_case = deepcopy(TEST_CASE_AGES)
-    simulation = new_simulation(test_case)
-
-    age = simulation.calculate('age')
-
-    age_min = simulation.min_in_entity(age, entity = Familles)
-    assert_near(age_min, [7, 20])
-
-    age_min_parents = simulation.min_in_entity(age, entity = Familles, role = PARENT)
-    assert_near(age_min_parents, [37, 54])
-
-def test_all_in_entity():
-    test_case = deepcopy(TEST_CASE_AGES)
-    simulation = new_simulation(test_case)
-
-    age = simulation.calculate('age')
-
-    condition_age = (age >= 18)
-    all_persons_age_sup_18 = simulation.all_in_entity(condition_age, entity = Familles)
-    assert_near(all_persons_age_sup_18, [False, True])
-
-    all_parents_age_sup_18 = simulation.all_in_entity(condition_age, entity = Familles, role = PARENT)
-    assert_near(all_parents_age_sup_18, [True, True])
-
 def test_value_from_person():
     test_case = deepcopy(TEST_CASE_AGES)
     simulation = new_simulation(test_case)
@@ -202,31 +92,3 @@ def test_value_from_person():
 
     assert_near(age_conjoint, [37, -1])
 
-def test_share_between_members():
-    test_case = deepcopy(TEST_CASE)
-    test_case['familles'][0]['af'] = 20000
-    test_case['familles'][1]['af'] = 5000
-
-    simulation = new_simulation(test_case)
-
-    af = simulation.calculate('af')
-
-    af_shared = simulation.share_between_members(af, entity = Familles, role = PARENT)
-
-    assert_near(af_shared, [10000, 10000, 0, 0, 5000, 0])
-
-def test_swap_between_members():
-    test_case = deepcopy(TEST_CASE)
-    test_case['individus'][0]['salaire'] = 1000
-    test_case['individus'][1]['salaire'] = 1500
-    test_case['individus'][4]['salaire'] = 3000
-    test_case['individus'][5]['salaire'] = 500
-
-    simulation = new_simulation(test_case)
-
-    salaire = simulation.calculate('salaire')
-
-    salaire_conjoint = simulation.swap_in_entity(salaire, entity = Familles, role = PARENT)
-
-    assert_near(salaire_conjoint, [1500, 1000, 0, 0, 0, 0])
-test_swap_between_members()
