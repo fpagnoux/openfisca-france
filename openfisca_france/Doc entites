@@ -221,7 +221,6 @@ Entity -> Entity
 
         ```py
         def function(foyer_fiscal, period):
-            famille = foyer_fiscal.first_person.famille
             af = famille.calculate('af')
             af_foyer_fiscal = famille.transpose_to_entity(af, target_entity_type = FoyersFiscaux)
 
