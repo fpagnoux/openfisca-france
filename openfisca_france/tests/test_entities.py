@@ -75,9 +75,11 @@ def test_transpose_to_entity():
         ]
 
     simulation = new_simulation(test_case)
+    foyers_fiscaux = simulation.get_entity(FoyersFiscaux)
 
-    af = simulation.calculate('af')
-    af_foyer_fiscal = simulation.transpose_to_entity(af, target_entity = FoyersFiscaux, origin_entity = Familles)
+    familles = foyers_fiscaux.members.famille
+    af = familles.calculate('af')
+    af_foyer_fiscal = familles.transpose_to_entity(af, target_entity_type = FoyersFiscaux)
 
     assert_near(af_foyer_fiscal, [20000, 10000, 0])
 
@@ -86,9 +88,9 @@ def test_value_from_person():
     test_case = deepcopy(TEST_CASE_AGES)
     simulation = new_simulation(test_case)
 
-    age = simulation.calculate('age')
+    foyers_fiscaux = simulation.get_entity(FoyersFiscaux)
+    age = foyers_fiscaux.members.calculate('age')
 
-    age_conjoint = simulation.value_from_person(age, entity = FoyersFiscaux, role = CONJOINT, default = -1)
+    age_conjoint = foyers_fiscaux.value_from_person(age, role = CONJOINT, default = -1)
 
     assert_near(age_conjoint, [37, -1])
-
