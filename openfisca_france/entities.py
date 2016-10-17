@@ -30,8 +30,9 @@ class Individus(Entity):
 
 
 class FoyersFiscaux(Entity):
-    key = "foyers_fiscaux",
-    label = u'Déclaration d’impôts',
+    key = "foyer_fiscal"
+    plural = "foyers_fiscaux"
+    label = u'Déclaration d’impôts'
     roles = [
         {
             'key': 'declarant',
@@ -53,8 +54,9 @@ class FoyersFiscaux(Entity):
 
 
 class Menages(Entity):
-    key = "menages",
-    label = u'Logement principal',
+    key = "menage"
+    plural = "menages"
+    label = u'Logement principal'
     roles = [
         {
             'key': 'personne_de_reference',
