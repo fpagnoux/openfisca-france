@@ -42,7 +42,7 @@ Entity -> Person
 
         ```py
         def function(individu, period):
-            individu.famille.project(af)
+            individu.famille.project_on_first_person(af)
             >>> [20000, 0, 0, 0, 5000, 0]
 
         ```
@@ -103,7 +103,7 @@ Persons -> Entity
         ```py
         def function(famille, period):
             condition_age = (age <= 18)
-            familles.any(condition_age)
+            famille.any(condition_age)
             >>> [True, False]
 
         ```
@@ -111,7 +111,7 @@ Persons -> Entity
         ```py
         def function(individu, period):
             condition_age_2 = (age > 18)
-            familles.any(condition_age_2, role = ENFANT)
+            famille.any(condition_age_2, role = ENFANT)
             >>> [False, True]
 
         ```
@@ -128,14 +128,14 @@ Persons -> Entity
 
         ```py
         def function(famille, period):
-            familles.all(age >= 18)
+            famille.all(age >= 18)
             >>> [False, True]
 
         ```
 
         ```py
         def function(individu, period):
-            familles.all(age >= 18, role = PARENT)
+            famille.all(age >= 18, role = PARENT)
             >>> [True, True]
 
         ```
@@ -152,14 +152,14 @@ Persons -> Entity
 
         ```py
         def function(famille, period):
-            familles.max(age)
+            famille.max(age)
             >>> [40, 54]
 
         ```
 
         ```py
-        def function(individu, period):
-            familles.max(age, role = ENFANT)
+        def function(famille, period):
+            famille.max(age, role = ENFANT)
             >>> [9, 20]
 
         ```
@@ -176,14 +176,14 @@ Persons -> Entity
 
         ```py
         def function(famille, period):
-            familles.min(age)
+            famille.min(age)
             >>> [7, 20]
 
         ```
 
         ```py
         def function(individu, period):
-            familles.min(age, role = PARENT)
+            famille.min(age, role = PARENT)
             >>> [37, 54]
 
         ```
