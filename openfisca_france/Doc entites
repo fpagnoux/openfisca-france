@@ -228,3 +228,22 @@ Entity -> Entity
             >>> [1500, 1000, 0, 0, 0, 0]
 
         ```
+
+# entity.value_from_person(input, role, default = 0)
+
+    For a variable defined on an person, returns the value for the person in the entity with the given role. If there is not such a person, the default value will be returned.
+
+    ## Example:
+
+        ```py
+        # age = [40, 37, 7, 9, 54, 20]
+        ```
+
+        ```py
+        def function(foyer_fiscal, period):
+            ages = foyers_fiscaux.members.calculate('age')
+            age_conjoint = foyers_fiscaux.value_from_person(age, role = CONJOINT)
+
+            >>> [37, 0]
+
+        ```
