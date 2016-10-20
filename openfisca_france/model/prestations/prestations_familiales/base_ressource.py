@@ -76,7 +76,7 @@ class biactivite(Variable):
 
         base_ressources_i = simulation.calculate('prestations_familiales_base_ressources_individu', period)
 
-        return period, simulation.all_in_entity(base_ressources_i >= seuil_rev, entity = Familles, role = PARENT)
+        return period, simulation.famille.all(base_ressources_i >= seuil_rev, role = PARENT)
 
 
 class div(Variable):
@@ -155,7 +155,7 @@ class prestations_familiales_base_ressources(Variable):
 
         # Revenus du foyer fiscal
         rev_coll = simulation.calculate('rev_coll', annee_fiscale_n_2)
-        rev_coll_famille = simulation.transpose_to_entity(rev_coll, origin_entity = FoyersFiscaux, target_entity = Familles)
+        rev_coll_famille = simulation.foyer_fiscal.transpose_to_entity(rev_coll, target_entity = Familles)
 
         base_ressources = base_ressources_i_total + rev_coll_famille
         return period, base_ressources
@@ -181,7 +181,7 @@ def nb_enf(simulation, period, age_min, age_max):
 #        le versement à lieu en début de mois suivant
     condition = (age >= age_min) * (age <= age_max) * not_(autonomie_financiere)
 
-    return simulation.sum_in_entity(condition, entity = Familles, role = ENFANT)
+    return simulation.famille.sum(condition, role = ENFANT)
 
 
 

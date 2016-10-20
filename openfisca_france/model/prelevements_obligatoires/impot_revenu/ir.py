@@ -246,7 +246,7 @@ class nbJ(Variable):
 
     def function(self, simulation, period):
         enfant_majeur_celibataire_sans_enfant = simulation.calculate('enfant_majeur_celibataire_sans_enfant', period)
-        return period, simulation.sum_in_entity(enfant_majeur_celibataire_sans_enfant, entity = FoyersFiscaux)
+        return period, simulation.foyer_fiscal.sum(enfant_majeur_celibataire_sans_enfant)
 
 
 class nombre_enfants_majeurs_celibataires_sans_enfant(Variable):
@@ -256,7 +256,7 @@ class nombre_enfants_majeurs_celibataires_sans_enfant(Variable):
 
     def function(self, simulation, period):
         enfant_majeur_celibataire_sans_enfant = simulation.calculate('enfant_majeur_celibataire_sans_enfant', period)
-        return period, simulation.sum_in_entity(enfant_majeur_celibataire_sans_enfant, entity = Menages)
+        return period, simulation.menage.sum(enfant_majeur_celibataire_sans_enfant)
 
 
 class maries_ou_pacses(Variable):
@@ -269,7 +269,7 @@ class maries_ou_pacses(Variable):
         statut_marital = simulation.calculate('statut_marital', period)
         individu_marie = (statut_marital == 1) | (statut_marital == 5)
 
-        return period, simulation.any_in_entity(individu_marie, entity = FoyersFiscaux, role = DECLARANT)
+        return period, simulation.foyer_fiscal.value_from_person(individu_marie, role = DECLARANT)
 
 
 class celibataire_ou_divorce(Variable):
@@ -282,7 +282,7 @@ class celibataire_ou_divorce(Variable):
         statut_marital = simulation.calculate('statut_marital', period)
         individu_celibataire_ou_divorce = (statut_marital == 2) | (statut_marital == 3)
 
-        return period, simulation.any_in_entity(individu_celibataire_ou_divorce, entity = FoyersFiscaux, role = DECLARANT)
+        return period, simulation.foyer_fiscal.value_from_person(individu_celibataire_ou_divorce, role = DECLARANT)
 
 
 class veuf(Variable):
@@ -295,7 +295,7 @@ class veuf(Variable):
         statut_marital = simulation.calculate('statut_marital', period)
         individu_veuf = (statut_marital == 4)
 
-        return period, simulation.any_in_entity(individu_veuf, entity = FoyersFiscaux, role = DECLARANT)
+        return period, simulation.foyer_fiscal.value_from_person(individu_veuf, role = DECLARANT)
 
 
 class jeune_veuf(Variable):
@@ -308,7 +308,7 @@ class jeune_veuf(Variable):
         statut_marital = simulation.calculate('statut_marital', period)
         individu_jeune_veuf = (statut_marital == 6)
 
-        return period, simulation.any_in_entity(individu_jeune_veuf, entity = FoyersFiscaux, role = DECLARANT)
+        return period, simulation.foyer_fiscal.value_from_person(individu_jeune_veuf, role = DECLARANT)
 
 
 ###############################################################################
@@ -508,7 +508,7 @@ class traitements_salaires_pensions_rentes(Variable):
         # Quand tspr est calculé sur une année glissante, retraite_titre_onereux_net est calculé sur l'année légale
         # correspondante.
         retraite_titre_onereux_net = simulation.calculate('retraite_titre_onereux_net', period.offset('first-of'))
-        retraite_titre_onereux_net_declarant1 = simulation.project_on_first_person(retraite_titre_onereux_net, entity = FoyersFiscaux)
+        retraite_titre_onereux_net_declarant1 = simulation.foyer_fiscal.project_on_first_person(retraite_titre_onereux_net)
 
         return period, revenu_assimile_salaire_apres_abattements + revenu_assimile_pension_apres_abattements - abattement_salaires_pensions + retraite_titre_onereux_net_declarant1
 
@@ -1258,7 +1258,7 @@ class teicaa(Variable):  # f5rm
         f5qm = simulation.calculate('f5qm', period)
         teicaa_individu = bareme.calc(f5qm)
 
-        return period, simulation.sum_in_entity(f5qm, entity = FoyersFiscaux, role = DECLARANT)
+        return period, simulation.foyer_fiscal.sum(f5qm, role = DECLARANT)
 
 
 class assiette_vente(Variable):
@@ -2505,8 +2505,8 @@ class abat_spe(Variable):
         abattements_speciaux = simulation.legislation_at(period.start).ir.abattements_speciaux
 
         age = simulation.calculate('age', period)
-        ageV = simulation.value_from_person(age, FoyersFiscaux, DECLARANT)
-        ageC = simulation.value_from_person(age, FoyersFiscaux, CONJOINT)
+        ageV = simulation.foyer_fiscal.value_from_person(age, DECLARANT)
+        ageC = simulation.foyer_fiscal.value_from_person(age, CONJOINT)
 
         invV, invC = caseP, caseF
         nb_elig_as = (1 * (((ageV >= 65) | invV) & (ageV > 0)) +

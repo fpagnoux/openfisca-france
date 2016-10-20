@@ -612,7 +612,7 @@ class indemnite_residence(Variable):
         _P = simulation.legislation_at(period.start)
 
         zone_apl = simulation.calculate('zone_apl', period) # vaut pour une famille
-        zone_apl = simulation.project_on_persons(zone_apl, entity = Familles)  # TODO: ces zones ne correpondent pas aux zones APL
+        zone_apl = simulation.famille.project(zone_apl)  # TODO: ces zones ne correpondent pas aux zones APL
         P = _P.fonc.indem_resid
         min_zone_1, min_zone_2, min_zone_3 = P.min * P.taux.zone1, P.min * P.taux.zone2, P.min * P.taux.zone3
         taux = P.taux.zone1 * (zone_apl == 1) + P.taux.zone2 * (zone_apl == 2) + P.taux.zone3 * (zone_apl == 3)
@@ -676,7 +676,7 @@ class af_nbenf_fonc(Variable):
         age = simulation.calculate('age', period)
         condition_enfant = (age >= law.fam.af.age1) * (age <= law.fam.af.age2) * not_(autonomie_financiere)
 
-        return period, simulation.sum_in_entity(condition_enfant, entity = Familles, role = ENFANT)
+        return period, simulation.famille.sum(condition_enfant, role = ENFANT)
 
 
 class supp_familial_traitement(Variable):
@@ -693,7 +693,7 @@ class supp_familial_traitement(Variable):
         _P = simulation.legislation_at(period.start)
 
         af_nbenf_fonc = simulation.calculate('af_nbenf_fonc', period)
-        fonc_nbenf = simulation.project_on_first_person(af_nbenf_fonc, entity = Familles)
+        fonc_nbenf = simulation.famille.project_on_first_person(af_nbenf_fonc)
 
         P = _P.fonc.supp_fam
         part_fixe_1 = P.fixe.enf1

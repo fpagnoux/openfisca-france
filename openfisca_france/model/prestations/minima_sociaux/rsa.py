@@ -282,7 +282,7 @@ class rsa_base_ressources_individu(Variable):
         rev_cap_lib_foyer_fiscal = max_(0, simulation.calculate_add('rev_cap_lib', three_previous_months))
         retraite_titre_onereux_foyer_fiscal = simulation.calculate_add('retraite_titre_onereux', three_previous_months)
         revenus_foyer_fiscal = rev_cap_bar_foyer_fiscal + rev_cap_lib_foyer_fiscal + retraite_titre_onereux_foyer_fiscal
-        revenus_foyer_fiscal_individu = simulation.project_on_first_person(revenus_foyer_fiscal, entity = FoyersFiscaux)
+        revenus_foyer_fiscal_individu = simulation.foyer_fiscal.project_on_first_person(revenus_foyer_fiscal)
 
         result = (
             chomage_net + retraite_nette + pensions_alimentaires_percues + revenus_foyer_fiscal_individu +

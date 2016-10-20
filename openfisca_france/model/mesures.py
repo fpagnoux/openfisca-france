@@ -137,7 +137,7 @@ class revnet(Variable):
 
     def function(self, simulation, period):
         revenu_net_individu = simulation.calculate('revenu_net_individu', period)
-        return period, simulation.sum_in_entity(revenu_net_individu, entity = Menages)
+        return period, simulation.menage.sum(revenu_net_individu)
 
 
 class nivvie_net(Variable):
@@ -181,7 +181,7 @@ class revini(Variable):
 
     def function(self, simulation, period):
         revenu_initial_individu = simulation.calculate('revenu_initial_individu', period)
-        return period, simulation.sum_in_entity(revenu_initial_individu, entity = Menages)
+        return period, simulation.menage.sum(revenu_initial_individu)
 
 
 class nivvie_ini(Variable):
@@ -249,7 +249,7 @@ class pen(Variable):
         pensions_alimentaires_versees = simulation.calculate('pensions_alimentaires_versees', period)
         retraite_titre_onereux = simulation.calculate_add('retraite_titre_onereux', period)
         pen_foyer_fiscal = pensions_alimentaires_versees + retraite_titre_onereux
-        pen_foyer_fiscal_projetees = simulation.project_on_first_person(pen_foyer_fiscal, entity = FoyersFiscaux)
+        pen_foyer_fiscal_projetees = simulation.foyer_fiscal.project_on_first_person(pen_foyer_fiscal)
 
         return period, (chomage_net + retraite_nette + pensions_alimentaires_percues + pen_foyer_fiscal_projetees)
 
@@ -309,7 +309,7 @@ class rev_cap(Variable):
         cotsoc_bar = simulation.calculate('cotsoc_bar', period)
 
         revenus_foyer_fiscal = fon + rev_cap_bar + cotsoc_lib + rev_cap_lib + imp_lib + cotsoc_bar
-        revenus_foyer_fiscal_i = simulation.project_on_first_person(revenus_foyer_fiscal, entity = FoyersFiscaux)
+        revenus_foyer_fiscal_i = simulation.foyer_fiscal.project_on_first_person(revenus_foyer_fiscal)
 
         rac = simulation.calculate('rac', period)
 
@@ -444,7 +444,7 @@ class crds(Variable):
         crds_logement = simulation.calculate_add('crds_logement', period)
         crds_mini = simulation.calculate_add('crds_mini', period)
         crds_famille =  crds_pfam + crds_logement + crds_mini
-        crds_famille_projetes = simulation.project_on_first_person(crds_famille, entity = Familles)
+        crds_famille_projetes = simulation.famille.project_on_first_person(crds_famille)
 
         # CRDS sur revenus du foyer fiscal
         crds_fon = simulation.calculate('crds_fon', period)
@@ -453,7 +453,7 @@ class crds(Variable):
         crds_cap_bar = simulation.calculate('crds_cap_bar', period)
         crds_cap_lib = simulation.calculate('crds_cap_lib', period)
         crds_foyer_fiscal = crds_fon + crds_pv_mo + crds_pv_immo + crds_cap_bar + crds_cap_lib
-        crds_foyer_fiscal_projetee = simulation.project_on_first_person(crds_foyer_fiscal, entity = FoyersFiscaux)
+        crds_foyer_fiscal_projetee = simulation.foyer_fiscal.project_on_first_person(crds_foyer_fiscal)
 
         return period, crds_individu + crds_famille_projetes + crds_foyer_fiscal_projetee
 
@@ -480,7 +480,7 @@ class csg(Variable):
         csg_pv_mo = simulation.calculate('csg_pv_mo', period)
         csg_pv_immo = simulation.calculate('csg_pv_immo', period)
         csg_foyer_fiscal = csg_fon + csg_cap_lib + csg_cap_bar + csg_pv_mo + csg_pv_immo
-        csg_foyer_fiscal_projetee = simulation.project_on_first_person(csg_foyer_fiscal, entity = FoyersFiscaux)
+        csg_foyer_fiscal_projetee = simulation.foyer_fiscal.project_on_first_person(csg_foyer_fiscal)
 
         return period, (csg_imposable_salaire + csg_deductible_salaire + csg_imposable_chomage +
                 csg_deductible_chomage + csg_imposable_retraite + csg_deductible_retraite + csg_foyer_fiscal_projetee)
@@ -524,7 +524,7 @@ class prelsoc_cap(Variable):
         prelsoc_pv_immo = simulation.calculate('prelsoc_pv_immo', period)
         prel_foyer_fiscal = prelsoc_fon + prelsoc_cap_lib + prelsoc_cap_bar + prelsoc_pv_mo + prelsoc_pv_immo
 
-        return period, simulation.project_on_first_person(prel_foyer_fiscal, entity = FoyersFiscaux)
+        return period, simulation.foyer_fiscal.project_on_first_person(prel_foyer_fiscal)
 
 
 class check_csk(Variable):
@@ -541,7 +541,7 @@ class check_csk(Variable):
         prelsoc_fon = simulation.calculate('prelsoc_fon', period)
         prel_foyer_fiscal = prelsoc_cap_bar + prelsoc_pv_mo + prelsoc_fon
 
-        return period, simulation.transpose_to_entity(prel_foyer_fiscal, target_entity = Menages, origin_entity = FoyersFiscaux)
+        return period, simulation.foyer_fiscal.transpose_to_entity(prel_foyer_fiscal, target_entity = simulation.menage)
 
 
 class check_csg(Variable):
@@ -559,7 +559,7 @@ class check_csg(Variable):
 
         csg_foyer_fiscal = csg_cap_bar + csg_pv_mo + csg_fon
 
-        return period, simulation.transpose_to_entity(csg_foyer_fiscal, target_entity = Menages, origin_entity = FoyersFiscaux)
+        return period, simulation.foyer_fiscal.transpose_to_entity(csg_foyer_fiscal, target_entity = simulation.menage)
 
 
 class check_crds(Variable):
@@ -577,4 +577,4 @@ class check_crds(Variable):
 
         crds_foyer_fiscal = crds_pv_mo + crds_fon + crds_cap_bar
 
-        return period, simulation.transpose_to_entity(crds_foyer_fiscal, target_entity = Menages, origin_entity = FoyersFiscaux)
+        return period, simulation.foyer_fiscal.transpose_to_entity(crds_foyer_fiscal, target_entity = simulation.menage)

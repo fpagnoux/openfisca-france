@@ -198,7 +198,7 @@ class salaire_imposable(Variable):
 
         # Revenu du foyer fiscal projeté sur le demandeur
         rev_microsocial = simulation.calculate_divide('rev_microsocial', period)
-        rev_microsocial_declarant1 = simulation.project_on_first_person(rev_microsocial, entity = FoyersFiscaux)
+        rev_microsocial_declarant1 = simulation.foyer_fiscal.project_on_first_person(rev_microsocial)
 
         return period, (
             salaire_de_base + primes_salaires + remuneration_principale +

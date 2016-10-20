@@ -182,7 +182,7 @@ class af_age_aine(Variable):
         condition_eligibilite = pfam_enfant_a_charge * (age <= pfam.af.age2)
         age_enfants_eligiles = age * condition_eligibilite
 
-        return period, simulation.max_in_entity(age_enfants_eligiles, entity = Familles, role = ENFANT)
+        return period, simulation.famille.max(age_enfants_eligiles, role = ENFANT)
 
 
 class af_majoration_enfant(Variable):
@@ -198,13 +198,13 @@ class af_majoration_enfant(Variable):
         garde_alternee = simulation.calculate('garde_alternee', period)
 
         af_nbenf_par_famille = simulation.calculate('af_nbenf', period)
-        af_nbenf = simulation.project_on_persons(af_nbenf_par_famille, entity = Familles)
+        af_nbenf = simulation.famille.project(af_nbenf_par_famille)
 
         af_base_par_famille = simulation.calculate('af_base', period)
-        af_base = simulation.project_on_persons(af_base_par_famille, entity = Familles)
+        af_base = simulation.famille.project(af_base_par_famille)
 
         age_aine_par_famille = simulation.calculate('af_age_aine', period)
-        age_aine = simulation.project_on_persons(age_aine_par_famille, entity = Familles)
+        age_aine = simulation.famille.project(age_aine_par_famille)
 
         pfam = simulation.legislation_at(period.start).fam
 
@@ -236,7 +236,7 @@ class af_majoration(Variable):
     def function(self, simulation, period):
         period = period.this_month
         af_majoration_enfant = simulation.calculate('af_majoration_enfant', period)
-        af_majoration_enfants = simulation.sum_in_entity(af_majoration_enfant, entity = Familles, role = ENFANT)
+        af_majoration_enfants = simulation.famille.sum(af_majoration_enfant, role = ENFANT)
 
         af_taux_modulation = simulation.calculate('af_taux_modulation', period)
         af_majoration_enfants_module = af_majoration_enfants * af_taux_modulation

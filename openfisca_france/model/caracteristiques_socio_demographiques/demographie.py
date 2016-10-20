@@ -175,8 +175,7 @@ class nb_parents(Variable):
         # Note : Cette variable est "instantanée" : quelque soit la période demandée, elle retourne la valeur au premier
         # jour, sans changer la période.
 
-        condition_role = simulation.get_role_in_entity(Familles) == PARENT
-        return period, simulation.sum_in_entity(condition_role, entity = Familles)
+        return period, simulation.famille.nb_persons(role = PARENT)
 
 
 class maries(Variable):
@@ -191,7 +190,7 @@ class maries(Variable):
         statut_marital = simulation.calculate('statut_marital', period)
         individu_marie = (statut_marital == 1)
 
-        return period, simulation.any_in_entity(individu_marie, entity = Familles, role = PARENT)
+        return period, simulation.famille.any(individu_marie, role = PARENT)
 
 
 class en_couple(Variable):
@@ -216,7 +215,7 @@ class est_enfant_dans_famille(Variable):
     label = u"Indique qe l'individu est un enfant dans une famille"
 
     def function(self, simulation, period):
-        return period, simulation.get_role_in_entity(Familles) == ENFANT
+        return period, simulation.persons.role_in(simulation.famille) == ENFANT
 
 class etudiant(Variable):
     column = BoolCol(default = False)

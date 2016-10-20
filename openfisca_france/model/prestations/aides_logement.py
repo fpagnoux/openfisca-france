@@ -206,7 +206,7 @@ class aide_logement_base_ressources_defaut(Variable):
 
         # Revenus du foyer fiscal
         rev_coll = simulation.calculate('rev_coll', period.n_2)
-        rev_coll_famille = simulation.transpose_to_entity(rev_coll, origin_entity = FoyersFiscaux, target_entity = Familles)
+        rev_coll_famille = simulation.foyer_fiscal.transpose_to_entity(rev_coll, target_entity = Familles)
 
         ressources = (
             base_ressources_parents + br_enfants + rev_coll_famille -

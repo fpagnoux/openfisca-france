@@ -80,7 +80,7 @@ class reduction_csg_foyer_fiscal(Variable):
 
     def function(self, simulation, period):
         reduction_csg = simulation.calculate('reduction_csg', period)
-        return period, simulation.sum_in_entity(reduction_csg, entity = FoyersFiscaux)
+        return period, simulation.foyer_fiscal.sum(reduction_csg)
 
 class reduction_csg_nette(DatedVariable):
     column = FloatCol
@@ -124,7 +124,7 @@ class ppe_elig_bis_individu(Variable):
 
     def function(self, simulation, period):
         ppe_elig_bis = simulation.calculate('ppe_elig_bis', period)
-        return period, simulation.project_on_persons(ppe_elig_bis, entity = FoyersFiscaux)
+        return period, simulation.foyer_fiscal.project(ppe_elig_bis)
 
 class regularisation_reduction_csg(DatedVariable):
     column = FloatCol

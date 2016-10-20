@@ -79,7 +79,7 @@ def test_transpose_to_entity():
 
     familles = foyers_fiscaux.members.famille
     af = familles.calculate('af')
-    af_foyer_fiscal = familles.transpose_to_entity(af, target_entity_type = FoyersFiscaux)
+    af_foyer_fiscal = familles.transpose_to_entity(af, foyers_fiscaux)
 
     assert_near(af_foyer_fiscal, [20000, 10000, 0])
 

@@ -3,10 +3,10 @@
 import collections
 import itertools
 
-from openfisca_core.entities import Entity
+from openfisca_core.entities import PersonEntity, GroupEntity
 
 
-class Familles(Entity):
+class Familles(GroupEntity):
     key = "famille"
     plural = "familles"
     label = u'Famille'
@@ -22,14 +22,14 @@ class Familles(Entity):
             }
         ]
 
-class Individus(Entity):
+class Individus(PersonEntity):
     key = "individu"
     plural = "individus"
     label = u'Individu'
     is_person = True
 
 
-class FoyersFiscaux(Entity):
+class FoyersFiscaux(GroupEntity):
     key = "foyer_fiscal"
     plural = "foyers_fiscaux"
     label = u'Déclaration d’impôts'
@@ -53,7 +53,7 @@ class FoyersFiscaux(Entity):
         ]
 
 
-class Menages(Entity):
+class Menages(GroupEntity):
     key = "menage"
     plural = "menages"
     label = u'Logement principal'

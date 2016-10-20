@@ -647,7 +647,7 @@ class bouclier_rev(Variable):
         cd_eparet = simulation.calculate('cd_eparet', period)
 
         maj_cga_individu = simulation.calculate('maj_cga_individu', period)
-        maj_cga = simulation.sum_in_entity(maj_cga_individu, entity = FoyersFiscaux)
+        maj_cga = simulation.foyer_fiscal.sum(maj_cga_individu)
 
         # TODO: réintégrer les déficits antérieur
         # TODO: intégrer les revenus soumis au prélèvement libératoire

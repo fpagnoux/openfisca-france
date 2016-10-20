@@ -59,7 +59,7 @@ class charge_loyer(Variable):
         period = period.this_year
         nbptr = simulation.calculate('nbptr', period)
         loyer_famille = simulation.calculate('loyer', period)
-        loyer = simulation.transpose_to_entity(loyer_menage, origin_entity = Familles, target_entity = FoyersFiscaux)
+        loyer = simulation.famille.transpose_to_entity(loyer_menage, target_entity = FoyersFiscaux)
         charge_loyer = simulation.legislation_at(period.start).charge_loyer
 
         plaf = charge_loyer.plaf
