@@ -2,7 +2,7 @@
 # alors qu'Openfisca la caclule pour Lyon (.0175)
 # Marges d'erreur définies par défaut égales à 0.5 euros
 
-- name: "Cotisations sociales - Celibataire public titulaire etat" 
+- name: "Cotisations sociales - Celibataire public titulaire etat"
   description: Montant cotisations sociales celibataire public titulaire etat
   period: 2012-01
   input_variables:
@@ -74,7 +74,7 @@
     rafp_employeur: -20
     pension_civile_employeur: -546
     cotisations_employeur_contributives: -(546 + 20)
-    
+
 
     cotisations_employeur: -(546 + 10 + 20 + 230 + 108 + 2 + 8 + 2000 * 0.0175 + 6)
                 # pension, ati, rafp, maladie, famille, fnal1, fnal2, csa,
@@ -188,6 +188,7 @@
   familles:
     parents: ["parent1", "parent2"]
     enfants: ["enfant1", "enfant2"]
+    zone_apl: 1
   foyers_fiscaux:
     declarants: ["parent1", "parent2"]
     personnes_a_charge: ["enfant1", "enfant2"]
@@ -195,7 +196,6 @@
     personne_de_reference: "parent1"
     conjoint: "parent2"
     enfants: ["enfant1", "enfant2"]
-    zone_apl: 1
   individus:
     - id: "parent1"
       date_naissance: 1972-01-01
@@ -245,6 +245,7 @@
   familles:
     parents: ["parent1", "parent2"]
     enfants: ["enfant1", "enfant2"]
+    zone_apl: 2
   foyers_fiscaux:
     declarants: ["parent1", "parent2"]
     personnes_a_charge: ["enfant1", "enfant2"]
@@ -252,7 +253,6 @@
     personne_de_reference: "parent1"
     conjoint: "parent2"
     enfants: ["enfant1", "enfant2"]
-    zone_apl: 2
   individus:
     - id: "parent1"
       date_naissance: 1972-01-01

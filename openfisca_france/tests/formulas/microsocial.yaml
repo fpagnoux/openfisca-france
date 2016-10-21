@@ -38,6 +38,7 @@
   familles:
     parents: ["parent1", "parent2"]
     enfants: ["enfant1", "enfant2"]
+    zone_apl: Zone 1
   foyers_fiscaux:
     declarants: ["parent1", "parent2"]
     personnes_a_charge: ["enfant1", "enfant2"]
@@ -45,7 +46,6 @@
     personne_de_reference: "parent1"
     conjoint: "parent2"
     enfants: ["enfant1", "enfant2"]
-    zone_apl: Zone 1
   individus:
     - id: "parent1"
       date_naissance: "1972-01-01"
