@@ -651,22 +651,21 @@ class rsa_activite_individu(DatedVariable):
     start_date = date(2009, 6, 1)
 
     @dated_function(start = date(2009, 6, 1))
-    def function_2009_(self, simulation, period):
+    def function_2009_(individu, period):
         '''
         Note: le partage en moitié est un point de législation, pas un choix arbitraire
         '''
         period = period   # TODO: rentre dans le calcul de la PPE check period !!!
-        rsa_activite = simulation.calculate('rsa_activite', period)
 
-        # On partage le rsa_activite entre les parents
-        rsa_activite_individu = simulation.famille.share_between_members(rsa_activite, role = PARENT)
+        rsa_activite_famille = individu.famille.calculate('rsa_activite', period)
+        rsa_activite_projete = individu.famille.project(rsa_activite_famille)
+        marie = individu.calculate('statut_marital', period) == 1
+        en_couple = individu.famille.calculate('en_couple', period)
 
-        # Si la personne est mariée et qu'aucun conjoint n'a été déclaré, on divise par 2
-        marie = simulation.calculate('statut_marital', period) == 1
-        no_conjoint = simulation.famille.nb_persons(role = PARENT) == 1
+        # On partage le rsa_activite entre les parents. Si la personne est mariée et qu'aucun conjoint n'a été déclaré, on divise par 2.
+        partage_rsa = or_(marie, individu.famille.project(en_couple))
 
-        return period, where(
-            marie * no_conjoint, rsa_activite_individu / 2, rsa_activite_individu)
+        return period, where(partage_rsa, rsa_activite_projete / 2, rsa_activite_projete)
 
 
 class rsa_base_ressources_patrimoine_individu(DatedVariable):

@@ -21,7 +21,7 @@ def test_decomposition(print_decomposition = False):
             taille_entreprise = 3,
             categorie_salarie = 0,
             ),
-        menage = dict(
+        famille = dict(
             zone_apl = 1,
             ),
         ).new_simulation()

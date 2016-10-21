@@ -120,7 +120,6 @@ class ppe_elig_bis(Variable):
 class ppe_elig_bis_individu(Variable):
     entity = Individus
     column = BoolCol
-    variable = ppe_elig_bis
 
     def function(self, simulation, period):
         ppe_elig_bis = simulation.calculate('ppe_elig_bis', period)

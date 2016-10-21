@@ -30,7 +30,7 @@ def test_charge_loyer():
             dict(date_naissance = datetime.date(year - 9, 1, 1)),
             dict(date_naissance = datetime.date(year - 9, 1, 1)),
             ],
-        menage = dict(
+        famille = dict(
             loyer = 1000,
             ),
         )

@@ -6,7 +6,7 @@ from numpy import maximum as max_
 from openfisca_core import columns
 from openfisca_core.reforms import Reform
 from openfisca_core.variables import Variable
-from .. import entities
+from ..model.base import *
 
 
 def modify_legislation_json(reference_legislation_json_copy):
@@ -79,7 +79,7 @@ class allocations_familiales_imposables(Reform):
 
     class allocations_familiales_imposables(Variable):
         column = columns.FloatCol
-        entity = entities.FoyersFiscaux
+        entity = FoyersFiscaux
         label = u"Allocations familiales imposables"
 
         def function(self, simulation, period):

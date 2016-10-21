@@ -39,8 +39,6 @@ class proprietaire_proche_famille(Variable):
     entity = Familles
     label = u"Le propriétaire du logement a un lien de parenté avec la personne de référence ou son conjoint"
 
-
-
 class statut_occupation_logement(Variable):
     column = EnumCol(
         enum = Enum([
