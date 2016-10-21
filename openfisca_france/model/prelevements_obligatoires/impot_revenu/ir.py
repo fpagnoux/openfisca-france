@@ -160,10 +160,10 @@ class enfant_a_charge(Variable):
     label = u"Enfant à charge non marié, de moins de 18 ans au 1er janvier de l'année de perception des" \
         u" revenus, ou né durant la même année, ou handicapés quel que soit son âge"
 
-    def function(self, simulation, period):
-        age = simulation.calculate('age', period)
-        handicap = simulation.calculate('handicap', period)
-        is_pac = simulation.get_role_in_entity(FoyersFiscaux) == PERSONNE_A_CHARGE
+    def function(individu, period):
+        age = individu.calculate('age', period)
+        handicap = individu.calculate('handicap', period)
+        is_pac = individu.role_in(FoyersFiscaux) == PERSONNE_A_CHARGE
 
         return period, is_pac * ((age < 18) + handicap)
 
@@ -229,11 +229,11 @@ class enfant_majeur_celibataire_sans_enfant(Variable):
     entity = Individus
     label = u"Enfant majeur célibataire sans enfant"
 
-    def function(self, simulation, period):
+    def function(individu, period):
         period = period.this_year
-        age = simulation.calculate('age', period)
-        handicap = simulation.calculate('handicap', period)
-        is_pac = simulation.get_role_in_entity(FoyersFiscaux) == PERSONNE_A_CHARGE
+        age = individu.calculate('age', period)
+        handicap = individu.calculate('handicap', period)
+        is_pac = individu.role_in(FoyersFiscaux) == PERSONNE_A_CHARGE
 
         return period, is_pac * (age >= 18) * not_(handicap)
 

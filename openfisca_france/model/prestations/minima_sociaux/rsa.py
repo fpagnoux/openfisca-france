@@ -459,9 +459,9 @@ class rsa_enfant_a_charge(Variable):
             enceinte_fam = simulation.calculate('enceinte_fam', period)
             isole = not_(simulation.calculate('en_couple', period))
             isolement_recent = simulation.calculate('rsa_isolement_recent', period)
-            presence_autres_enfants = self.sum_by_entity(enfant * not_(autonomie_financiere) * (age <= P_rsa.age_pac), entity = Familles) > 1
+            presence_autres_enfants = simulation.famille.sum(enfant * not_(autonomie_financiere) * (age <= P_rsa.age_pac)) > 1
 
-            return self.cast_from_entity_to_roles(not_(enceinte_fam) * isole * isolement_recent * not_(presence_autres_enfants), entity = Familles)
+            return simulation.famille.project(not_(enceinte_fam) * isole * isolement_recent * not_(presence_autres_enfants))
 
         return period, (
             enfant * not_(autonomie_financiere) *
@@ -659,11 +659,11 @@ class rsa_activite_individu(DatedVariable):
         rsa_activite = simulation.calculate('rsa_activite', period)
 
         # On partage le rsa_activite entre les parents
-        rsa_activite_individu = simulation.share_between_members(rsa_activite, Familles, role = PARENT)
+        rsa_activite_individu = simulation.famille.share_between_members(rsa_activite, role = PARENT)
 
         # Si la personne est mariée et qu'aucun conjoint n'a été déclaré, on divise par 2
         marie = simulation.calculate('statut_marital', period) == 1
-        no_conjoint = simulation.nb_persons_in_entity(Familles, role = PARENT) == 1
+        no_conjoint = simulation.famille.nb_persons(role = PARENT) == 1
 
         return period, where(
             marie * no_conjoint, rsa_activite_individu / 2, rsa_activite_individu)
