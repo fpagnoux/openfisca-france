@@ -135,9 +135,9 @@ class revnet(Variable):
     column = FloatCol
     url = u"http://impotsurlerevenu.org/definitions/115-revenu-net-imposable.php",
 
-    def function(self, simulation, period):
-        revenu_net_individu = simulation.calculate('revenu_net_individu', period)
-        return period, simulation.menage.sum(revenu_net_individu)
+    def function(menage, period):
+        revenu_net_individus = menage.members.calculate('revenu_net_individu', period)
+        return period, menage.sum(revenu_net_individus)
 
 
 class nivvie_net(Variable):
@@ -179,9 +179,9 @@ class revini(Variable):
     label = u"Revenu initial du ménage"
     column = FloatCol
 
-    def function(self, simulation, period):
-        revenu_initial_individu = simulation.calculate('revenu_initial_individu', period)
-        return period, simulation.menage.sum(revenu_initial_individu)
+    def function(menage, period):
+        revenu_initial_individus = menage.members.calculate('revenu_initial_individu', period)
+        return period, simulation.menage.sum(revenu_initial_individus)
 
 
 class nivvie_ini(Variable):
@@ -236,20 +236,20 @@ class pen(Variable):
     label = u"Pensions et revenus de remplacement"
     url = "http://fr.wikipedia.org/wiki/Rente"
 
-    def function(self, simulation, period):
+    def function(individu, period):
         '''
         Pensions
         '''
         period = period.start.period('year').offset('first-of')
-        chomage_net = simulation.calculate('chomage_net', period)
-        retraite_nette = simulation.calculate('retraite_nette', period)
-        pensions_alimentaires_percues = simulation.calculate('pensions_alimentaires_percues', period)
+        chomage_net = individu.calculate('chomage_net', period)
+        retraite_nette = individu.calculate('retraite_nette', period)
+        pensions_alimentaires_percues = individu.calculate('pensions_alimentaires_percues', period)
 
         # Revenus du foyer fiscal
-        pensions_alimentaires_versees = simulation.calculate('pensions_alimentaires_versees', period)
-        retraite_titre_onereux = simulation.calculate_add('retraite_titre_onereux', period)
+        pensions_alimentaires_versees = individu.foyer_fiscal.calculate('pensions_alimentaires_versees', period)
+        retraite_titre_onereux = individu.foyer_fiscal.calculate_add('retraite_titre_onereux', period)
         pen_foyer_fiscal = pensions_alimentaires_versees + retraite_titre_onereux
-        pen_foyer_fiscal_projetees = simulation.foyer_fiscal.project_on_first_person(pen_foyer_fiscal)
+        pen_foyer_fiscal_projetees = individu.foyer_fiscal.project_on_first_person(pen_foyer_fiscal)
 
         return period, (chomage_net + retraite_nette + pensions_alimentaires_percues + pen_foyer_fiscal_projetees)
 
@@ -541,7 +541,7 @@ class check_csk(Variable):
         prelsoc_fon = simulation.calculate('prelsoc_fon', period)
         prel_foyer_fiscal = prelsoc_cap_bar + prelsoc_pv_mo + prelsoc_fon
 
-        return period, simulation.foyer_fiscal.transpose_to_entity(prel_foyer_fiscal, target_entity = simulation.menage)
+        return period, simulation.foyer_fiscal.transpose_to_entity(prel_foyer_fiscal, target_entity = Menages)
 
 
 class check_csg(Variable):
@@ -559,7 +559,7 @@ class check_csg(Variable):
 
         csg_foyer_fiscal = csg_cap_bar + csg_pv_mo + csg_fon
 
-        return period, simulation.foyer_fiscal.transpose_to_entity(csg_foyer_fiscal, target_entity = simulation.menage)
+        return period, simulation.foyer_fiscal.transpose_to_entity(csg_foyer_fiscal, target_entity = Menages)
 
 
 class check_crds(Variable):
@@ -577,4 +577,4 @@ class check_crds(Variable):
 
         crds_foyer_fiscal = crds_pv_mo + crds_fon + crds_cap_bar
 
-        return period, simulation.foyer_fiscal.transpose_to_entity(crds_foyer_fiscal, target_entity = simulation.menage)
+        return period, simulation.foyer_fiscal.transpose_to_entity(crds_foyer_fiscal, target_entity = Menages)

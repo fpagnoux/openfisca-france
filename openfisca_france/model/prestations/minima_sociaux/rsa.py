@@ -897,13 +897,10 @@ class rsa_majore_eligibilite(Variable):
 
     def function(self, simulation, period):
 
-        def has_enfant_moins_3_ans():
-            return nb_enf(simulation, period, 0, 2) > 0
-
         period = period.this_month
         isole = not_(simulation.calculate('en_couple', period))
         isolement_recent = simulation.calculate('rsa_isolement_recent', period)
-        enfant_moins_3_ans = has_enfant_moins_3_ans()
+        enfant_moins_3_ans = nb_enf(simulation, period, 0, 2) > 0
         enceinte_fam = simulation.calculate('enceinte_fam', period)
         nbenf = simulation.calculate('rsa_nb_enfants', period)
         rsa_eligibilite_tns = simulation.calculate('rsa_eligibilite_tns', period)

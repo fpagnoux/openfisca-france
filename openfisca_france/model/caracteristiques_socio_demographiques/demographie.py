@@ -183,14 +183,14 @@ class maries(Variable):
     entity = Familles
     label = u"maries"
 
-    def function(self, simulation, period):
+    def function(famille, period):
         """couple = 1 si couple marié sinon 0 TODO: faire un choix avec couple ?"""
         # Note : Cette variable est "instantanée" : quelque soit la période demandée, elle retourne la valeur au premier
         # jour, sans changer la période.
-        statut_marital = simulation.calculate('statut_marital', period)
+        statut_marital = famille.members.calculate('statut_marital', period)
         individu_marie = (statut_marital == 1)
 
-        return period, simulation.famille.any(individu_marie, role = PARENT)
+        return period, famille.any(individu_marie, role = PARENT)
 
 
 class en_couple(Variable):
@@ -214,8 +214,8 @@ class est_enfant_dans_famille(Variable):
     entity = Individus
     label = u"Indique qe l'individu est un enfant dans une famille"
 
-    def function(self, simulation, period):
-        return period, simulation.persons.role_in(simulation.famille) == ENFANT
+    def function(individu, period):
+        return period, individu.role_in(Familles) == ENFANT
 
 class etudiant(Variable):
     column = BoolCol(default = False)

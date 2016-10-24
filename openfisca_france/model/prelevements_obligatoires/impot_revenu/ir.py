@@ -244,9 +244,9 @@ class nbJ(Variable):
     label = u"Nombre d'enfants majeurs célibataires sans enfant"
     column = IntCol
 
-    def function(self, simulation, period):
-        enfant_majeur_celibataire_sans_enfant = simulation.calculate('enfant_majeur_celibataire_sans_enfant', period)
-        return period, simulation.foyer_fiscal.sum(enfant_majeur_celibataire_sans_enfant)
+    def function(foyer_fiscal, period):
+        enfant_majeur_celibataire_sans_enfant = foyer_fiscal.members.calculate('enfant_majeur_celibataire_sans_enfant', period)
+        return period, foyer_fiscal.sum(enfant_majeur_celibataire_sans_enfant)
 
 
 class nombre_enfants_majeurs_celibataires_sans_enfant(Variable):
@@ -254,9 +254,9 @@ class nombre_enfants_majeurs_celibataires_sans_enfant(Variable):
     label = u"Nombre d'enfants majeurs célibataires sans enfant"
     column = IntCol
 
-    def function(self, simulation, period):
-        enfant_majeur_celibataire_sans_enfant = simulation.calculate('enfant_majeur_celibataire_sans_enfant', period)
-        return period, simulation.menage.sum(enfant_majeur_celibataire_sans_enfant)
+    def function(menage, period):
+        enfant_majeur_celibataire_sans_enfant = menage.members.calculate('enfant_majeur_celibataire_sans_enfant', period)
+        return period, menage.sum(enfant_majeur_celibataire_sans_enfant)
 
 
 class maries_ou_pacses(Variable):
@@ -264,12 +264,12 @@ class maries_ou_pacses(Variable):
     entity = FoyersFiscaux
     label = u"Déclarants mariés ou pacsés"
 
-    def function(self, simulation, period):
+    def function(foyer_fiscal, period):
         period = period.this_year
-        statut_marital = simulation.calculate('statut_marital', period)
-        individu_marie = (statut_marital == 1) | (statut_marital == 5)
+        statut_marital = foyer_fiscal.members.calculate('statut_marital', period)
+        individu_marie_ou_pacse = (statut_marital == 1) | (statut_marital == 5)
 
-        return period, simulation.foyer_fiscal.value_from_person(individu_marie, role = DECLARANT)
+        return period, foyer_fiscal.value_from_person(individu_marie, role = DECLARANT)
 
 
 class celibataire_ou_divorce(Variable):
@@ -277,12 +277,12 @@ class celibataire_ou_divorce(Variable):
     entity = FoyersFiscaux
     label = u"Déclarant célibataire ou divorcé"
 
-    def function(self, simulation, period):
+    def function(foyer_fiscal, period):
         period = period.this_year
-        statut_marital = simulation.calculate('statut_marital', period)
+        statut_marital = foyer_fiscal.members.calculate('statut_marital', period)
         individu_celibataire_ou_divorce = (statut_marital == 2) | (statut_marital == 3)
 
-        return period, simulation.foyer_fiscal.value_from_person(individu_celibataire_ou_divorce, role = DECLARANT)
+        return period, foyer_fiscal.value_from_person(individu_celibataire_ou_divorce, role = DECLARANT)
 
 
 class veuf(Variable):
@@ -290,12 +290,12 @@ class veuf(Variable):
     entity = FoyersFiscaux
     label = u"Déclarant veuf"
 
-    def function(self, simulation, period):
+    def function(foyer_fiscal, period):
         period = period.this_year
-        statut_marital = simulation.calculate('statut_marital', period)
+        statut_marital = foyer_fiscal.members.calculate('statut_marital', period)
         individu_veuf = (statut_marital == 4)
 
-        return period, simulation.foyer_fiscal.value_from_person(individu_veuf, role = DECLARANT)
+        return period, foyer_fiscal.value_from_person(individu_veuf, role = DECLARANT)
 
 
 class jeune_veuf(Variable):
@@ -303,12 +303,12 @@ class jeune_veuf(Variable):
     entity = FoyersFiscaux
     label = u"Déclarant jeune veuf"
 
-    def function(self, simulation, period):
+    def function(foyer_fiscal, period):
         period = period.this_year
-        statut_marital = simulation.calculate('statut_marital', period)
+        statut_marital = foyer_fiscal.members.calculate('statut_marital', period)
         individu_jeune_veuf = (statut_marital == 6)
 
-        return period, simulation.foyer_fiscal.value_from_person(individu_jeune_veuf, role = DECLARANT)
+        return period, foyer_fiscal.value_from_person(individu_jeune_veuf, role = DECLARANT)
 
 
 ###############################################################################
@@ -1258,7 +1258,7 @@ class teicaa(Variable):  # f5rm
         f5qm = simulation.calculate('f5qm', period)
         teicaa_individu = bareme.calc(f5qm)
 
-        return period, simulation.foyer_fiscal.sum(f5qm, role = DECLARANT)
+        return period, simulation.foyer_fiscal.sum(f5qm)
 
 
 class assiette_vente(Variable):
