@@ -297,7 +297,11 @@ class ppa_fictive(Variable):
 
     def function(famille, period, legislation, mois_demande):
         period = period.this_month
-        forfait_logement = famille('rsa_forfait_logement', mois_demande)
+        # Depuis 2017, le forfait logement du RSA prend un paramètre supplémentaire
+        if mois_demande.start.date >= date(2017, 01, 01):
+            forfait_logement = famille('rsa_forfait_logement', mois_demande, extra_params = [mois_demande])
+        else:
+            forfait_logement = famille('rsa_forfait_logement', mois_demande)
         ppa_majoree_eligibilite = famille('rsa_majore_eligibilite', mois_demande)
 
         elig = famille('ppa_eligibilite', period, extra_params = [mois_demande])

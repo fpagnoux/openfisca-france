@@ -352,10 +352,21 @@ class rsa_enfant_a_charge(Variable):
         age = individu('age', period)
         autonomie_financiere = individu('autonomie_financiere', period)
 
-        ressources = (
-            individu('rsa_base_ressources_individu', period) +
-            (1 - P_rsa.pente) * individu('rsa_revenu_activite_individu', period)
-            )
+        if period.start.date >= date(2017, 01, 01):
+            m_1 = period.last_month
+            m_2 = m_1.last_month
+            m_3 = m_2.last_month
+            ressources = (
+                individu('rsa_base_ressources_individu', period) +
+                individu('rsa_revenu_activite_individu', period, extra_params = [m_1]) / 3 +
+                individu('rsa_revenu_activite_individu', period, extra_params = [m_2]) / 3 +
+                individu('rsa_revenu_activite_individu', period, extra_params = [m_3]) / 3
+                )
+        else:
+            ressources = (
+                individu('rsa_base_ressources_individu', period) +
+                (1 - P_rsa.pente) * individu('rsa_revenu_activite_individu', period)
+                )
 
         # Les parametres ont changé de nom au moment où le RMI est devenu le RSA
         if period.start.date >= date(2009, 6, 01):
@@ -831,9 +842,13 @@ class rsa_forfait_logement(Variable):
     def function(famille, mois_demande, legislation, mois_courant = None):
         mois_demande = mois_demande.this_month
 
+         # Jusqu'à 2016, pas de disctinction mois courant / mois demande : le FL n'est calculé que pour le mois de demande.
+
         # Before 2017, mois_demande and mois_courant are the same.
-        if mois_courant is None:
+        if mois_demande.start.date <= date(2016, 12, 31):
             mois_courant = mois_demande
+        else:
+            assert mois_courant is not None, "rsa_forfait_logement needs an extra-param mois_courant from 2017-01"
 
         np_pers = famille('nb_parents', mois_courant) + famille('rsa_nb_enfants', mois_courant)
         aide_logement = famille('aide_logement', mois_demande)
