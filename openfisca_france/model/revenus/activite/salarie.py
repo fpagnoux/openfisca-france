@@ -372,6 +372,12 @@ class primes_salaires(Variable):
     label = u"Indemnités, primes et avantages en argent"
 
 
+class indemnites_fin_de_contrat_net(Variable):
+    column = FloatCol
+    entity = Individu
+    label = u"Indemnités de fin de contrat (licenciement, rupture conventionelle, prime de précarité) nettes"
+
+
 class complementaire_sante_montant(Variable):
     column = FloatCol
     entity = Individu
