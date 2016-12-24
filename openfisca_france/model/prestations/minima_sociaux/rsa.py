@@ -421,6 +421,7 @@ class participation_frais(Variable):
     column = BoolCol
     entity = Menage
     label = u"Partipation aux frais de logement pour un hebergé à titre gratuit"
+    base_function = requested_period_last_or_next_value
 
 
 class rsa_revenu_activite(Variable):

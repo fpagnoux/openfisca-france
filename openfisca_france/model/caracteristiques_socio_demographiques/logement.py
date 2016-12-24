@@ -59,6 +59,7 @@ class statut_occupation_logement(Variable):
     entity = Menage
     label = u"Statut d'occupation du logement"
     set_input = set_input_dispatch_by_period
+    base_function = requested_period_last_or_next_value
 
 class residence_dom(Variable):
     column = BoolCol
