@@ -1,3 +1,115 @@
+- name: "Personne seule sans revenus avec FL"
+  period: 2017-01
+  relative_error_margin: 0.01
+  input_variables:
+    age: 40
+    statut_occupation_logement: 4 # locataire
+    loyer: 400
+  output_variables:
+    rsa:
+      2017-01: 471 # forfait logement appliqué car AL
+
+- name: "Personne seule sans revenus sans FL"
+  period: 2017-01
+  relative_error_margin: 0.01
+  input_variables:
+    age: 40
+    statut_occupation_logement: 6 # hebergé gratuitement
+    participation_frais: True
+  output_variables:
+    rsa:
+      2017-01: 535
+
+- name: "Personne seule avec salaire"
+  period: 2017-01
+  relative_error_margin: 0.01
+  input_variables:
+    salaire_net:
+      2017-01: 200
+      2016-12: 200
+      2016-11: 200
+      2016-10: 200
+    age: 40
+    statut_occupation_logement: 6 # hebergé gratuitement
+    participation_frais: True
+  output_variables:
+    rsa:
+      2017-01: 535 - 200
+
+- name: "Personne seule avec salaire interrompu"
+  period: 2017-01
+  relative_error_margin: 0.01
+  input_variables:
+    salaire_net:
+      2017-01: 0
+      2016-12: 200
+      2016-11: 200
+      2016-10: 200
+    age: 40
+    statut_occupation_logement: 6 # hebergé gratuitement
+    participation_frais: True
+  output_variables:
+    rsa:
+      2017-01: 535
+
+
+- name: "Famille avec enfants et un parent en activité, déduction des AF"
+  period: 2017-01
+  relative_error_margin: 0.01
+  individus:
+    - id: 1
+      age: 40
+      salaire_net:
+        2017-01: 400
+        2016-12: 400
+        2016-11: 400
+        2016-10: 400
+    - id: 2
+      age: 40
+    - id: 3
+      age: 4
+    - id: 4
+      age: 5
+  familles:
+    parents: [1, 2]
+    enfants: [3, 4]
+  menages:
+    personne_de_reference: 1
+    conjoint: 2
+    enfants: [3,4]
+    statut_occupation_logement: 4 # locataire
+    loyer: 400
+  output_variables:
+    af_base: 130
+    rsa: 964.91 - 400 - 130
+
+
+- name: "Parent isolé, majoration et déduction de l'ASF"
+  period: 2017-01
+  relative_error_margin: 0.01
+  individus:
+    - id: 1
+      age: 40
+    - id: 3
+      age: 4
+    - id: 4
+      age: 5
+  familles:
+    rsa_isolement_recent: true
+    parents: [1]
+    enfants: [3, 4]
+    # af_base: 130 # calculé
+    # asf: 200
+  menages:
+    personne_de_reference: 1
+    enfants: [3,4]
+    statut_occupation_logement: 4 # locataire
+    loyer: 400
+  output_variables:
+    af_base: 130
+    asf: 200
+    rsa: 986.42 - 130 - 180
+
 - name: "Les primes sur un mois ne sont pas moyennées"
   period: 2017-01
   relative_error_margin: 0.01
